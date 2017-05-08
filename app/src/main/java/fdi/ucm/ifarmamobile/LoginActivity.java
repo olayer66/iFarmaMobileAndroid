@@ -3,6 +3,7 @@ package fdi.ucm.ifarmamobile;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -19,7 +20,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -29,8 +32,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import volley.AppSingleton;
+import volley.VolleyCallback;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -345,6 +359,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    // leer esto https://mobikul.com/how-to-send-json-post-request-using-volley-rest-api/
+    public void volleyJsonObjectRequest(String url,final VolleyCallback callback){
+
+        String  REQUEST_TAG = "com.androidtutorialpoint.volleyJsonObjectRequest";
+        Object resp=null;
+        JsonObjectRequest jsonObjectReq = new JsonObjectRequest(url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        callback.onSuccessResponse(true,response);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                callback.onSuccessResponse(false,error);
+            }
+        });
+        // Adding JsonObject request to request queue
+        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectReq,REQUEST_TAG);
     }
 }
 

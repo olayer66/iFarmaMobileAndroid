@@ -6,6 +6,8 @@ import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -386,12 +388,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 finish();
                 if(role.equals("PAC"))
                 {
-                    Intent myIntent = new Intent(LoginActivity.this,perfilPaciente.class);
+                    Intent myIntent = new Intent(LoginActivity.this,indexPaciente.class);
                     LoginActivity.this.startActivity(myIntent);
                 }
                 else
                 {
-                    Intent myIntent = new Intent(LoginActivity.this,MyMainActivity.class);
+                    Intent myIntent = new Intent(LoginActivity.this,indexMedico.class);
                     LoginActivity.this.startActivity(myIntent);
                 }
             } else {

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -313,7 +314,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mUsuario;
         private final String mPassword;
-        boolean acceso=false;
+        private boolean acceso=false;
+        private String role="";
         UserLoginTask(String usuario, String password) {
             mUsuario = usuario;
             mPassword = password;
@@ -322,26 +324,42 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         {
             acceso=estado;
         }
+        public void setRole(String tipo)
+        {
+            role=tipo;
+        }
         @Override
-        protected boolean doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service
-            String url = "http://httpbin.org/get?site=code&network=tutsplus";
+            String url = "http://container.fdi.ucm.es:20007/mobile/login";
+            JSONObject entrada= new JSONObject();
+
+            try {
+                entrada.put("usuario",mUsuario);
+                entrada.put("contrasenia",mPassword);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             JsonObjectRequest jsonRequest = new JsonObjectRequest
-                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    (Request.Method.POST, url, entrada, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            // the response is already constructed as a JSONObject!
-                            String usu="";
-                            String cont="";
+                            // the response is already constructed as a JSONObject
+                            Boolean acceso=false;
+                            String role="";
                             try {
-                            usu=response.getString("usuario");
-                            cont=response.getString("contrasenia");
+                                acceso=response.getBoolean("acceso");
+                                role=response.getString("role");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            if(usu.equals(mUsuario) && cont.equals(mPassword))
+                            if(acceso)
                             {
-                                setAcceso(true);
+                                if(role.equals("PAC") || role.equals("MED"))
+                                {
+                                    setAcceso(true);
+                                    setRole(role);
+                                }
                             }
                             else
                             {
@@ -356,7 +374,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         }
                     });
             Volley.newRequestQueue(getApplicationContext()).add(jsonRequest);
-            return true;
+            return acceso;
         }
 
         @Override
@@ -366,6 +384,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 finish();
+                if(role.equals("PAC"))
+                {
+                    Intent myIntent = new Intent(LoginActivity.this,perfilPaciente.class);
+                    LoginActivity.this.startActivity(myIntent);
+                }
+                else
+                {
+                    Intent myIntent = new Intent(LoginActivity.this,MyMainActivity.class);
+                    LoginActivity.this.startActivity(myIntent);
+                }
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

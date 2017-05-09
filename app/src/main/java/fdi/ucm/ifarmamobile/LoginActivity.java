@@ -3,7 +3,7 @@ package fdi.ucm.ifarmamobile;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.DialogInterface;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -22,7 +22,6 @@ import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -32,21 +31,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import volley.AppSingleton;
-import volley.VolleyCallback;
-
 import static android.Manifest.permission.READ_CONTACTS;
+import static fdi.ucm.ifarmamobile.R.id.usuario;
 
 /**
  * A login screen that offers login via usuario/password.
@@ -81,7 +83,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mUsuarioView = (AutoCompleteTextView) findViewById(R.id.usuario);
+        mUsuarioView = (AutoCompleteTextView) findViewById(usuario);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -303,7 +305,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
-
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -312,32 +313,49 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mUsuario;
         private final String mPassword;
-
+        boolean acceso=false;
         UserLoginTask(String usuario, String password) {
             mUsuario = usuario;
             mPassword = password;
         }
-
+        public void setAcceso(boolean estado)
+        {
+            acceso=estado;
+        }
         @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+        protected boolean doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service
+            String url = "http://httpbin.org/get?site=code&network=tutsplus";
+            JsonObjectRequest jsonRequest = new JsonObjectRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // the response is already constructed as a JSONObject!
+                            String usu="";
+                            String cont="";
+                            try {
+                            usu=response.getString("usuario");
+                            cont=response.getString("contrasenia");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            if(usu.equals(mUsuario) && cont.equals(mPassword))
+                            {
+                                setAcceso(true);
+                            }
+                            else
+                            {
+                                setAcceso(false);
+                            }
+                        }
+                    }, new Response.ErrorListener() {
 
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mUsuario)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                        }
+                    });
+            Volley.newRequestQueue(getApplicationContext()).add(jsonRequest);
             return true;
         }
 
@@ -359,27 +377,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
-    }
-
-    // leer esto https://mobikul.com/how-to-send-json-post-request-using-volley-rest-api/
-    public void volleyJsonObjectRequest(String url,final VolleyCallback callback){
-
-        String  REQUEST_TAG = "com.androidtutorialpoint.volleyJsonObjectRequest";
-        Object resp=null;
-        JsonObjectRequest jsonObjectReq = new JsonObjectRequest(url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        callback.onSuccessResponse(true,response);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                callback.onSuccessResponse(false,error);
-            }
-        });
-        // Adding JsonObject request to request queue
-        AppSingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectReq,REQUEST_TAG);
     }
 }
 

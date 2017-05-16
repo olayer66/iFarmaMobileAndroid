@@ -33,4 +33,7 @@
         libero in purus. Phasellus tempus gravida tempor.
     </string>
     <string name="action_search">Buscar</string>
+    <!--Menu medico-->
+    <string name="agenda">Lista pacientes</string>
+    <string name="correo">Correo</string>
 </resources>

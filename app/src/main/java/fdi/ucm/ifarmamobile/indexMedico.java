@@ -3,6 +3,8 @@ package fdi.ucm.ifarmamobile;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,7 +19,12 @@ public class indexMedico extends AppCompatActivity {
         setContentView(R.layout.activity_index_medico);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarMedico);
         setSupportActionBar(myToolbar);
+        //Vista de las cards
+        RecyclerView rv = (RecyclerView)findViewById(R.id.rvCorreoMedico);
+        rv.setHasFixedSize(true);
 
+        LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
+        rv.setLayoutManager(llm);
     }
     // Menu icons are inflated just as they were with actionbar
     @Override

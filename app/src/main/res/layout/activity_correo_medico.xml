@@ -14,16 +14,19 @@
         app:titleTextColor="@android:color/white"
         android:background="@color/colorPrimary">
     </android.support.v7.widget.Toolbar>
-
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
     <Button
-        android:id="@+id/nuevoMensaje"
-        android:layout_width="match_parent"
+        android:id="@+id/nuevoMensajeMedico"
+        android:layout_width="@android:dimen/thumbnail_width"
         android:layout_height="wrap_content"
         android:text="@string/boton_nuevo" />
+    </RelativeLayout>
     <!-- Layout for content is here. This can be a RelativeLayout  -->
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_correo"
-        android:scrollbars="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:id="@+id/rvCorreoMedico"
+        />
 </LinearLayout>

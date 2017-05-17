@@ -34,7 +34,7 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
 
         PersonViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(cv);
+            cv = (CardView)itemView.findViewById(R.id.cv);
             asunto = (TextView)itemView.findViewById(R.id.asunto);
             remitente=(TextView) itemView.findViewById(R.id.remitente);
         }
@@ -54,9 +54,9 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
         personViewHolder.asunto.setText(mensajes.get(i).getAsunto());
         String remitente=mensajes.get(i).getRemitente().getNombre()+" "+mensajes.get(i).getRemitente().getApellidos();
         personViewHolder.remitente.setText(remitente);
-        /*if(!mensajes.get(i).getleido())
+        if(!mensajes.get(i).getleido())
         {
             personViewHolder.cv.setCardBackgroundColor(Color.argb(150,150,150,150));
-        }*/
+        }
     }
 }

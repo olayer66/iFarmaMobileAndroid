@@ -70,7 +70,8 @@ public class correoMedico extends AppCompatActivity {
     //Carga con volley los mensajes desde la BBDD
     private void traerMensajes()
     {
-        Usuario rem=new Usuario(1,"paco","perez","234324554","usuario@algo.com");
+        Long id=Long.parseLong("1");
+        Usuario rem=new Usuario(id,"paco","perez","234324554","usuario@algo.com");
         mensajes = new ArrayList<>();
         mensajes.add(new Mensaje("prueba1",rem,"esto es una prueba de mensaje",true));
         mensajes.add(new Mensaje("prueba2",rem,"esto es una prueba de mensaje",true));

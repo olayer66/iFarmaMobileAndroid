@@ -9,9 +9,9 @@ import static android.R.attr.name;
 public class Mensaje {
     private String asunto;
     private Usuario remitente;
-    private Usuario mensaje;
+    private String mensaje;
     private boolean leido;
-    public Mensaje(String asunto, Usuario remitente, Usuario mensaje, boolean leido) {
+    public Mensaje(String asunto, Usuario remitente, String mensaje, boolean leido) {
         this.asunto=asunto;
         this.remitente=remitente;
         this.mensaje=mensaje;
@@ -25,7 +25,7 @@ public class Mensaje {
     {
         return remitente;
     }
-    public Usuario getMensaje()
+    public String getMensaje()
     {
         return mensaje;
     }

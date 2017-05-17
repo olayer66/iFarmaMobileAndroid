@@ -20,7 +20,7 @@ public class indexMedico extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarMedico);
         setSupportActionBar(myToolbar);
         //Vista de las cards
-        RecyclerView rv = (RecyclerView)findViewById(R.id.rvCorreoMedico);
+        RecyclerView rv = (RecyclerView)findViewById(R.id.rvListaPacientes);
         rv.setHasFixedSize(true);
 
         LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());

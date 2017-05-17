@@ -27,7 +27,6 @@
         <activity android:name=".indexMedico" />
         <activity android:name=".detallePaciente" />
         <activity android:name=".correoMedico" />
-        <activity android:name=".CardCorreo"></activity>
     </application>
 
 </manifest>

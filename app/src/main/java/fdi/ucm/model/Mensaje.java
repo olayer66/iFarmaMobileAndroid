@@ -8,10 +8,10 @@ import static android.R.attr.name;
 
 public class Mensaje {
     private String asunto;
-    private String remitente;
-    private String mensaje;
+    private Usuario remitente;
+    private Usuario mensaje;
     private boolean leido;
-    public Mensaje(String asunto, String remitente, String mensaje, boolean leido) {
+    public Mensaje(String asunto, Usuario remitente, Usuario mensaje, boolean leido) {
         this.asunto=asunto;
         this.remitente=remitente;
         this.mensaje=mensaje;
@@ -21,11 +21,11 @@ public class Mensaje {
     {
         return asunto;
     }
-    public String getRemitente()
+    public Usuario getRemitente()
     {
         return remitente;
     }
-    public String getMensaje()
+    public Usuario getMensaje()
     {
         return mensaje;
     }

@@ -3,30 +3,54 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/cv"
-    >
+    android:id="@+id/cv">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:background="@drawable/shape">
+        android:layout_height="75dp"
+        android:background="@drawable/shape"
+        android:paddingLeft="10dp">
 
         <TextView
             android:id="@+id/asunto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Asunto"
-            android:textStyle="bold"
-            android:textSize="27sp" />
+            android:textSize="27sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/remitente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/asunto"
             android:text="remitente"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_alignEnd="@+id/asunto"
+            android:layout_alignTop="@+id/cardCorreoFecha" />
+
+        <TextView
+            android:id="@+id/IdMensaje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/correoNuevo"
+            android:layout_width="@android:dimen/app_icon_size"
+            android:layout_height="@android:dimen/app_icon_size"
+            android:src="@android:drawable/btn_star_big_on"
+            android:visibility="invisible"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/cardCorreoFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/correoNuevo"
+            android:text="Fecha"
+            android:textSize="20sp"
+            android:layout_alignParentBottom="true" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

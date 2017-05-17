@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -31,12 +32,15 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
         CardView cv;
         TextView asunto;
         TextView remitente;
-
+        TextView fecha;
+        ImageView leido;
         PersonViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cv);
             asunto = (TextView)itemView.findViewById(R.id.asunto);
             remitente=(TextView) itemView.findViewById(R.id.remitente);
+            fecha=(TextView) itemView.findViewById(R.id.cardCorreoFecha);
+            leido=(ImageView) itemView.findViewById(R.id.correoNuevo);
         }
     }
     @Override
@@ -54,9 +58,16 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
         personViewHolder.asunto.setText(mensajes.get(i).getAsunto());
         String remitente=mensajes.get(i).getRemitente().getNombre()+" "+mensajes.get(i).getRemitente().getApellidos();
         personViewHolder.remitente.setText(remitente);
+        personViewHolder.fecha.setText(mensajes.get(i).getFecha());
+        personViewHolder.cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         if(!mensajes.get(i).getleido())
         {
-            personViewHolder.cv.setCardBackgroundColor(Color.argb(150,150,150,150));
+            personViewHolder.leido.setVisibility(View.VISIBLE);
         }
     }
 }

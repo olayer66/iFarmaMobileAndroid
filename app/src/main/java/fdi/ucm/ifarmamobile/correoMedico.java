@@ -73,10 +73,10 @@ public class correoMedico extends AppCompatActivity {
         Long id=Long.parseLong("1");
         Usuario rem=new Usuario(id,"paco","perez","234324554","usuario@algo.com");
         mensajes = new ArrayList<>();
-        mensajes.add(new Mensaje("prueba1",rem,"esto es una prueba de mensaje",true));
-        mensajes.add(new Mensaje("prueba2",rem,"esto es una prueba de mensaje",true));
-        mensajes.add(new Mensaje("prueba3",rem,"esto es una prueba de mensaje",false));
-        mensajes.add(new Mensaje("prueba4",rem,"esto es una prueba de mensaje",false));
+        mensajes.add(new Mensaje("prueba1",rem,"esto es una prueba de mensaje",true,"20/10/2017"));
+        mensajes.add(new Mensaje("prueba2",rem,"esto es una prueba de mensaje",true,"20/09/2017"));
+        mensajes.add(new Mensaje("prueba3",rem,"esto es una prueba de mensaje",false,"19/10/2017"));
+        mensajes.add(new Mensaje("prueba4",rem,"esto es una prueba de mensaje",false,"27/02/2017"));
     }
     private void iniAdapter()
     {

@@ -1,21 +1,17 @@
 package fdi.ucm.model;
 
-import static android.R.attr.name;
-
-/**
- * Created by joset on 16/05/2017.
- */
-
 public class Mensaje {
     private String asunto;
     private Usuario remitente;
     private String mensaje;
     private boolean leido;
-    public Mensaje(String asunto, Usuario remitente, String mensaje, boolean leido) {
+    private String fecha;
+    public Mensaje(String asunto, Usuario remitente, String mensaje, boolean leido,String fecha) {
         this.asunto=asunto;
         this.remitente=remitente;
         this.mensaje=mensaje;
         this.leido=leido;
+        this.fecha=fecha;
     }
     public String getAsunto()
     {
@@ -32,5 +28,9 @@ public class Mensaje {
     public boolean getleido()
     {
         return leido;
+    }
+    public String getFecha()
+    {
+        return fecha;
     }
 }

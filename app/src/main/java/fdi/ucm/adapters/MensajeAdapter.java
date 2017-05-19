@@ -1,6 +1,5 @@
 package fdi.ucm.adapters;
 
-import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,15 +13,11 @@ import java.util.List;
 import fdi.ucm.ifarmamobile.R;
 import fdi.ucm.model.Mensaje;
 
-import static fdi.ucm.ifarmamobile.R.id.cv;
 
-/**
- * Created by joset on 16/05/2017.
- */
 
 public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonViewHolder>{
 
-    List<Mensaje> mensajes;
+    private List<Mensaje> mensajes;
 
     public MensajeAdapter(List<Mensaje> mensajes){
         this.mensajes = mensajes;
@@ -34,13 +29,15 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
         TextView remitente;
         TextView fecha;
         ImageView leido;
+        TextView id;
         PersonViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv);
-            asunto = (TextView)itemView.findViewById(R.id.asunto);
-            remitente=(TextView) itemView.findViewById(R.id.remitente);
+            cv = (CardView)itemView.findViewById(R.id.cvCorreo);
+            asunto = (TextView)itemView.findViewById(R.id.cardCorreoAsunto);
+            remitente=(TextView) itemView.findViewById(R.id.cardCorreoRemitente);
             fecha=(TextView) itemView.findViewById(R.id.cardCorreoFecha);
-            leido=(ImageView) itemView.findViewById(R.id.correoNuevo);
+            leido=(ImageView) itemView.findViewById(R.id.cardCorreoNuevo);
+            id=(TextView) itemView.findViewById(R.id.cardCorreoId);
         }
     }
     @Override
@@ -59,6 +56,7 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
         String remitente=mensajes.get(i).getRemitente().getNombre()+" "+mensajes.get(i).getRemitente().getApellidos();
         personViewHolder.remitente.setText(remitente);
         personViewHolder.fecha.setText(mensajes.get(i).getFecha());
+        personViewHolder.id.setText(String.valueOf(mensajes.get(i).getId()));
         personViewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

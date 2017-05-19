@@ -15,9 +15,10 @@ android:orientation="vertical">
     android:background="@color/colorPrimary">
 </android.support.v7.widget.Toolbar>
 <!-- Layout for content is here. This can be a RelativeLayout  -->
-    <android.support.v7.widget.RecyclerView
+    <fragment
+        android:id="@+id/FragmentListaCorreo"
+        android:layout_weight="2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/rvListaPacientes"
-        />
+        android:layout_height="0px"
+        android:name="fdi.ucm.ifarmamobile.listaCorreo" />
 </LinearLayout>

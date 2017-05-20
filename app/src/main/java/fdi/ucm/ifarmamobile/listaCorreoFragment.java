@@ -1,5 +1,7 @@
 package fdi.ucm.ifarmamobile;
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,15 +21,16 @@ import fdi.ucm.model.Usuario;
 
 
 
-public class listaCorreo extends Fragment {
+public class listaCorreoFragment extends Fragment {
     private List<Mensaje> mensajes;
-    private static final String TAG = "RecyclerViewFragment";
+    private static final String TAG = "listaCorreo";
     private static final String KEY_LAYOUT_MANAGER = "layoutManager";
     private static final int SPAN_COUNT = 2;
     private enum LayoutManagerType {
         GRID_LAYOUT_MANAGER,
         LINEAR_LAYOUT_MANAGER
     }
+    private DetalleCorreoFragment.OnFragmentInteractionListener mListener;
     protected LayoutManagerType mCurrentLayoutManagerType;
     protected RecyclerView mRecyclerView;
     protected MensajeAdapter mAdapter;
@@ -101,7 +104,22 @@ public class listaCorreo extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.scrollToPosition(scrollPosition);
     }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof DetalleCorreoFragment.OnFragmentInteractionListener) {
+            mListener = (DetalleCorreoFragment.OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         // Save currently selected layout manager.
@@ -118,5 +136,9 @@ public class listaCorreo extends Fragment {
         mensajes.add(new Mensaje(Long.parseLong("2"),"prueba2",rem,"esto es una prueba de mensaje",true,"20/09/2017"));
         mensajes.add(new Mensaje(Long.parseLong("3"),"prueba3",rem,"esto es una prueba de mensaje",false,"19/10/2017"));
         mensajes.add(new Mensaje(Long.parseLong("4"),"prueba4",rem,"esto es una prueba de mensaje",false,"27/02/2017"));
+    }
+    public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onFragmentInteraction(Uri uri);
     }
 }

@@ -5,13 +5,13 @@ package fdi.ucm.model;
  */
 
 public class Usuario {
-    private Long idUsuario;
+    private long idUsuario;
     private String nombre;
     private String apellidos;
     private String telefono;
     private String email;
 
-    public Usuario( Long ID,String nombre,String apellidos, String telefono, String email)
+    public Usuario( long ID,String nombre,String apellidos, String telefono, String email)
     {
         this.idUsuario=ID;
         this.nombre=nombre;
@@ -19,12 +19,11 @@ public class Usuario {
         this.telefono=telefono;
         this.email=email;
     }
-
     public String getEmail() {
         return email;
     }
 
-    public Long getIdUsuario() {
+    public long getIdUsuario() {
         return idUsuario;
     }
 

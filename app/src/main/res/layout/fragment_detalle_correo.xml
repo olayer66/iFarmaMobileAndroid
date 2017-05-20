@@ -1,0 +1,93 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fdi.ucm.ifarmamobile.DetalleCorreoFragment"
+    android:background="@color/colorPrimary">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape"
+        android:backgroundTint="?android:attr/colorButtonNormal">
+
+        <TextView
+            android:id="@+id/DetalleCorreoAsunto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:ems="10"
+            android:text="Asunto"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/DetalleCorreoFechaLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/DetalleCorreoRemitenteLabel"
+            android:text="Fecha: "
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/DetalleCorreoRemitenteLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/DetalleCorreoAsunto"
+            android:text="Remitente: "
+            android:textColor="@android:color/background_dark"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/DetalleCorreoFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/DetalleCorreoRemitenteLabel"
+            android:layout_toEndOf="@+id/DetalleCorreoFechaLabel"
+            android:text="29/10/1192"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/DetalleCorreoRemitente"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/DetalleCorreoAsunto"
+            android:layout_toEndOf="@+id/DetalleCorreoRemitenteLabel"
+            android:text="Paco Penas Gordas"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/DetalleCorreoMensaje"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/DetalleCorreoFechaLabel"
+            android:background="@drawable/shape"
+            android:gravity="left"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/DetalleCorreoBotonResp"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/DetalleCorreoAsunto"
+            android:background="@drawable/shape"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Responder"
+            android:textColor="@color/cardview_light_background"
+            android:layout_above="@+id/DetalleCorreoMensaje" />
+
+    </RelativeLayout>
+
+</FrameLayout>

@@ -7,19 +7,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+
 public class indexMedico extends AppCompatActivity {
 
+    ListaPacientesFragment fragListaPacientes;
+    listaCorreoFragment fragListaCorreo;
+    DetalleCorreoFragment fragDetalleCorreo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index_medico);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarMedico);
         setSupportActionBar(myToolbar);
-        //Vista de las cards
-        if (savedInstanceState == null) {
+        fragListaPacientes = new ListaPacientesFragment();
+        fragListaCorreo = new listaCorreoFragment();
+        fragDetalleCorreo=new DetalleCorreoFragment();
+        if(savedInstanceState!=null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            listaCorreo fragment = new listaCorreo();
-            transaction.replace(R.id.FragmentListaCorreo, fragment);
+            transaction.add(R.id.FragmentPrincipal, fragListaPacientes);
+            transaction.addToBackStack(null);
             transaction.commit();
         }
     }
@@ -46,10 +52,19 @@ public class indexMedico extends AppCompatActivity {
     }
     private void cargarListaPacientes()
     {
-
+        /*android.app.Fragment fragmento = getFragmentManager().findFragmentByTag("listaPacientes");
+        if(fragmento==null || !fragmento.isVisible()) {
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.FragmentPrincipal, fragListaPacientes);
+            transaction.commit();
+        }*/
     }
     private void cargarMensajes()
     {
-
+        /*
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.FragmentPrincipal, fragListaCorreo);
+            transaction.commit();
+            */
     }
 }

@@ -56,7 +56,7 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
         String remitente=mensajes.get(i).getRemitente().getNombre()+" "+mensajes.get(i).getRemitente().getApellidos();
         personViewHolder.remitente.setText(remitente);
         personViewHolder.fecha.setText(mensajes.get(i).getFecha());
-        personViewHolder.id.setText(String.valueOf(mensajes.get(i).getId()));
+        personViewHolder.id.setText(String.valueOf(i));
         personViewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

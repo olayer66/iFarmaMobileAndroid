@@ -1,0 +1,96 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    tools:context="fdi.ucm.ifarmamobile.DetallePacienteFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape"
+        android:backgroundTint="?android:attr/colorButtonNormal">
+
+        <TextView
+            android:id="@+id/detallePacienteTelefono"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/detallePacienteTelefonoLabel"
+            android:layout_marginStart="9dp"
+            android:layout_toEndOf="@+id/detallePacienteTelefonoLabel"
+            android:text="907452114"
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+            android:textColor="?attr/colorControlNormal" />
+
+        <TextView
+            android:id="@+id/detallePacienteNombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:text="Paco Porras Garcia"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/detallePacienteTelefonoLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/detallePacienteNombre"
+            android:text="Telefono:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/detallePacienteCorreoLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/detallePacienteTelefonoLabel"
+            android:text="Correo:"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/detallePacienteTratamientoLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/detallePacienteCorreoLabel"
+            android:layout_marginTop="9dp"
+            android:text="Tratamiento"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="30sp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvTratamientoMedico"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/detallePacienteTratamientoLabel" />
+
+        <ImageButton
+            android:id="@+id/detallePacienteBotonAñadir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/rvTratamientoMedico"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/detallePacienteTratamientoLabel"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+        <TextView
+            android:id="@+id/detallePacienteCorreo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/detallePacienteTratamientoLabel"
+            android:layout_marginStart="8dp"
+            android:layout_toEndOf="@+id/detallePacienteCorreoLabel"
+            android:text="paco_porras@algo.com"
+            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+            android:textColor="?attr/colorControlNormal" />
+    </RelativeLayout>
+</FrameLayout>

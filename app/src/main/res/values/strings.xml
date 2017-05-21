@@ -19,7 +19,9 @@
     <string name="correo">Correo</string>
     <!-- correo-->
     <string name="boton_nuevo">Nuevo mensaje</string>
-
+    <string name="boton_responder">Responder</string>
+    <string name="fecha_correo">Fecha: </string>
+    <string name="remitente_correo">Remitente: </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

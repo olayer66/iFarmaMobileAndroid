@@ -30,7 +30,7 @@ public class listaCorreoFragment extends Fragment {
         GRID_LAYOUT_MANAGER,
         LINEAR_LAYOUT_MANAGER
     }
-    private DetalleCorreoFragment.OnFragmentInteractionListener mListener;
+    private OnFragmentInteractionListener mListener;
     protected LayoutManagerType mCurrentLayoutManagerType;
     protected RecyclerView mRecyclerView;
     protected MensajeAdapter mAdapter;
@@ -107,8 +107,8 @@ public class listaCorreoFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof DetalleCorreoFragment.OnFragmentInteractionListener) {
-            mListener = (DetalleCorreoFragment.OnFragmentInteractionListener) context;
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");

@@ -11,14 +11,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import fdi.ucm.adapters.MensajeAdapter;
 import fdi.ucm.adapters.TratamientoMedicoAdapter;
+import fdi.ucm.model.Medicamento;
 import fdi.ucm.model.Tratamiento;
 import fdi.ucm.model.Usuario;
+
+import static android.R.attr.id;
 
 
 /**
@@ -40,6 +45,10 @@ public class DetallePacienteFragment extends Fragment {
     protected TratamientoMedicoAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
 
+    private TextView nombre;
+    private TextView telefono;
+    private TextView correo;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,17 +62,18 @@ public class DetallePacienteFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_detalle_paciente, container, false);
-        rootView.setTag(TAG);
 
-
+        nombre=(TextView) rootView.findViewById(R.id.detallePacienteNombre);
+        correo=(TextView) rootView.findViewById(R.id.detallePacienteCorreo);
+        telefono=(TextView) rootView.findViewById(R.id.detallePacienteTelefono);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rvTratamientoMedico);
-
-        // LinearLayoutManager is used here, this will layout the elements in a similar fashion
-        // to the way ListView would layout elements. The RecyclerView.LayoutManager defines how
-        // elements are laid out.
         mLayoutManager = new LinearLayoutManager(getActivity());
-
         mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
+
+        //Añadimos el TAG de la vista
+        rootView.setTag(TAG);
+        //Cargamos los datos del paciente en la vista
+        cargarDatosPaciente();
 
         if (savedInstanceState != null) {
             // Restore saved layout manager type.
@@ -131,10 +141,23 @@ public class DetallePacienteFragment extends Fragment {
     //Carga con volley los mensajes desde la BBDD
     private void traerDatos()
     {
+        tratamientos= new ArrayList<>();
         Long id=Long.parseLong("1");
+        Medicamento med= new Medicamento(id,"Lexatin","Caga rapido, caga fuerte","Cinfa",Double.parseDouble("2"));
+        Date fecha= new Date();
+
         datosPaciente=new Usuario(id,"paco","perez","234324554","paco@algo.com");
+        tratamientos.add(new Tratamiento(Long.parseLong("1"),med,fecha,0,8,1));
+        tratamientos.add(new Tratamiento(Long.parseLong("2"),med,fecha,0,12,1));
+        tratamientos.add(new Tratamiento(Long.parseLong("3"),med,fecha,0,24,2));
+        tratamientos.add(new Tratamiento(Long.parseLong("4"),med,fecha,0,6,1));
 
-
+    }
+    private void cargarDatosPaciente()
+    {
+        nombre.setText(datosPaciente.getApellidos()+","+datosPaciente.getNombre());
+        telefono.setText(datosPaciente.getTelefono());
+        correo.setText(datosPaciente.getTelefono());
     }
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

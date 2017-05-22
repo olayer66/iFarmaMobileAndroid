@@ -21,8 +21,8 @@ public class indexMedico extends AppCompatActivity {
         setSupportActionBar(myToolbar);
         fragListaPacientes = new ListaPacientesFragment();
         fragListaCorreo = new listaCorreoFragment();
-        fragDetalleCorreo=new DetalleCorreoFragment();
-        if(savedInstanceState!=null) {
+        //fragDetalleCorreo=new DetalleCorreoFragment();
+        if(savedInstanceState==null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.add(R.id.FragmentPrincipal, fragListaPacientes);
             transaction.addToBackStack(null);

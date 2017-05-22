@@ -1,4 +1,5 @@
 package fdi.ucm.adapters;
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,8 +17,9 @@ import fdi.ucm.model.Usuario;
 public class PacienteAdapter  extends RecyclerView.Adapter<PacienteAdapter.PersonViewHolder>{
 
     private List<Usuario> pacientes;
-
-    public PacienteAdapter(List<Usuario> pacientes){
+    private LayoutInflater mLayoutInflater;
+    public PacienteAdapter(List<Usuario> pacientes,Context context){
+        mLayoutInflater = LayoutInflater.from(context);
         this.pacientes = pacientes;
 
     }
@@ -42,9 +44,7 @@ public class PacienteAdapter  extends RecyclerView.Adapter<PacienteAdapter.Perso
     }
     @Override
     public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_paciente, viewGroup, false);
-        PersonViewHolder pvh = new PersonViewHolder(v);
-        return pvh;
+        return new PersonViewHolder( mLayoutInflater.inflate(R.layout.card_paciente, viewGroup, false));
     }
     @Override
     public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {

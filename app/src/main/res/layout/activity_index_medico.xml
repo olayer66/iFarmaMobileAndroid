@@ -15,11 +15,15 @@ android:orientation="vertical">
     app:titleTextColor="@android:color/white"
     android:background="@color/colorPrimary">
 </android.support.v7.widget.Toolbar>
-<!-- Layout for content is here. This can be a RelativeLayout  -->
-    <fragment
-         android:id="@+id/FragmentPrincipal"
-         android:layout_weight="2"
-         android:layout_width="match_parent"
-         android:layout_height="0px"
-         tools:layout="@layout/fragment_lista_pacientes" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/fondo_base"
+        android:id="@+id/view_toolbar" />
+
+    <!-- Layout for content is here. This can be a RelativeLayout  -->
+    <FrameLayout android:id="@+id/FragmentPrincipal"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
  </LinearLayout>

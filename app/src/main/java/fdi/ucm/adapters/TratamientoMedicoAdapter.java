@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import fdi.ucm.ifarmamobile.R;
 import fdi.ucm.model.Tratamiento;
 
 /**
@@ -27,21 +28,21 @@ public class TratamientoMedicoAdapter extends RecyclerView.Adapter<TratamientoMe
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView medicamento;
-        TextView tratamiento;
+        TextView tomas;
         TextView fechaFin;
         TextView id;
         PersonViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cvPaciente);
-            paciente = (TextView)itemView.findViewById(R.id.cardPacienteNombre);
-            telefono=(TextView) itemView.findViewById(R.id.cardPacienteTelefono);
-            tratamiento=(TextView) itemView.findViewById(R.id.);
-            id=(TextView) itemView.findViewById(R.id.cardPacienteId);
+            cv = (CardView)itemView.findViewById(R.id.cvTratamientoMedico);
+            medicamento = (TextView)itemView.findViewById(R.id.cardTratamientoMedicoMedicamento);
+            fechaFin=(TextView) itemView.findViewById(R.id.cardTratamientoMedicoFechaFin);
+            tomas=(TextView) itemView.findViewById(R.id.cardTratamientoMedicoTomas);
+            id=(TextView) itemView.findViewById(R.id.cardTratamientoMedicoId);
         }
     }
     @Override
     public int getItemCount() {
-        return pacientes.size();
+        return tratamientos.size();
     }
     @Override
     public PersonViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -51,10 +52,11 @@ public class TratamientoMedicoAdapter extends RecyclerView.Adapter<TratamientoMe
     }
     @Override
     public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
-        String paciente=pacientes.get(i).getNombre()+" "+pacientes.get(i).getApellidos();
-        personViewHolder.paciente.setText(paciente);
-        personViewHolder.telefono.setText(pacientes.get(i).getTelefono());
-        personViewHolder.id.setText(String.valueOf(pacientes.get(i).getIdUsuario()));
+        personViewHolder.medicamento.setText(tratamientos.get(i).getMedicamento().getNombre());
+        String tomas=tratamientos.get(i).getNumDosisDia()+" cada " +tratamientos.get(i).getPerioicidad()+" horas";
+        personViewHolder.tomas.setText(tomas);
+        personViewHolder.fechaFin.setText(tratamientos.get(i).getFechaFinTratamiento().toString());
+        personViewHolder.id.setText(String.valueOf(i));
         personViewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

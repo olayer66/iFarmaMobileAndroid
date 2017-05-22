@@ -33,7 +33,7 @@
             android:textColor="?attr/colorControlNormal" />
 
         <TextView
-            android:id="@+id/cardCorreoId"
+            android:id="@+id/cardTratamientoMedicoId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone" />
@@ -45,7 +45,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/cardTratamientoMedicoTomas"
             android:contentDescription="@string/eliminar_tratamiento"
-            app:srcCompat="@android:drawable/ic_delete" />
+            android:src="@android:drawable/ic_delete" />
 
         <TextView
             android:id="@+id/cardTratamientoMedicoTratLabel"

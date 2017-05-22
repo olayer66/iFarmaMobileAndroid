@@ -32,7 +32,7 @@ public class PacienteAdapter  extends RecyclerView.Adapter<PacienteAdapter.Perso
             cv = (CardView)itemView.findViewById(R.id.cvPaciente);
             paciente = (TextView)itemView.findViewById(R.id.cardPacienteNombre);
             telefono=(TextView) itemView.findViewById(R.id.cardPacienteTelefono);
-            tratamiento=(TextView) itemView.findViewById(R.id.cardTratamientoMedicoTomas);
+            tratamiento=(ImageView) itemView.findViewById(R.id.cardPacienteTratamiento);
             id=(TextView) itemView.findViewById(R.id.cardPacienteId);
         }
     }

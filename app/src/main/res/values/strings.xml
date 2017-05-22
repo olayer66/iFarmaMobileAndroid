@@ -24,4 +24,7 @@
     <string name="remitente_correo">Remitente: </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tratamiento">Tratamiento:</string>
+    <string name="fecha_fin">Finalización:</string>
+    <string name="eliminar_tratamiento">Eliminar tratamiento</string>
 </resources>

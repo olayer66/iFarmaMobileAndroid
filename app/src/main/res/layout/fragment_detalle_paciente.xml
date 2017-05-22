@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/shape"
-        android:backgroundTint="?android:attr/colorButtonNormal">
+        android:backgroundTint="@color/fondo_base">
 
         <TextView
             android:id="@+id/detallePacienteTelefono"

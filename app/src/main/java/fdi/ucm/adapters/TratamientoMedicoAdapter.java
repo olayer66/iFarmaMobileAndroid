@@ -1,4 +1,5 @@
 package fdi.ucm.adapters;
+
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,30 +10,32 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import fdi.ucm.ifarmamobile.R;
-import fdi.ucm.model.Usuario;
+import fdi.ucm.model.Tratamiento;
 
+/**
+ * Created by joset on 22/05/2017.
+ */
 
-public class PacienteAdapter  extends RecyclerView.Adapter<PacienteAdapter.PersonViewHolder>{
+public class TratamientoMedicoAdapter extends RecyclerView.Adapter<TratamientoMedicoAdapter.PersonViewHolder>{
 
-    private List<Usuario> pacientes;
+    private List<Tratamiento> tratamientos;
 
-    public PacienteAdapter(List<Usuario> pacientes){
-        this.pacientes = pacientes;
+    public TratamientoMedicoAdapter(List<Tratamiento> tratamientos){
+        this.tratamientos = tratamientos;
 
     }
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
-        TextView paciente;
-        TextView telefono;
-        ImageView tratamiento;
+        TextView medicamento;
+        TextView tratamiento;
+        TextView fechaFin;
         TextView id;
         PersonViewHolder(View itemView) {
             super(itemView);
             cv = (CardView)itemView.findViewById(R.id.cvPaciente);
             paciente = (TextView)itemView.findViewById(R.id.cardPacienteNombre);
             telefono=(TextView) itemView.findViewById(R.id.cardPacienteTelefono);
-            tratamiento=(TextView) itemView.findViewById(R.id.cardTratamientoMedicoTomas);
+            tratamiento=(TextView) itemView.findViewById(R.id.);
             id=(TextView) itemView.findViewById(R.id.cardPacienteId);
         }
     }

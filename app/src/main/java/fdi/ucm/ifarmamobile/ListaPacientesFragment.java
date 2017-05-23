@@ -36,6 +36,7 @@ public class ListaPacientesFragment extends Fragment {
         Activity activity=getActivity();
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rvPacientes);
         mLayoutManager = new LinearLayoutManager(activity);
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new PacienteAdapter(pacientes,activity);
         mRecyclerView.setAdapter(mAdapter);
         return rootView;
@@ -43,6 +44,7 @@ public class ListaPacientesFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Activity activity=getActivity();
     }
     //Carga con volley los mensajes desde la BBDD
     private void traerMensajes()

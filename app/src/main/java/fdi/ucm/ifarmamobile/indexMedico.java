@@ -13,6 +13,7 @@ public class indexMedico extends AppCompatActivity {
     ListaPacientesFragment fragListaPacientes;
     listaCorreoFragment fragListaCorreo;
     DetalleCorreoFragment fragDetalleCorreo;
+    FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +24,7 @@ public class indexMedico extends AppCompatActivity {
         fragListaCorreo = new listaCorreoFragment();
         //fragDetalleCorreo=new DetalleCorreoFragment();
         if(savedInstanceState==null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction = getSupportFragmentManager().beginTransaction();
             transaction.add(R.id.FragmentPrincipal, fragListaPacientes);
             transaction.addToBackStack(null);
             transaction.commit();
@@ -52,19 +53,22 @@ public class indexMedico extends AppCompatActivity {
     }
     private void cargarListaPacientes()
     {
-        /*android.app.Fragment fragmento = getFragmentManager().findFragmentByTag("listaPacientes");
+        android.app.Fragment fragmento = getFragmentManager().findFragmentByTag("listaPacientes");
         if(fragmento==null || !fragmento.isVisible()) {
             transaction = getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.fragment_slide_right_exit,R.anim.fragment_slide_left_enter);
             transaction.replace(R.id.FragmentPrincipal, fragListaPacientes);
             transaction.commit();
-        }*/
+        }
     }
     private void cargarMensajes()
     {
-        /*
+        android.app.Fragment fragmento = getFragmentManager().findFragmentByTag("listaCorreo");
+        if(fragmento==null || !fragmento.isVisible()) {
             transaction = getSupportFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.fragment_slide_right_exit, R.anim.fragment_slide_left_enter);
             transaction.replace(R.id.FragmentPrincipal, fragListaCorreo);
             transaction.commit();
-            */
+        }
     }
 }

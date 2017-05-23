@@ -1,5 +1,6 @@
 package fdi.ucm.ifarmamobile;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class listaCorreoFragment extends Fragment {
     private static final String TAG = "listaCorreo";
     protected RecyclerView mRecyclerView;
     protected MensajeAdapter mAdapter;
+    protected RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,10 @@ public class listaCorreoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_lista_correo, container, false);
         rootView.setTag(TAG);
+        Activity activity=getActivity();
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rvCorreo);
-
+        mLayoutManager = new LinearLayoutManager(activity);
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new MensajeAdapter(mensajes);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);

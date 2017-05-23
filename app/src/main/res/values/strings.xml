@@ -27,4 +27,5 @@
     <string name="tratamiento">Tratamiento:</string>
     <string name="fecha_fin">Finalización:</string>
     <string name="eliminar_tratamiento">Eliminar tratamiento</string>
+    <string name="en_tratamiento">En tratamiento</string>
 </resources>

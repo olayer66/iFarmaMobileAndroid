@@ -28,6 +28,7 @@ public class listaCorreoFragment extends Fragment {
     protected RecyclerView mRecyclerView;
     protected MensajeAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
+    private OnCorreoSelected mListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,8 +50,16 @@ public class listaCorreoFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         return rootView;
     }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
-
+        if (context instanceof OnCorreoSelected) {
+            mListener = (OnCorreoSelected) context;
+        } else {
+            throw new ClassCastException(context.toString() + " must implement OnCorreoSelected.");
+        }
+    }
     //Carga con volley los mensajes desde la BBDD
     private void traerMensajes()
     {

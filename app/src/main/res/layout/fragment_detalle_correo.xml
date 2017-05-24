@@ -1,92 +1,116 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fdi.ucm.ifarmamobile.DetalleCorreoFragment"
-    android:background="@color/colorPrimary">
-
-
+    android:backgroundTint="@color/fondo_fragment">
     <RelativeLayout
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:context="fdi.ucm.ifarmamobile.DetalleCorreoFragment"
+        android:padding="8dp"
         android:background="@drawable/shape"
         android:backgroundTint="@color/fondo_base">
-
-        <TextView
-            android:id="@+id/DetalleCorreoAsunto"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:background="@color/fondo_base"
+            android:id="@+id/relativeLayout2">
+
+            <TextView
+                android:id="@+id/DetalleCorreoAsunto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:ems="10"
+                android:text="Asunto"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/DetalleCorreoFechaLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/DetalleCorreoRemitenteLabel"
+                android:layout_marginTop="8dp"
+                android:text="@string/fecha_correo"
+                android:textColor="@android:color/background_dark"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/DetalleCorreoRemitenteLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/DetalleCorreoAsunto"
+                android:layout_marginTop="8dp"
+                android:text="@string/remitente_correo"
+                android:textColor="@android:color/background_dark"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/DetalleCorreoFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/DetalleCorreoFechaLabel"
+                android:layout_alignBottom="@+id/DetalleCorreoFechaLabel"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@+id/DetalleCorreoFechaLabel"
+                android:text="29/10/1192"
+                android:textSize="18sp" />
+            <TextView
+                android:id="@+id/DetalleCorreoRemitente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/DetalleCorreoRemitenteLabel"
+                android:layout_alignBottom="@+id/DetalleCorreoRemitenteLabel"
+                android:layout_marginStart="9dp"
+                android:layout_toEndOf="@+id/DetalleCorreoRemitenteLabel"
+                android:text="Paco Penas Gordas"
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/fondo_base"
+            android:layout_above="@+id/relativeLayout"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:ems="10"
-            android:text="Asunto"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:layout_below="@+id/relativeLayout2">
 
-        <TextView
-            android:id="@+id/DetalleCorreoFechaLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/DetalleCorreoMensaje"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/shape"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="15dp"
+                android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                android:textSize="18sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
+            android:background="@color/fondo_base"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/DetalleCorreoRemitenteLabel"
-            android:text="@string/fecha_correo"
-            android:textColor="@android:color/background_dark"
-            android:textSize="18sp" />
+            android:id="@+id/relativeLayout">
 
-        <TextView
-            android:id="@+id/DetalleCorreoRemitenteLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/DetalleCorreoAsunto"
-            android:text="@string/remitente_correo"
-            android:textColor="@android:color/background_dark"
-            android:textSize="18sp" />
+            <Button
+                android:id="@+id/DetalleCorreoBotonResp"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape"
+                android:backgroundTint="@color/colorPrimary"
+                android:text="@string/boton_responder"
+                android:textColor="@color/cardview_light_background"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
 
-        <TextView
-            android:id="@+id/DetalleCorreoFecha"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/DetalleCorreoRemitenteLabel"
-            android:layout_toEndOf="@+id/DetalleCorreoFechaLabel"
-            android:text="29/10/1192"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/DetalleCorreoRemitente"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/DetalleCorreoAsunto"
-            android:layout_toEndOf="@+id/DetalleCorreoRemitenteLabel"
-            android:text="Paco Penas Gordas"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/DetalleCorreoMensaje"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/DetalleCorreoFechaLabel"
-            android:background="@drawable/shape"
-            android:gravity="left"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/DetalleCorreoBotonResp"
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/DetalleCorreoMensaje"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/DetalleCorreoAsunto"
-            android:background="@drawable/shape"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="@string/boton_responder"
-            android:textColor="@color/cardview_light_background" />
+        </RelativeLayout>
 
     </RelativeLayout>
-
-</FrameLayout>
+</RelativeLayout>

@@ -61,18 +61,6 @@ public class listaCorreoFragment extends Fragment {
         mensajes.add(new Mensaje(Long.parseLong("4"),"prueba4",rem,emi,"esto es una prueba de mensaje",false,"27/02/2017"));
         mensajes.add(new Mensaje(Long.parseLong("1"),"prueba1",rem,emi,"esto es una prueba de mensaje",true,"20/10/2017"));
         mensajes.add(new Mensaje(Long.parseLong("2"),"prueba2",rem,emi,"esto es una prueba de mensaje",true,"20/09/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("3"),"prueba3",rem,emi,"esto es una prueba de mensaje",false,"19/10/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("4"),"prueba4",rem,emi,"esto es una prueba de mensaje",false,"27/02/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("1"),"prueba1",rem,emi,"esto es una prueba de mensaje",true,"20/10/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("2"),"prueba2",rem,emi,"esto es una prueba de mensaje",true,"20/09/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("3"),"prueba3",rem,emi,"esto es una prueba de mensaje",false,"19/10/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("4"),"prueba4",rem,emi,"esto es una prueba de mensaje",false,"27/02/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("1"),"prueba1",rem,emi,"esto es una prueba de mensaje",true,"20/10/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("2"),"prueba2",rem,emi,"esto es una prueba de mensaje",true,"20/09/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("3"),"prueba3",rem,emi,"esto es una prueba de mensaje",false,"19/10/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("4"),"prueba4",rem,emi,"esto es una prueba de mensaje",false,"27/02/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("1"),"prueba1",rem,emi,"esto es una prueba de mensaje",true,"20/10/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("2"),"prueba2",rem,emi,"esto es una prueba de mensaje",true,"20/09/2017"));
     }
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

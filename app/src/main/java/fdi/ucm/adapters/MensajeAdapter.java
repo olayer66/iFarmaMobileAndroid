@@ -18,6 +18,7 @@ import fdi.ucm.model.Mensaje;
 public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonViewHolder>{
 
     private List<Mensaje> mensajes;
+    private OnCorreoSelected mListener;
 
     public MensajeAdapter(List<Mensaje> mensajes){
         this.mensajes = mensajes;
@@ -51,7 +52,7 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
         return pvh;
     }
     @Override
-    public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
+    public void onBindViewHolder(PersonViewHolder personViewHolder,final int i) {
         personViewHolder.asunto.setText(mensajes.get(i).getAsunto());
         String remitente=mensajes.get(i).getRemitente().getNombre()+" "+mensajes.get(i).getRemitente().getApellidos();
         personViewHolder.remitente.setText(remitente);
@@ -60,12 +61,16 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
         personViewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
+                mListener=(OnCorreoSelected)v.getContext();
+                String remitente=mensajes.get(i).getRemitente().getNombre()+" "+mensajes.get(i).getRemitente().getApellidos();
+                mListener.OnCorreoSelected(mensajes.get(i).getAsunto(),remitente,mensajes.get(i).getFecha(),mensajes.get(i).getMensaje());            }
         });
         if(!mensajes.get(i).getleido())
         {
             personViewHolder.leido.setVisibility(View.VISIBLE);
         }
+    }
+    public interface OnCorreoSelected {
+        void OnCorreoSelected(String asunto, String remitente, String fecha, String mensaje);
     }
 }

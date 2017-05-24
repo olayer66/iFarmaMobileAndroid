@@ -28,7 +28,7 @@ public class listaCorreoFragment extends Fragment {
     protected RecyclerView mRecyclerView;
     protected MensajeAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
-    private OnCorreoSelected mListener;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,16 +50,6 @@ public class listaCorreoFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         return rootView;
     }
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if (context instanceof OnCorreoSelected) {
-            mListener = (OnCorreoSelected) context;
-        } else {
-            throw new ClassCastException(context.toString() + " must implement OnCorreoSelected.");
-        }
-    }
     //Carga con volley los mensajes desde la BBDD
     private void traerMensajes()
     {
@@ -71,12 +61,21 @@ public class listaCorreoFragment extends Fragment {
         mensajes.add(new Mensaje(Long.parseLong("4"),"prueba4",rem,emi,"esto es una prueba de mensaje",false,"27/02/2017"));
         mensajes.add(new Mensaje(Long.parseLong("1"),"prueba1",rem,emi,"esto es una prueba de mensaje",true,"20/10/2017"));
         mensajes.add(new Mensaje(Long.parseLong("2"),"prueba2",rem,emi,"esto es una prueba de mensaje",true,"20/09/2017"));
+        mensajes.add(new Mensaje(Long.parseLong("3"),"prueba3",rem,emi,"esto es una prueba de mensaje",false,"19/10/2017"));
+        mensajes.add(new Mensaje(Long.parseLong("4"),"prueba4",rem,emi,"esto es una prueba de mensaje",false,"27/02/2017"));
+        mensajes.add(new Mensaje(Long.parseLong("1"),"prueba1",rem,emi,"esto es una prueba de mensaje",true,"20/10/2017"));
+        mensajes.add(new Mensaje(Long.parseLong("2"),"prueba2",rem,emi,"esto es una prueba de mensaje",true,"20/09/2017"));
+        mensajes.add(new Mensaje(Long.parseLong("3"),"prueba3",rem,emi,"esto es una prueba de mensaje",false,"19/10/2017"));
+        mensajes.add(new Mensaje(Long.parseLong("4"),"prueba4",rem,emi,"esto es una prueba de mensaje",false,"27/02/2017"));
+        mensajes.add(new Mensaje(Long.parseLong("1"),"prueba1",rem,emi,"esto es una prueba de mensaje",true,"20/10/2017"));
+        mensajes.add(new Mensaje(Long.parseLong("2"),"prueba2",rem,emi,"esto es una prueba de mensaje",true,"20/09/2017"));
+        mensajes.add(new Mensaje(Long.parseLong("3"),"prueba3",rem,emi,"esto es una prueba de mensaje",false,"19/10/2017"));
+        mensajes.add(new Mensaje(Long.parseLong("4"),"prueba4",rem,emi,"esto es una prueba de mensaje",false,"27/02/2017"));
+        mensajes.add(new Mensaje(Long.parseLong("1"),"prueba1",rem,emi,"esto es una prueba de mensaje",true,"20/10/2017"));
+        mensajes.add(new Mensaje(Long.parseLong("2"),"prueba2",rem,emi,"esto es una prueba de mensaje",true,"20/09/2017"));
     }
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-    public interface OnCorreoSelected {
-        void OnCorreoSelected(String asunto, String remitente, String fecha, String mensaje);
     }
 }

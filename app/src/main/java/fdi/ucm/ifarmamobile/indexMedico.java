@@ -7,9 +7,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import fdi.ucm.adapters.MensajeAdapter;
+
 
 public class indexMedico extends AppCompatActivity
-        implements listaCorreoFragment.OnCorreoSelected {
+        implements MensajeAdapter.OnCorreoSelected {
 
     private ListaPacientesFragment fragListaPacientes;
     private listaCorreoFragment fragListaCorreo;

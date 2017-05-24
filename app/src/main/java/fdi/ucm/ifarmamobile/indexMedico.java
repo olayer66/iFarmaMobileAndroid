@@ -8,12 +8,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class indexMedico extends AppCompatActivity {
+public class indexMedico extends AppCompatActivity
+        implements listaCorreoFragment.OnCorreoSelected {
 
-    ListaPacientesFragment fragListaPacientes;
-    listaCorreoFragment fragListaCorreo;
-    DetalleCorreoFragment fragDetalleCorreo;
-    FragmentTransaction transaction;
+    private ListaPacientesFragment fragListaPacientes;
+    private listaCorreoFragment fragListaCorreo;
+    private DetalleCorreoFragment fragDetalleCorreo;
+    private FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +57,11 @@ public class indexMedico extends AppCompatActivity {
         android.app.Fragment fragmento = getFragmentManager().findFragmentByTag("listaPacientes");
         if(fragmento==null || !fragmento.isVisible()) {
             transaction = getSupportFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(R.anim.fragment_slide_right_exit,R.anim.fragment_slide_left_enter);
+            /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                    R.anim.fragment_slide_left_exit,
+                    R.anim.fragment_slide_right_enter,
+                    R.anim.fragment_slide_right_exit);*/
+            transaction.addToBackStack(null);
             transaction.replace(R.id.FragmentPrincipal, fragListaPacientes);
             transaction.commit();
         }
@@ -66,9 +71,25 @@ public class indexMedico extends AppCompatActivity {
         android.app.Fragment fragmento = getFragmentManager().findFragmentByTag("listaCorreo");
         if(fragmento==null || !fragmento.isVisible()) {
             transaction = getSupportFragmentManager().beginTransaction();
-            transaction.setCustomAnimations(R.anim.fragment_slide_right_exit, R.anim.fragment_slide_left_enter);
+            /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                    R.anim.fragment_slide_left_exit,
+                    R.anim.fragment_slide_right_enter,
+                    R.anim.fragment_slide_right_exit);*/
+            transaction.addToBackStack(null);
             transaction.replace(R.id.FragmentPrincipal, fragListaCorreo);
             transaction.commit();
         }
+    }
+    @Override
+    public void OnCorreoSelected(String asunto, String remitente, String fecha, String mensaje) {
+        fragDetalleCorreo= DetalleCorreoFragment.newInstance(asunto,remitente,fecha,mensaje);
+        transaction = getSupportFragmentManager().beginTransaction();
+            /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                    R.anim.fragment_slide_left_exit,
+                    R.anim.fragment_slide_right_enter,
+                    R.anim.fragment_slide_right_exit);*/
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.FragmentPrincipal, fragDetalleCorreo);
+        transaction.commit();
     }
 }

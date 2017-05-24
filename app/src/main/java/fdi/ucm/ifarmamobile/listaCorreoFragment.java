@@ -67,4 +67,7 @@ public class listaCorreoFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+    public interface OnCorreoSelected {
+        void OnCorreoSelected(String asunto, String remitente, String fecha, String mensaje);
+    }
 }

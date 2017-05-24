@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 /**
@@ -20,12 +22,15 @@ import android.view.ViewGroup;
 public class DetalleCorreoFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
+    private static final String ARG_ASUNTO = "asunto";
+    private static final String ARG_REMITENTE = "remitente";
+    private static final String ARG_FECHA = "fecha";
+    private static final String ARG_MENSAJE = "mensaje";
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String asunto;
+    private String remitente;
+    private String fecha;
+    private String mensaje;
 
     private OnFragmentInteractionListener mListener;
 
@@ -37,16 +42,20 @@ public class DetalleCorreoFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param asunto Parameter 1.
+     * @param remitente Parameter 2.
+     * @param fecha Parameter 3.
+     * @param mensaje Parameter 4.
      * @return A new instance of fragment DetalleCorreoFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static DetalleCorreoFragment newInstance(String param1, String param2) {
+    public static DetalleCorreoFragment newInstance(String asunto, String remitente, String fecha, String mensaje) {
         DetalleCorreoFragment fragment = new DetalleCorreoFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_ASUNTO, asunto);
+        args.putString(ARG_REMITENTE, remitente);
+        args.putString(ARG_FECHA,fecha);
+        args.putString(ARG_MENSAJE,mensaje);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,16 +64,27 @@ public class DetalleCorreoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            asunto = getArguments().getString(ARG_ASUNTO);
+            remitente = getArguments().getString(ARG_REMITENTE);
+            fecha=getArguments().getString(ARG_FECHA);
+            mensaje=getArguments().getString(ARG_MENSAJE);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detalle_correo, container, false);
+        final View view = inflater.inflate(R.layout.fragment_detalle_correo, container, false);
+        final TextView asunto = (TextView) view.findViewById(R.id.DetalleCorreoAsunto);
+        final TextView remitente = (TextView) view.findViewById(R.id.DetalleCorreoRemitente);
+        final TextView fecha = (TextView) view.findViewById(R.id.DetalleCorreoFecha);
+        final TextView mensaje = (TextView) view.findViewById(R.id.DetalleCorreoMensaje);
+
+        final Bundle args = getArguments();
+        asunto.setText(args.getString(ARG_ASUNTO));
+        remitente.setText(args.getString(ARG_REMITENTE));
+        fecha.setText(args.getString(ARG_FECHA));
+        mensaje.setText(args.getString(ARG_MENSAJE));
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

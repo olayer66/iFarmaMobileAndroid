@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fdi.ucm.ifarmamobile.R;
@@ -19,9 +20,9 @@ import fdi.ucm.model.Tratamiento;
 
 public class TratamientoMedicoAdapter extends RecyclerView.Adapter<TratamientoMedicoAdapter.PersonViewHolder>{
 
-    private List<Tratamiento> tratamientos;
+    private ArrayList<Tratamiento> tratamientos;
 
-    public TratamientoMedicoAdapter(List<Tratamiento> tratamientos){
+    public TratamientoMedicoAdapter(ArrayList<Tratamiento> tratamientos){
         this.tratamientos = tratamientos;
 
     }

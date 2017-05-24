@@ -1,9 +1,12 @@
 package fdi.ucm.ifarmamobile;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,143 +27,74 @@ import fdi.ucm.model.Tratamiento;
 import fdi.ucm.model.Usuario;
 
 import static android.R.attr.id;
+import static android.R.attr.tabStripEnabled;
+import static fdi.ucm.ifarmamobile.R.string.correo;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DetallePacienteFragment extends Fragment {
-    private List<Tratamiento> tratamientos;
-    private Usuario datosPaciente;
-    private static final String TAG = "detallePaciente";
-    private static final String KEY_LAYOUT_MANAGER = "layoutManager";
-    private static final int SPAN_COUNT = 2;
-    private enum LayoutManagerType {
-        GRID_LAYOUT_MANAGER,
-        LINEAR_LAYOUT_MANAGER
-    }
-    private OnFragmentInteractionListener mListener;
-    protected LayoutManagerType mCurrentLayoutManagerType;
     protected RecyclerView mRecyclerView;
     protected TratamientoMedicoAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
+    private static final String TAG = "detallePaciente";
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_NOMBRE= "nombre";
+    private static final String ARG_TELEFONO = "telefono";
+    private static final String ARG_EMAIL = "email";
+    private static final String ARG_TRATAMIENTO = "tratamientos";
 
-    private TextView nombre;
-    private TextView telefono;
-    private TextView correo;
+    // TODO: Rename and change types of parameters
+    private String nombre;
+    private String telefono;
+    private String email;
+    private ArrayList<Tratamiento> tratamientos;
 
+    public static DetalleCorreoFragment newInstance(String nombre, String email, String telefono, ArrayList<Tratamiento> tratamientos) {
+        DetalleCorreoFragment fragment = new DetalleCorreoFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_NOMBRE, nombre);
+        args.putString(ARG_EMAIL, email);
+        args.putString(ARG_TELEFONO,telefono);
+        args.putParcelableArrayList(ARG_TRATAMIENTO,tratamientos);
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Initialize dataset, this data would usually come from a local content provider or
-        // remote server.
-        traerDatos();
+        if (getArguments() != null) {
+            nombre = getArguments().getString(ARG_NOMBRE);
+            telefono = getArguments().getString(ARG_TELEFONO);
+            email=getArguments().getString(ARG_EMAIL);
+            tratamientos=getArguments().getParcelable(ARG_TRATAMIENTO);
+        }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_detalle_correo, container, false);
+        //Datos del paciente
+        final TextView nombre = (TextView) view.findViewById(R.id.detallePacienteNombre);
+        final TextView telefono = (TextView) view.findViewById(R.id.detallePacienteTelefono);
+        final TextView email = (TextView) view.findViewById(R.id.detallePacienteCorreo);
 
-        View rootView = inflater.inflate(R.layout.fragment_detalle_paciente, container, false);
-
-        nombre=(TextView) rootView.findViewById(R.id.detallePacienteNombre);
-        correo=(TextView) rootView.findViewById(R.id.detallePacienteCorreo);
-        telefono=(TextView) rootView.findViewById(R.id.detallePacienteTelefono);
-        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rvTratamientoMedico);
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
-
-        //Añadimos el TAG de la vista
-        rootView.setTag(TAG);
-        //Cargamos los datos del paciente en la vista
-        cargarDatosPaciente();
-
-        if (savedInstanceState != null) {
-            // Restore saved layout manager type.
-            mCurrentLayoutManagerType = (LayoutManagerType) savedInstanceState
-                    .getSerializable(KEY_LAYOUT_MANAGER);
-        }
-        setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
-
-        mAdapter = new TratamientoMedicoAdapter(tratamientos);
+        //Cargamos la vista
+        final Bundle args = getArguments();
+        nombre.setText(args.getString(ARG_NOMBRE));
+        telefono.setText(args.getString(ARG_TELEFONO));
+        email.setText(args.getString(ARG_EMAIL));
+        //cardView del tratamiento
+        Activity activity=getActivity();
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.rvTratamientoMedico);
+        mLayoutManager = new LinearLayoutManager(activity);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mAdapter = new TratamientoMedicoAdapter(args.getParcelable(ARG_TRATAMIENTO));
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
-        return rootView;
-    }
-    /**
-     * Set RecyclerView's LayoutManager to the one given.
-     *
-     * @param layoutManagerType Type of layout manager to switch to.
-     */
-    public void setRecyclerViewLayoutManager(LayoutManagerType layoutManagerType) {
-        int scrollPosition = 0;
 
-        // If a layout manager has already been set, get current scroll position.
-        if (mRecyclerView.getLayoutManager() != null) {
-            scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager())
-                    .findFirstCompletelyVisibleItemPosition();
-        }
-
-        switch (layoutManagerType) {
-            case GRID_LAYOUT_MANAGER:
-                mLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT);
-                mCurrentLayoutManagerType =LayoutManagerType.GRID_LAYOUT_MANAGER;
-                break;
-            case LINEAR_LAYOUT_MANAGER:
-                mLayoutManager = new LinearLayoutManager(getActivity());
-                mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
-                break;
-            default:
-                mLayoutManager = new LinearLayoutManager(getActivity());
-                mCurrentLayoutManagerType = LayoutManagerType.LINEAR_LAYOUT_MANAGER;
-        }
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.scrollToPosition(scrollPosition);
-    }
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        // Save currently selected layout manager.
-        savedInstanceState.putSerializable(KEY_LAYOUT_MANAGER, mCurrentLayoutManagerType);
-        super.onSaveInstanceState(savedInstanceState);
-    }
-    //Carga con volley los mensajes desde la BBDD
-    private void traerDatos()
-    {
-        tratamientos= new ArrayList<>();
-        Long id=Long.parseLong("1");
-        Medicamento med= new Medicamento(id,"Lexatin","Caga rapido, caga fuerte","Cinfa",Double.parseDouble("2"));
-        Date fecha= new Date();
-
-        datosPaciente=new Usuario(id,"paco","perez","234324554","paco@algo.com");
-        tratamientos.add(new Tratamiento(Long.parseLong("1"),med,fecha,0,8,1));
-        tratamientos.add(new Tratamiento(Long.parseLong("2"),med,fecha,0,12,1));
-        tratamientos.add(new Tratamiento(Long.parseLong("3"),med,fecha,0,24,2));
-        tratamientos.add(new Tratamiento(Long.parseLong("4"),med,fecha,0,6,1));
-
-    }
-    private void cargarDatosPaciente()
-    {
-        nombre.setText(datosPaciente.getApellidos()+","+datosPaciente.getNombre());
-        telefono.setText(datosPaciente.getTelefono());
-        correo.setText(datosPaciente.getTelefono());
-    }
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        return view;
     }
 }

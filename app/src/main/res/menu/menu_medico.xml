@@ -4,9 +4,9 @@
 
     <item
         android:id="@+id/agendaPac"
-        android:icon="@android:drawable/ic_menu_agenda"
-        app:showAsAction="ifRoom"
-        android:title="@string/agenda" />
+        android:icon="@mipmap/ic_pacientes"
+        android:title="@string/agenda"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/correoMed"
         android:icon="@android:drawable/ic_dialog_email"

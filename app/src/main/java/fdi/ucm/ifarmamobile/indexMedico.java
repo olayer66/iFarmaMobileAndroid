@@ -7,15 +7,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import fdi.ucm.adapters.MensajeAdapter;
+import fdi.ucm.adapters.PacienteAdapter;
+import fdi.ucm.model.Tratamiento;
 
 
 public class indexMedico extends AppCompatActivity
-        implements MensajeAdapter.OnCorreoSelected {
+        implements MensajeAdapter.OnCorreoSelected
+                  ,PacienteAdapter.OnPacienteSelected {
 
     private ListaPacientesFragment fragListaPacientes;
     private listaCorreoFragment fragListaCorreo;
     private DetalleCorreoFragment fragDetalleCorreo;
+    private DetallePacienteFragment fragDetallePaciente;
     private FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,5 +99,10 @@ public class indexMedico extends AppCompatActivity
         transaction.addToBackStack(null);
         transaction.replace(R.id.FragmentPrincipal, fragDetalleCorreo);
         transaction.commit();
+    }
+    @Override
+    public void OnPacienteSelected(String nombre, String telefono, String email, ArrayList<Tratamiento> tratamientos)
+    {
+        fragDetallePaciente= DetallePacienteFragment.newInstance(nombre,email,telefono,tratamientos);
     }
 }

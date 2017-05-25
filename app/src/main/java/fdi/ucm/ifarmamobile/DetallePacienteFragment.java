@@ -52,8 +52,8 @@ public class DetallePacienteFragment extends Fragment {
     private String email;
     private ArrayList<Tratamiento> tratamientos;
 
-    public static DetalleCorreoFragment newInstance(String nombre, String email, String telefono, ArrayList<Tratamiento> tratamientos) {
-        DetalleCorreoFragment fragment = new DetalleCorreoFragment();
+    public static DetallePacienteFragment newInstance(String nombre, String email, String telefono, ArrayList<Tratamiento> tratamientos) {
+        DetallePacienteFragment fragment = new DetallePacienteFragment();
         Bundle args = new Bundle();
         args.putString(ARG_NOMBRE, nombre);
         args.putString(ARG_EMAIL, email);
@@ -69,7 +69,7 @@ public class DetallePacienteFragment extends Fragment {
             nombre = getArguments().getString(ARG_NOMBRE);
             telefono = getArguments().getString(ARG_TELEFONO);
             email=getArguments().getString(ARG_EMAIL);
-            tratamientos=getArguments().getParcelable(ARG_TRATAMIENTO);
+            tratamientos=getArguments().getParcelableArrayList(ARG_TRATAMIENTO);
         }
     }
     @Override
@@ -91,7 +91,8 @@ public class DetallePacienteFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rvTratamientoMedico);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new TratamientoMedicoAdapter(args.getParcelable(ARG_TRATAMIENTO));
+        ArrayList<Tratamiento> tr=args.getParcelableArrayList(ARG_TRATAMIENTO);
+        mAdapter = new TratamientoMedicoAdapter(tr);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
 

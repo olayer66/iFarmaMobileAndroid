@@ -77,11 +77,10 @@ public class Tratamiento implements Parcelable {
     }
     public void readFromParcel(Parcel in) {
         id = in.readLong();
-        medicamento =(Medicamento) in.readParcelable(Medicamento.class.getClassLoader());
+        medicamento = in.readParcelable(Medicamento.class.getClassLoader());
         fechaFinTratamiento = in.readString();
         numDosis=in.readInt();
         perioicidad=in.readInt();
         numDosisDia=in.readInt();
-
     }
 }

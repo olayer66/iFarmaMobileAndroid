@@ -8,15 +8,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fdi.ucm.ifarmamobile.R;
+import fdi.ucm.model.Tratamiento;
 import fdi.ucm.model.Usuario;
 
 
 public class PacienteAdapter  extends RecyclerView.Adapter<PacienteAdapter.PersonViewHolder>{
 
     private List<Usuario> pacientes;
+    private OnPacienteSelected mListener;
     public PacienteAdapter(List<Usuario> pacientes,Context context){
         this.pacientes = pacientes;
     }
@@ -46,7 +49,7 @@ public class PacienteAdapter  extends RecyclerView.Adapter<PacienteAdapter.Perso
         return pvh;
     }
     @Override
-    public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
+    public void onBindViewHolder(PersonViewHolder personViewHolder, final int i) {
         String paciente=pacientes.get(i).getNombre()+" "+pacientes.get(i).getApellidos();
         personViewHolder.paciente.setText(paciente);
         personViewHolder.telefono.setText(pacientes.get(i).getTelefono());
@@ -54,8 +57,16 @@ public class PacienteAdapter  extends RecyclerView.Adapter<PacienteAdapter.Perso
         personViewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mListener=(OnPacienteSelected) v.getContext();
+                String paciente=pacientes.get(i).getNombre()+" "+pacientes.get(i).getApellidos();
+                /*mListener.OnPacienteSelected(paciente,
+                        pacientes.get(i).getTelefono(),
+                        pacientes.get(i).getEmail(),
+                        pacientes.get(i).get);*/
             }
         });
+    }
+    public interface OnPacienteSelected {
+        void OnPacienteSelected(String nombre, String telefono, String email, ArrayList<Tratamiento> tratamientos);
     }
 }

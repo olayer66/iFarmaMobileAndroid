@@ -15,10 +15,14 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 import fdi.ucm.adapters.PacienteAdapter;
+import fdi.ucm.model.Medicamento;
+import fdi.ucm.model.Medico;
+import fdi.ucm.model.Paciente;
+import fdi.ucm.model.Tratamiento;
 import fdi.ucm.model.Usuario;
 
 public class ListaPacientesFragment extends Fragment {
-    private List<Usuario> pacientes;
+    private List<Paciente> pacientes;
     private static final String TAG = "listaPacientes";
     protected RecyclerView mRecyclerView;
     protected PacienteAdapter mAdapter;
@@ -26,7 +30,7 @@ public class ListaPacientesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        traerMensajes();
+        traerPacientes();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,12 +51,25 @@ public class ListaPacientesFragment extends Fragment {
         Activity activity=getActivity();
     }
     //Carga con volley los mensajes desde la BBDD
-    private void traerMensajes()
+    private void traerPacientes()
     {
+        Medico medico= new Medico(Long.parseLong("1"),"Paco","Perez Andaluz","234324554","paco@algo.com","12/14/20004","C.S. Acacias");
+        ArrayList<Tratamiento> tratamientos= crearTratamiento();
+        ArrayList<Tratamiento> tratVacio= new ArrayList<>();
         pacientes = new ArrayList<>();
-        pacientes.add(new Usuario(Long.parseLong("1"),"Paco","Perez Andaluz","234324554","paco@algo.com"));
-        pacientes.add(new Usuario(Long.parseLong("2"),"Ana","Martinez Santos","91563887","ana@algo.com"));
-        pacientes.add(new Usuario(Long.parseLong("3"),"Jose Maria"," Gutierrez Sas","635874415","jose_maria@algo.com"));
-        pacientes.add(new Usuario(Long.parseLong("4"),"Arturo","Marino Quintana","689257442","arturito@algo.com"));
+        pacientes.add(new Paciente(Long.parseLong("1"),"Paco","Perez Andaluz","234324554","paco@algo.com","C/ falsa 123","Madrid","28045","Madrid","Madrid",medico,tratamientos));
+        pacientes.add(new Paciente(Long.parseLong("2"),"Ana","Sanchez Gorfo","234324554","ana@algo.com","C/ falsa 123","Madrid","28045","Madrid","Madrid",medico,tratVacio));
+        pacientes.add(new Paciente(Long.parseLong("3"),"Antonio","Perez Sanchez","234324554","antonio@algo.com","C/ falsa 123","Madrid","28045","Madrid","Madrid",medico,tratVacio));
+        pacientes.add(new Paciente(Long.parseLong("4"),"Juana","Perez Sanchez","234324554","juana@algo.com","C/ falsa 123","Madrid","28045","Madrid","Madrid",medico,tratamientos));
+    }
+    private ArrayList<Tratamiento> crearTratamiento()
+    {
+        ArrayList<Tratamiento> tratamientos=new ArrayList<>();
+        Medicamento medicamento= new Medicamento(Long.parseLong("1"),"Tranquinol","Duerme como un liron","TontoFarma",Double.parseDouble("13"));
+        tratamientos.add(new Tratamiento(Long.parseLong("1"),medicamento,"12/08/2017",0,8,2));
+        tratamientos.add(new Tratamiento(Long.parseLong("2"),medicamento,"12/08/2017",0,8,2));
+        tratamientos.add(new Tratamiento(Long.parseLong("3"),medicamento,"12/08/2017",0,8,2));
+        tratamientos.add(new Tratamiento(Long.parseLong("4"),medicamento,"12/08/2017",0,8,2));
+        return tratamientos;
     }
 }

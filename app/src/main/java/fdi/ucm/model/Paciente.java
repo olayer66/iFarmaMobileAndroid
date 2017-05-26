@@ -7,18 +7,29 @@ import java.util.ArrayList;
  */
 
 public class Paciente {
+    //estandar
     private long id;
+    private String nombre;
+    private String apellidos;
+    private String telefono;
+    private String email;
+    //Especificos
     private String direccion;
     private String ciudad;
     private String codPostal;
     private String provincia;
     private String comAutonoma;
-    private Usuario medico;
+    private Medico medico;
     private ArrayList<Tratamiento> tratamiento;
 
-    public void Paciente(long id,String direccion,String ciudad,String codPostal, String provincia,String comAutonoma,Usuario medico,ArrayList<Tratamiento> tratamiento)
+    public Paciente(long id,String nombre,String apellidos, String telefono, String email,String direccion,String ciudad,String codPostal, String provincia,String comAutonoma,Medico medico,ArrayList<Tratamiento> tratamiento)
     {
         this.id=id;
+        this.nombre=nombre;
+        this.apellidos=apellidos;
+        this.telefono=telefono;
+        this.email=email;
+
         this.direccion=direccion;
         this.ciudad=ciudad;
         this.codPostal=codPostal;
@@ -31,6 +42,19 @@ public class Paciente {
     public long getId() {
         return id;
     }
+    public String getEmail() {
+        return email;
+    }
+    public String getNombre() {
+        return nombre;
+    }
+    public String getApellidos() {
+        return apellidos;
+    }
+    public String getTelefono() {
+        return telefono;
+    }
+
     public String getDireccion() {
         return direccion;
     }
@@ -46,7 +70,7 @@ public class Paciente {
     public String getComAutonoma() {
         return comAutonoma;
     }
-    public Usuario getMedico() {
+    public Medico getMedico() {
         return medico;
     }
     public ArrayList<Tratamiento> getTratamiento() {

@@ -12,15 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fdi.ucm.ifarmamobile.R;
+import fdi.ucm.model.Paciente;
 import fdi.ucm.model.Tratamiento;
 import fdi.ucm.model.Usuario;
 
 
 public class PacienteAdapter  extends RecyclerView.Adapter<PacienteAdapter.PersonViewHolder>{
 
-    private List<Usuario> pacientes;
+    private List<Paciente> pacientes;
     private OnPacienteSelected mListener;
-    public PacienteAdapter(List<Usuario> pacientes,Context context){
+    public PacienteAdapter(List<Paciente> pacientes,Context context){
         this.pacientes = pacientes;
     }
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
@@ -53,16 +54,20 @@ public class PacienteAdapter  extends RecyclerView.Adapter<PacienteAdapter.Perso
         String paciente=pacientes.get(i).getNombre()+" "+pacientes.get(i).getApellidos();
         personViewHolder.paciente.setText(paciente);
         personViewHolder.telefono.setText(pacientes.get(i).getTelefono());
-        personViewHolder.id.setText(String.valueOf(pacientes.get(i).getIdUsuario()));
+        personViewHolder.id.setText(String.valueOf(pacientes.get(i).getId()));
+        if(pacientes.get(i).getTratamiento().size()==0)
+        {
+            personViewHolder.tratamiento.setVisibility(View.INVISIBLE);
+        }
         personViewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mListener=(OnPacienteSelected) v.getContext();
                 String paciente=pacientes.get(i).getNombre()+" "+pacientes.get(i).getApellidos();
-                /*mListener.OnPacienteSelected(paciente,
+                mListener.OnPacienteSelected(paciente,
                         pacientes.get(i).getTelefono(),
                         pacientes.get(i).getEmail(),
-                        pacientes.get(i).get);*/
+                        pacientes.get(i).getTratamiento());
             }
         });
     }

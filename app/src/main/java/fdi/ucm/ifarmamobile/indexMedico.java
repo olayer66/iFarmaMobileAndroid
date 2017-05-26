@@ -104,5 +104,13 @@ public class indexMedico extends AppCompatActivity
     public void OnPacienteSelected(String nombre, String telefono, String email, ArrayList<Tratamiento> tratamientos)
     {
         fragDetallePaciente= DetallePacienteFragment.newInstance(nombre,email,telefono,tratamientos);
+        transaction = getSupportFragmentManager().beginTransaction();
+            /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                    R.anim.fragment_slide_left_exit,
+                    R.anim.fragment_slide_right_enter,
+                    R.anim.fragment_slide_right_exit);*/
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.FragmentPrincipal, fragDetallePaciente);
+        transaction.commit();
     }
 }

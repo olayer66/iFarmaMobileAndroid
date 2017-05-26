@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/fondo_fragment"
     tools:context="fdi.ucm.ifarmamobile.DetallePacienteFragment">
 
     <!-- TODO: Update blank fragment layout -->

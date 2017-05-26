@@ -58,7 +58,7 @@ public class DetallePacienteFragment extends Fragment {
         args.putString(ARG_NOMBRE, nombre);
         args.putString(ARG_EMAIL, email);
         args.putString(ARG_TELEFONO,telefono);
-        args.putParcelableArrayList(ARG_TRATAMIENTO,tratamientos);
+        //args.putParcelableArrayList(ARG_TRATAMIENTO,tratamientos);
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,7 +75,7 @@ public class DetallePacienteFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_detalle_correo, container, false);
+        final View view = inflater.inflate(R.layout.fragment_detalle_paciente, container, false);
         //Datos del paciente
         final TextView nombre = (TextView) view.findViewById(R.id.detallePacienteNombre);
         final TextView telefono = (TextView) view.findViewById(R.id.detallePacienteTelefono);
@@ -92,6 +92,8 @@ public class DetallePacienteFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
         ArrayList<Tratamiento> tr=args.getParcelableArrayList(ARG_TRATAMIENTO);
+        if(tr==null)
+            tr= new ArrayList<>();
         mAdapter = new TratamientoMedicoAdapter(tr);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);

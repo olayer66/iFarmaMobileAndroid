@@ -40,12 +40,16 @@
 
         <ImageButton
             android:id="@+id/cardTratamientoMedicoBotonEliminar"
+            style="@android:style/Widget.DeviceDefault.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/cardTratamientoMedicoTomas"
+            android:background="@drawable/shape"
             android:contentDescription="@string/eliminar_tratamiento"
-            android:src="@android:drawable/ic_delete" />
+            android:src="@android:drawable/ic_delete"
+            android:layout_toEndOf="@+id/cardTratamientoMedicoTomas"
+            android:layout_alignBottom="@+id/cardTratamientoMedicoFinLabel" />
 
         <TextView
             android:id="@+id/cardTratamientoMedicoTratLabel"

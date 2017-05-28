@@ -28,13 +28,14 @@ import fdi.ucm.model.Usuario;
 
 import static android.R.attr.id;
 import static android.R.attr.tabStripEnabled;
+import static android.R.id.list;
 import static fdi.ucm.ifarmamobile.R.string.correo;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DetallePacienteFragment extends Fragment {
+public class DetallePacienteFragment extends Fragment  {
     protected RecyclerView mRecyclerView;
     protected TratamientoMedicoAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
@@ -50,6 +51,8 @@ public class DetallePacienteFragment extends Fragment {
     private String nombre;
     private String telefono;
     private String email;
+
+
     private ArrayList<Tratamiento> tratamientos;
 
     public static DetallePacienteFragment newInstance(String nombre, String email, String telefono, ArrayList<Tratamiento> tratamientos) {
@@ -58,7 +61,7 @@ public class DetallePacienteFragment extends Fragment {
         args.putString(ARG_NOMBRE, nombre);
         args.putString(ARG_EMAIL, email);
         args.putString(ARG_TELEFONO,telefono);
-        //args.putParcelableArrayList(ARG_TRATAMIENTO,tratamientos);
+        args.putParcelableArrayList(ARG_TRATAMIENTO,tratamientos);
         fragment.setArguments(args);
         return fragment;
     }
@@ -99,5 +102,17 @@ public class DetallePacienteFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
 
         return view;
+    }
+
+    public ArrayList<Tratamiento> getTratamientos() {
+        return tratamientos;
+    }
+
+    public void setTratamientos(ArrayList<Tratamiento> tratamientos) {
+        this.tratamientos = tratamientos;
+    }
+
+    public TratamientoMedicoAdapter getmAdapter() {
+        return mAdapter;
     }
 }

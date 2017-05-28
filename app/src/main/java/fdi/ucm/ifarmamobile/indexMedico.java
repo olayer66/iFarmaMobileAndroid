@@ -3,6 +3,7 @@ package fdi.ucm.ifarmamobile;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,12 +12,13 @@ import java.util.ArrayList;
 
 import fdi.ucm.adapters.MensajeAdapter;
 import fdi.ucm.adapters.PacienteAdapter;
+import fdi.ucm.adapters.TratamientoMedicoAdapter;
 import fdi.ucm.model.Tratamiento;
 
 
 public class indexMedico extends AppCompatActivity
         implements MensajeAdapter.OnCorreoSelected
-                  ,PacienteAdapter.OnPacienteSelected {
+                  ,PacienteAdapter.OnPacienteSelected{
 
     private ListaPacientesFragment fragListaPacientes;
     private listaCorreoFragment fragListaCorreo;

@@ -28,4 +28,11 @@
     <string name="fecha_fin">Finalización:</string>
     <string name="eliminar_tratamiento">Eliminar tratamiento</string>
     <string name="en_tratamiento">En tratamiento</string>
+    <string name="actualizar">Actualizar</string>
+    <string name="nuevo_mensaje">Nuevo mensaje</string>
+    <string name="asunto">Asunto:</string>
+    <string name="Int_asunto">Introduce el Asunto</string>
+    <string name="mensaje">Mensaje:</string>
+    <string name="pista_mensaje">Introduce el texto del mensaje</string>
+    <string name="enviar">Enviar</string>
 </resources>

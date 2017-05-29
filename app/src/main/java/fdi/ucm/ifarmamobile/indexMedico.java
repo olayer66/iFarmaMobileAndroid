@@ -1,5 +1,6 @@
 package fdi.ucm.ifarmamobile;
 
+import android.content.SharedPreferences;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,13 +14,15 @@ import java.util.ArrayList;
 import fdi.ucm.adapters.MensajeAdapter;
 import fdi.ucm.adapters.PacienteAdapter;
 import fdi.ucm.adapters.TratamientoMedicoAdapter;
+import fdi.ucm.model.Medico;
 import fdi.ucm.model.Tratamiento;
 
 
 public class indexMedico extends AppCompatActivity
         implements MensajeAdapter.OnCorreoSelected
                   ,PacienteAdapter.OnPacienteSelected{
-
+    SharedPreferences mPrefs;
+    Medico medico;
     private ListaPacientesFragment fragListaPacientes;
     private listaCorreoFragment fragListaCorreo;
     private DetalleCorreoFragment fragDetalleCorreo;
@@ -28,9 +31,12 @@ public class indexMedico extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPrefs = getPreferences(MODE_PRIVATE);
+        cargarMedico();
         setContentView(R.layout.activity_index_medico);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarMedico);
         setSupportActionBar(myToolbar);
+
         fragListaPacientes = new ListaPacientesFragment();
         fragListaCorreo = new listaCorreoFragment();
         //fragDetalleCorreo=new DetalleCorreoFragment();
@@ -62,6 +68,7 @@ public class indexMedico extends AppCompatActivity
                 return super.onOptionsItemSelected(item);
         }
     }
+    //Framents pricipales
     private void cargarListaPacientes()
     {
         android.app.Fragment fragmento = getFragmentManager().findFragmentByTag("listaPacientes");
@@ -90,6 +97,7 @@ public class indexMedico extends AppCompatActivity
             transaction.commit();
         }
     }
+    //Fragments de detalle supeditamos a los fragment principales
     @Override
     public void OnCorreoSelected(String asunto, String remitente, String fecha, String mensaje) {
         fragDetalleCorreo= DetalleCorreoFragment.newInstance(asunto,remitente,fecha,mensaje);
@@ -114,5 +122,18 @@ public class indexMedico extends AppCompatActivity
         transaction.addToBackStack(null);
         transaction.replace(R.id.FragmentPrincipal, fragDetallePaciente);
         transaction.commit();
+    }
+    //Extrae el medico de la BBDD
+    private void cargarMedico()
+    {
+        Long id;
+        //Peticion a la BBDD
+        //id= mPrefs.getLong("ID_USUARIO", Long.parseLong(null));
+
+
+        //Temporal
+        id=Long.parseLong("1");
+        medico= new Medico(id,"Lauro","Gordo Vago","635428976","lauro@algo.com","12/23/23343","C.S. Acacias");
+
     }
 }

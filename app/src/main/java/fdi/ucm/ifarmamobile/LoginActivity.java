@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -50,6 +51,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import fdi.ucm.model.Medico;
+import fdi.ucm.model.Paciente;
+
 import static android.Manifest.permission.READ_CONTACTS;
 import static fdi.ucm.ifarmamobile.R.id.usuario;
 
@@ -80,6 +84,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private SharedPreferences mPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +93,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Set up the login form.
         mUsuarioView = (AutoCompleteTextView) findViewById(usuario);
         populateAutoComplete();
-
+        mPrefs=getPreferences(MODE_PRIVATE);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -346,9 +351,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     (Request.Method.POST, url, entrada, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
+
                             // the response is already constructed as a JSONObject
+                            SharedPreferences.Editor editor = mPrefs.edit();
                             Boolean acceso=false;
                             String role="";
+                            Long id=Long.parseLong("0");
                             try {
                                 acceso=response.getBoolean("acceso");
                                 role=response.getString("role");
@@ -359,6 +367,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             {
                                 if(role.equals("PAC") || role.equals("MED"))
                                 {
+                                    try {
+                                        id=response.getLong("id");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    editor.putLong("ID_USUARIO",id);
+                                    editor.apply();
                                     setAcceso(true);
                                     setRole(role);
                                 }

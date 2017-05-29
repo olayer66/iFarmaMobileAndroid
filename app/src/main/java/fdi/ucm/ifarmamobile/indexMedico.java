@@ -22,7 +22,8 @@ import fdi.ucm.model.Usuario;
 public class indexMedico extends AppCompatActivity
         implements MensajeAdapter.OnCorreoSelected
                   ,PacienteAdapter.OnPacienteSelected
-,DetalleCorreoFragment.OnResponderSelected {
+                  ,DetalleCorreoFragment.OnResponderSelected
+                  ,NuevoCorreoFragment.goBack{
     SharedPreferences mPrefs;
     Medico medico;
     private ListaPacientesFragment fragListaPacientes;
@@ -137,6 +138,11 @@ public class indexMedico extends AppCompatActivity
         transaction.addToBackStack(null);
         transaction.replace(R.id.FragmentPrincipal, fragNuevoCorreo);
         transaction.commit();
+    }
+    @Override
+    public void goBack() {
+        getSupportFragmentManager().popBackStack();
+        getSupportFragmentManager().popBackStack();
     }
     //Extrae el medico de la BBDD
     private void cargarMedico()

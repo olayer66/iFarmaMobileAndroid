@@ -11,76 +11,99 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/shape"
-        android:backgroundTint="@color/fondo_base"
-        android:padding="10dp">
+        android:backgroundTint="@color/fondo_base">
+
+        <RelativeLayout
+            android:id="@+id/LayoutCabecera"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/nuevoCorreoAsuntoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/asunto"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:layout_alignBaseline="@+id/nuevoCorreoAsunto"
+                android:layout_alignBottom="@+id/nuevoCorreoAsunto"
+                android:layout_alignParentStart="true" />
+
+            <EditText
+                android:id="@+id/nuevoCorreoAsunto"
+                style="@style/Widget.AppCompat.EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/Int_asunto"
+                android:inputType="text"
+                android:layout_above="@+id/nuevoCorreoMensajeLabel"
+                android:layout_toEndOf="@+id/nuevoCorreoAsuntoLabel" />
+
+            <TextView
+                android:id="@+id/nuevoCorreoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nuevo_mensaje"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/nuevoCorreoMensajeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mensaje"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/LayoutMensaje"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/LayoutBoton"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/LayoutCabecera"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/nuevoCorreoMensaje"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:ems="10"
+                android:gravity="top"
+                android:hint="@string/pista_mensaje"
+                android:inputType="textMultiLine"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/LayoutBoton"
+            android:layout_width="match_parent"
+            android:layout_height="58dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true">
+
+            <Button
+                android:id="@+id/nuevoCorreoEnviar"
+                style="@style/Widget.AppCompat.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/shape"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:text="@string/enviar"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/nuevoCorreoLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/nuevo_mensaje"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/colorPrimaryDark"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/nuevoCorreoAsuntoLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/nuevoCorreoLabel"
-        android:layout_below="@+id/nuevoCorreoLabel"
-        android:layout_marginTop="9dp"
-        android:text="@string/asunto"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-    <EditText
-        android:id="@+id/nuevoCorreoAsunto"
-        style="@style/Widget.AppCompat.EditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/nuevoCorreoLabel"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:hint="@string/Int_asunto"
-        android:inputType="text"
-        android:singleLine="true"
-        android:text="Asunto" />
-
-    <TextView
-        android:id="@+id/nuevoCorreoMensajeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/nuevoCorreoAsuntoLabel"
-        android:layout_below="@+id/nuevoCorreoAsunto"
-        android:text="@string/mensaje"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
-
-    <EditText
-        android:id="@+id/nuevoCorreoMensaje"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/nuevoCorreoMensajeLabel"
-        android:layout_below="@+id/nuevoCorreoMensajeLabel"
-        android:ems="10"
-        android:hint="@string/pista_mensaje"
-        android:inputType="textMultiLine" />
-
-    <Button
-        android:id="@+id/button"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/shape"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:text="@string/enviar"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse" />
 </RelativeLayout>

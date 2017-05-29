@@ -1,0 +1,125 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_fragment"
+    tools:context="fdi.ucm.ifarmamobile.NuevoTratamientoFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape"
+        android:backgroundTint="@color/fondo_base"
+        android:padding="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/nuevoTratamientoLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nuevo_tratamiento"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <Spinner
+            android:id="@+id/nuevoTratamientoMedicamentos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/nuevoTratamientoLabel"
+            android:layout_below="@+id/nuevoTratamientoLabel"
+            android:layout_marginEnd="88dp"
+            android:layout_marginTop="13dp" />
+
+        <TextView
+            android:id="@+id/nuevoTratamientoPastillasLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="59dp"
+            android:text="@string/num_pastillas"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_below="@+id/nuevoTratamientoMedicamentos"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/nuevoTratamientoFinLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:text="@string/fecha_fin"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_below="@+id/nuevoTratamientoPastillasLabel"
+            android:layout_alignParentStart="true" />
+
+        <EditText
+            android:id="@+id/nuevoTratamientoFin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/nuevoTratamientoFinLabel"
+            android:layout_alignBottom="@+id/nuevoTratamientoFinLabel"
+            android:layout_toEndOf="@+id/nuevoTratamientoFinLabel"
+            android:ems="10"
+            android:hint="@string/hint_fecha_fin"
+            android:inputType="date" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="57dp"
+        android:text="@string/medicamento"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/nuevoTratamientoPeriodicidadLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/periodicidad"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_below="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
+
+    <EditText
+        android:id="@+id/nuevoTratamientoPeriodicidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/hint_periodicidad"
+        android:inputType="number"
+        android:layout_alignBaseline="@+id/nuevoTratamientoPeriodicidadLabel"
+        android:layout_alignBottom="@+id/nuevoTratamientoPeriodicidadLabel"
+        android:layout_toEndOf="@+id/nuevoTratamientoPeriodicidadLabel" />
+
+    <EditText
+        android:id="@+id/nuevoTratamientoPastillas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/hint_pastillas"
+        android:inputType="number"
+        android:layout_marginStart="8dp"
+        android:layout_below="@+id/nuevoTratamientoPeriodicidad"
+        android:layout_toEndOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/nuevtoTratamientoAnadir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nuevoTratamientoPastillas"
+        android:layout_marginTop="54dp"
+        android:layout_toEndOf="@+id/textView"
+        android:background="@drawable/shape"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="@string/anadir"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse" />
+
+</RelativeLayout>

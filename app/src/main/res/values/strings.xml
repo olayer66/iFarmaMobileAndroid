@@ -32,7 +32,15 @@
     <string name="nuevo_mensaje">Nuevo mensaje</string>
     <string name="asunto">Asunto:</string>
     <string name="Int_asunto">Introduce el Asunto</string>
-    <string name="mensaje">Mensaje:</string>
+    <string name="mensaje">Mensaje</string>
     <string name="pista_mensaje">Introduce el texto del mensaje</string>
     <string name="enviar">Enviar</string>
+    <string name="nuevo_tratamiento">Nuevo tratamiento</string>
+    <string name="medicamento">Medicamento:</string>
+    <string name="periodicidad">Periodicidad:</string>
+    <string name="hint_periodicidad">Frecuencia de toma</string>
+    <string name="num_pastillas">Nº de pastillas:</string>
+    <string name="hint_pastillas" >Nº de pastillas por toma</string>
+    <string name="hint_fecha_fin">Fecha finalización</string>
+    <string name="anadir">Añadir</string>
 </resources>

@@ -23,8 +23,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".indexPaciente" />
-        <activity android:name=".indexMedico" />
+        <activity
+            android:name=".indexPaciente"
+            />
+        <activity
+            android:name=".indexMedico"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

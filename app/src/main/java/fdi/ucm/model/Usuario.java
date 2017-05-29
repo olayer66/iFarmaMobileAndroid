@@ -1,10 +1,13 @@
 package fdi.ucm.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by joset on 17/05/2017.
  */
 
-public class Usuario {
+public class Usuario implements Parcelable {
     private long idUsuario;
     private String nombre;
     private String apellidos;
@@ -37,5 +40,27 @@ public class Usuario {
 
     public String getTelefono() {
         return telefono;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(idUsuario);
+        dest.writeString(nombre);
+        dest.writeString(apellidos);
+        dest.writeString(telefono);
+        dest.writeString(email);
+
+    }
+    public void readFromParcel(Parcel in) {
+        idUsuario=in.readLong();
+        nombre= in.readString();
+        apellidos=in.readString();
+        telefono=in.readString();
+        email=in.readString();
     }
 }

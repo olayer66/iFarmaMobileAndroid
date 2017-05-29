@@ -12,7 +12,7 @@ import java.util.List;
 
 import fdi.ucm.ifarmamobile.R;
 import fdi.ucm.model.Mensaje;
-
+import fdi.ucm.model.Usuario;
 
 
 public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonViewHolder>{
@@ -62,9 +62,9 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
             @Override
             public void onClick(View v) {
                 mListener=(OnCorreoSelected)v.getContext();
-                String remitente=mensajes.get(i).getRemitente().getNombre()+" "+mensajes.get(i).getRemitente().getApellidos();
                 mListener.OnCorreoSelected(mensajes.get(i).getAsunto(),
-                                           remitente,
+                                           mensajes.get(i).getRemitente(),
+                                           mensajes.get(i).getEmisor(),
                                            mensajes.get(i).getFecha(),
                                            mensajes.get(i).getMensaje());
             }
@@ -75,6 +75,6 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
         }
     }
     public interface OnCorreoSelected {
-        void OnCorreoSelected(String asunto, String remitente, String fecha, String mensaje);
+        void OnCorreoSelected(String asunto, Usuario remitente,Usuario emisor, String fecha, String mensaje);
     }
 }

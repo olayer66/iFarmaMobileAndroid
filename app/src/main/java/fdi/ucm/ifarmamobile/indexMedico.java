@@ -16,17 +16,20 @@ import fdi.ucm.adapters.PacienteAdapter;
 import fdi.ucm.adapters.TratamientoMedicoAdapter;
 import fdi.ucm.model.Medico;
 import fdi.ucm.model.Tratamiento;
+import fdi.ucm.model.Usuario;
 
 
 public class indexMedico extends AppCompatActivity
         implements MensajeAdapter.OnCorreoSelected
-                  ,PacienteAdapter.OnPacienteSelected{
+                  ,PacienteAdapter.OnPacienteSelected
+,DetalleCorreoFragment.OnResponderSelected {
     SharedPreferences mPrefs;
     Medico medico;
     private ListaPacientesFragment fragListaPacientes;
     private listaCorreoFragment fragListaCorreo;
     private DetalleCorreoFragment fragDetalleCorreo;
     private DetallePacienteFragment fragDetallePaciente;
+    private NuevoCorreoFragment fragNuevoCorreo;
     private FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +102,8 @@ public class indexMedico extends AppCompatActivity
     }
     //Fragments de detalle supeditamos a los fragment principales
     @Override
-    public void OnCorreoSelected(String asunto, String remitente, String fecha, String mensaje) {
-        fragDetalleCorreo= DetalleCorreoFragment.newInstance(asunto,remitente,fecha,mensaje);
+    public void OnCorreoSelected(String asunto, Usuario remitente, Usuario emisor, String fecha, String mensaje) {
+        fragDetalleCorreo= DetalleCorreoFragment.newInstance(asunto,remitente,emisor,fecha,mensaje);
         transaction = getSupportFragmentManager().beginTransaction();
             /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
                     R.anim.fragment_slide_left_exit,
@@ -121,6 +124,18 @@ public class indexMedico extends AppCompatActivity
                     R.anim.fragment_slide_right_exit);*/
         transaction.addToBackStack(null);
         transaction.replace(R.id.FragmentPrincipal, fragDetallePaciente);
+        transaction.commit();
+    }
+    @Override
+    public void OnResponderSelected(Usuario remitente, Usuario emisor) {
+        fragNuevoCorreo = NuevoCorreoFragment.newInstance(remitente,emisor);
+        transaction=getSupportFragmentManager().beginTransaction();
+        /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                    R.anim.fragment_slide_left_exit,
+                    R.anim.fragment_slide_right_enter,
+                    R.anim.fragment_slide_right_exit);*/
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.FragmentPrincipal, fragNuevoCorreo);
         transaction.commit();
     }
     //Extrae el medico de la BBDD

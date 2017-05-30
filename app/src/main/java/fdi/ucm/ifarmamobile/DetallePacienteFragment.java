@@ -24,6 +24,7 @@ import java.util.List;
 import fdi.ucm.adapters.MensajeAdapter;
 import fdi.ucm.adapters.TratamientoMedicoAdapter;
 import fdi.ucm.model.Medicamento;
+import fdi.ucm.model.Paciente;
 import fdi.ucm.model.Tratamiento;
 import fdi.ucm.model.Usuario;
 
@@ -43,26 +44,18 @@ public class DetallePacienteFragment extends Fragment  {
     private static final String TAG = "detallePaciente";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_NOMBRE= "nombre";
-    private static final String ARG_TELEFONO = "telefono";
-    private static final String ARG_EMAIL = "email";
-    private static final String ARG_TRATAMIENTO = "tratamientos";
+    private static final String ARG_PACIENTE= "paciente";
 
     // TODO: Rename and change types of parameters
-    private String nombre;
-    private String telefono;
-    private String email;
+    private Paciente paciente;
 
     private OnNuevoTratamiento mListener;
     private ArrayList<Tratamiento> tratamientos;
 
-    public static DetallePacienteFragment newInstance(String nombre, String email, String telefono, ArrayList<Tratamiento> tratamientos) {
+    public static DetallePacienteFragment newInstance(Paciente paciente) {
         DetallePacienteFragment fragment = new DetallePacienteFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_NOMBRE, nombre);
-        args.putString(ARG_EMAIL, email);
-        args.putString(ARG_TELEFONO,telefono);
-        args.putParcelableArrayList(ARG_TRATAMIENTO,tratamientos);
+        args.putParcelable(ARG_PACIENTE, paciente);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,10 +63,7 @@ public class DetallePacienteFragment extends Fragment  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            nombre = getArguments().getString(ARG_NOMBRE);
-            telefono = getArguments().getString(ARG_TELEFONO);
-            email=getArguments().getString(ARG_EMAIL);
-            tratamientos=getArguments().getParcelableArrayList(ARG_TRATAMIENTO);
+            paciente = getArguments().getParcelable(ARG_PACIENTE);
         }
     }
     @Override
@@ -87,15 +77,16 @@ public class DetallePacienteFragment extends Fragment  {
         final ImageButton anadir=(ImageButton) view.findViewById(R.id.detallePacienteBotonAñadir);
         //Cargamos la vista
         final Bundle args = getArguments();
-        nombre.setText(args.getString(ARG_NOMBRE));
-        telefono.setText(args.getString(ARG_TELEFONO));
-        email.setText(args.getString(ARG_EMAIL));
+        final Paciente paciente= args.getParcelable(ARG_PACIENTE);
+        nombre.setText(paciente.getNombre()+" "+paciente.getApellidos());
+        telefono.setText(paciente.getTelefono());
+        email.setText(paciente.getEmail());
         //cardView del tratamiento
         Activity activity=getActivity();
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rvTratamientoMedico);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        ArrayList<Tratamiento> tr=args.getParcelableArrayList(ARG_TRATAMIENTO);
+        ArrayList<Tratamiento> tr=paciente.getTratamiento();
         if(tr==null)
             tr= new ArrayList<>();
         mAdapter = new TratamientoMedicoAdapter(tr);
@@ -105,7 +96,7 @@ public class DetallePacienteFragment extends Fragment  {
             @Override
             public void onClick(View v) {
                 mListener=(OnNuevoTratamiento) v.getContext();
-                mListener.OnNuevoTratamiento();
+                mListener.OnNuevoTratamiento(paciente);
             }
         });
         return view;
@@ -124,6 +115,6 @@ public class DetallePacienteFragment extends Fragment  {
     }
 
     public interface OnNuevoTratamiento {
-        void OnNuevoTratamiento();
+        void OnNuevoTratamiento(Paciente paciente);
     }
 }

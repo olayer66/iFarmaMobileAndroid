@@ -64,14 +64,11 @@ public class PacienteAdapter  extends RecyclerView.Adapter<PacienteAdapter.Perso
             public void onClick(View v) {
                 mListener=(OnPacienteSelected) v.getContext();
                 String paciente=pacientes.get(i).getNombre()+" "+pacientes.get(i).getApellidos();
-                mListener.OnPacienteSelected(paciente,
-                        pacientes.get(i).getTelefono(),
-                        pacientes.get(i).getEmail(),
-                        pacientes.get(i).getTratamiento());
+                mListener.OnPacienteSelected(pacientes.get(i));
             }
         });
     }
     public interface OnPacienteSelected {
-        void OnPacienteSelected(String nombre, String telefono, String email, ArrayList<Tratamiento> tratamientos);
+        void OnPacienteSelected(Paciente paciente);
     }
 }

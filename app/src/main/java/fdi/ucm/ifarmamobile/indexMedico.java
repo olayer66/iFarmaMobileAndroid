@@ -15,6 +15,7 @@ import fdi.ucm.adapters.MensajeAdapter;
 import fdi.ucm.adapters.PacienteAdapter;
 import fdi.ucm.adapters.TratamientoMedicoAdapter;
 import fdi.ucm.model.Medico;
+import fdi.ucm.model.Paciente;
 import fdi.ucm.model.Tratamiento;
 import fdi.ucm.model.Usuario;
 
@@ -117,9 +118,9 @@ public class indexMedico extends AppCompatActivity
         transaction.commit();
     }
     @Override
-    public void OnPacienteSelected(String nombre, String telefono, String email, ArrayList<Tratamiento> tratamientos)
+    public void OnPacienteSelected(Paciente paciente)
     {
-        fragDetallePaciente= DetallePacienteFragment.newInstance(nombre,email,telefono,tratamientos);
+        fragDetallePaciente= DetallePacienteFragment.newInstance(paciente);
         transaction = getSupportFragmentManager().beginTransaction();
             /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
                     R.anim.fragment_slide_left_exit,
@@ -142,8 +143,8 @@ public class indexMedico extends AppCompatActivity
         transaction.commit();
     }
     @Override
-    public void OnNuevoTratamiento() {
-        fragNuevoTratamiento = NuevoTratamientoFragment.newInstance();
+    public void OnNuevoTratamiento(Paciente paciente) {
+        fragNuevoTratamiento = NuevoTratamientoFragment.newInstance(paciente);
         transaction=getSupportFragmentManager().beginTransaction();
         /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
                     R.anim.fragment_slide_left_exit,

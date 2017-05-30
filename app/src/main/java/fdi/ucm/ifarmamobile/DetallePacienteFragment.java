@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class DetallePacienteFragment extends Fragment  {
     private String telefono;
     private String email;
 
-
+    private OnNuevoTratamiento mListener;
     private ArrayList<Tratamiento> tratamientos;
 
     public static DetallePacienteFragment newInstance(String nombre, String email, String telefono, ArrayList<Tratamiento> tratamientos) {
@@ -83,7 +84,7 @@ public class DetallePacienteFragment extends Fragment  {
         final TextView nombre = (TextView) view.findViewById(R.id.detallePacienteNombre);
         final TextView telefono = (TextView) view.findViewById(R.id.detallePacienteTelefono);
         final TextView email = (TextView) view.findViewById(R.id.detallePacienteCorreo);
-
+        final ImageButton anadir=(ImageButton) view.findViewById(R.id.detallePacienteBotonAñadir);
         //Cargamos la vista
         final Bundle args = getArguments();
         nombre.setText(args.getString(ARG_NOMBRE));
@@ -100,7 +101,13 @@ public class DetallePacienteFragment extends Fragment  {
         mAdapter = new TratamientoMedicoAdapter(tr);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
-
+        anadir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener=(OnNuevoTratamiento) v.getContext();
+                mListener.OnNuevoTratamiento();
+            }
+        });
         return view;
     }
 
@@ -114,5 +121,9 @@ public class DetallePacienteFragment extends Fragment  {
 
     public TratamientoMedicoAdapter getmAdapter() {
         return mAdapter;
+    }
+
+    public interface OnNuevoTratamiento {
+        void OnNuevoTratamiento();
     }
 }

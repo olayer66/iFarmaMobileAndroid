@@ -23,7 +23,8 @@ public class indexMedico extends AppCompatActivity
         implements MensajeAdapter.OnCorreoSelected
                   ,PacienteAdapter.OnPacienteSelected
                   ,DetalleCorreoFragment.OnResponderSelected
-                  ,NuevoCorreoFragment.goBack{
+                  ,NuevoCorreoFragment.goBack
+                  ,DetallePacienteFragment.OnNuevoTratamiento{
     SharedPreferences mPrefs;
     Medico medico;
     private ListaPacientesFragment fragListaPacientes;
@@ -31,6 +32,7 @@ public class indexMedico extends AppCompatActivity
     private DetalleCorreoFragment fragDetalleCorreo;
     private DetallePacienteFragment fragDetallePaciente;
     private NuevoCorreoFragment fragNuevoCorreo;
+    private NuevoTratamientoFragment fragNuevoTratamiento;
     private FragmentTransaction transaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +142,18 @@ public class indexMedico extends AppCompatActivity
         transaction.commit();
     }
     @Override
+    public void OnNuevoTratamiento() {
+        fragNuevoTratamiento = NuevoTratamientoFragment.newInstance();
+        transaction=getSupportFragmentManager().beginTransaction();
+        /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                    R.anim.fragment_slide_left_exit,
+                    R.anim.fragment_slide_right_enter,
+                    R.anim.fragment_slide_right_exit);*/
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.FragmentPrincipal, fragNuevoTratamiento);
+        transaction.commit();
+    }
+    @Override
     public void goBack() {
         getSupportFragmentManager().popBackStack();
         getSupportFragmentManager().popBackStack();
@@ -157,4 +171,6 @@ public class indexMedico extends AppCompatActivity
         medico= new Medico(id,"Lauro","Gordo Vago","635428976","lauro@algo.com","12/23/23343","C.S. Acacias");
 
     }
+
+
 }

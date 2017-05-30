@@ -80,7 +80,10 @@
             android:layout_above="@+id/rvTratamientoMedico"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/detallePacienteTratamientoLabel"
-            android:src="@android:drawable/ic_input_add" />
+            android:background="@drawable/shape"
+            android:backgroundTint="@color/boton"
+            android:contentDescription="@string/hint_anadir_tratamiento"
+            android:src="@android:drawable/ic_menu_add" />
 
         <TextView
             android:id="@+id/detallePacienteCorreo"

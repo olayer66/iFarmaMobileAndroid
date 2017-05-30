@@ -66,10 +66,12 @@ public class ListaPacientesFragment extends Fragment {
     {
         ArrayList<Tratamiento> tratamientos=new ArrayList<>();
         Medicamento medicamento= new Medicamento(Long.parseLong("1"),"Tranquinol","Duerme como un liron","TontoFarma",Double.parseDouble("13"));
-        tratamientos.add(new Tratamiento(Long.parseLong("1"),medicamento,"12/08/2017",0,8,2));
-        tratamientos.add(new Tratamiento(Long.parseLong("2"),medicamento,"12/08/2017",0,8,2));
-        tratamientos.add(new Tratamiento(Long.parseLong("3"),medicamento,"12/08/2017",0,8,2));
-        tratamientos.add(new Tratamiento(Long.parseLong("4"),medicamento,"12/08/2017",0,8,2));
+        Medico medico= new Medico(Long.parseLong("1"),"Paco","Perez Andaluz","234324554","paco@algo.com","12/14/20004","C.S. Acacias");
+        Paciente pac=new Paciente(Long.parseLong("1"),"Paco","Perez Andaluz","234324554","paco@algo.com","C/ falsa 123","Madrid","28045","Madrid","Madrid",medico,tratamientos);
+        tratamientos.add(new Tratamiento(Long.parseLong("1"),pac,medicamento,"12/05/2017","12/08/2017",0,8,2));
+        tratamientos.add(new Tratamiento(Long.parseLong("2"),pac,medicamento,"12/05/2017","12/08/2017",0,8,2));
+        tratamientos.add(new Tratamiento(Long.parseLong("3"),pac,medicamento,"12/05/2017","12/08/2017",0,8,2));
+        tratamientos.add(new Tratamiento(Long.parseLong("4"),pac,medicamento,"12/05/2017","12/08/2017",0,8,2));
         return tratamientos;
     }
 }

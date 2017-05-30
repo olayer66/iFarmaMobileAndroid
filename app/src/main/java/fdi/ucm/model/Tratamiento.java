@@ -5,22 +5,23 @@ import android.os.Parcelable;
 
 import java.util.Date;
 
-/**
- * Created by joset on 21/05/2017.
- */
 
 public class Tratamiento implements Parcelable {
     private long id;
+    private Paciente paciente;
     private Medicamento medicamento;
-    private String fechaFinTratamiento;
+    private String fechaInicio;
+    private String fechaFin;
     private int numDosis;
     private int perioicidad;
     private int numDosisDia;
-    public Tratamiento (long id,Medicamento medicamento, String fechaFinTratamiento, int numDosis,int perioicidad,int numDosisDia)
+    public Tratamiento (long id,Paciente paciente,Medicamento medicamento, String fechaInicio,String fechaFin, int numDosis,int perioicidad,int numDosisDia)
     {
         this.id=id;
+        this.paciente=paciente;
         this.medicamento=medicamento;
-        this.fechaFinTratamiento=fechaFinTratamiento;
+        this.fechaInicio=fechaInicio;
+        this.fechaFin=fechaFin;
         this.numDosis=numDosis;
         this.perioicidad=perioicidad;
         this.numDosisDia=numDosisDia;
@@ -32,8 +33,10 @@ public class Tratamiento implements Parcelable {
     public Medicamento getMedicamento() {
         return medicamento;
     }
-    public String getFechaFinTratamiento() {
-        return fechaFinTratamiento;
+    public Paciente getPaciente(){return  paciente;}
+    public String getFechaInicio(){return fechaInicio;}
+    public String getFechaFin() {
+        return fechaFin;
     }
     public int getNumDosis() {
         return numDosis;
@@ -69,16 +72,20 @@ public class Tratamiento implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(id);
+        dest.writeParcelable(paciente,flags);
         dest.writeParcelable(medicamento,flags);
-        dest.writeString(fechaFinTratamiento);
+        dest.writeString(fechaInicio);
+        dest.writeString(fechaFin);
         dest.writeInt(numDosis);
         dest.writeInt(perioicidad);
         dest.writeInt(numDosisDia);
     }
     public void readFromParcel(Parcel in) {
         id = in.readLong();
+        paciente= in.readParcelable(Paciente.class.getClassLoader());
         medicamento = in.readParcelable(Medicamento.class.getClassLoader());
-        fechaFinTratamiento = in.readString();
+        fechaFin = in.readString();
+        fechaInicio=in.readString();
         numDosis=in.readInt();
         perioicidad=in.readInt();
         numDosisDia=in.readInt();

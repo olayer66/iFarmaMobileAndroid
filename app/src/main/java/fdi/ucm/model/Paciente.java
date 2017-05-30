@@ -1,12 +1,15 @@
 package fdi.ucm.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
  * Created by joset on 21/05/2017.
  */
 
-public class Paciente {
+public class Paciente implements Parcelable {
     //estandar
     private long id;
     private String nombre;
@@ -75,5 +78,40 @@ public class Paciente {
     }
     public ArrayList<Tratamiento> getTratamiento() {
         return tratamiento;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(nombre);
+        dest.writeString(apellidos);
+        dest.writeString(email);
+        dest.writeString(telefono);
+        dest.writeString(direccion);
+        dest.writeString(ciudad);
+        dest.writeString(codPostal);
+        dest.writeString(provincia);
+        dest.writeString(comAutonoma);
+        dest.writeParcelable(medico,flags);
+        dest.writeList(tratamiento);
+    }
+    public void readFromParcel(Parcel in) {
+        id = in.readLong();
+        nombre= in.readString();
+        apellidos= in.readString();
+        email= in.readString();
+        telefono= in.readString();
+        direccion= in.readString();
+        ciudad= in.readString();
+        codPostal= in.readString();
+        provincia= in.readString();
+        comAutonoma= in.readString();
+        medico=in.readParcelable(Medico.class.getClassLoader());
+        tratamiento=in.readArrayList(Tratamiento.class.getClassLoader());
     }
 }

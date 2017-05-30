@@ -59,7 +59,7 @@ public class TratamientoMedicoAdapter extends RecyclerView.Adapter<TratamientoMe
         personViewHolder.medicamento.setText(tratamientos.get(i).getMedicamento().getNombre());
         String tomas=tratamientos.get(i).getNumDosisDia()+" cada " +tratamientos.get(i).getPerioicidad()+" horas";
         personViewHolder.tomas.setText(tomas);
-        personViewHolder.fechaFin.setText(tratamientos.get(i).getFechaFinTratamiento());
+        personViewHolder.fechaFin.setText(tratamientos.get(i).getFechaFin());
 
         personViewHolder.eliminar.setOnClickListener(new View.OnClickListener() {
             @Override

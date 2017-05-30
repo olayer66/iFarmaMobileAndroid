@@ -43,4 +43,5 @@
     <string name="hint_pastillas" >Nº de pastillas por toma</string>
     <string name="hint_fecha_fin">Fecha finalización</string>
     <string name="anadir">Añadir</string>
+    <string name="hint_anadir_tratamiento">Añadir Tratamiento</string>
 </resources>

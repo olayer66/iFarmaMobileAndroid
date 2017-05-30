@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import fdi.ucm.adapters.MensajeAdapter;
 import fdi.ucm.adapters.PacienteAdapter;
 import fdi.ucm.adapters.TratamientoMedicoAdapter;
+import fdi.ucm.model.Medicamento;
 import fdi.ucm.model.Medico;
 import fdi.ucm.model.Paciente;
 import fdi.ucm.model.Tratamiento;
@@ -118,9 +119,9 @@ public class indexMedico extends AppCompatActivity
         transaction.commit();
     }
     @Override
-    public void OnPacienteSelected(Paciente paciente)
+    public void OnPacienteSelected(Paciente paciente,ArrayList<Medicamento> medicamentos)
     {
-        fragDetallePaciente= DetallePacienteFragment.newInstance(paciente);
+        fragDetallePaciente= DetallePacienteFragment.newInstance(paciente, medicamentos);
         transaction = getSupportFragmentManager().beginTransaction();
             /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
                     R.anim.fragment_slide_left_exit,
@@ -143,8 +144,8 @@ public class indexMedico extends AppCompatActivity
         transaction.commit();
     }
     @Override
-    public void OnNuevoTratamiento(Paciente paciente) {
-        fragNuevoTratamiento = NuevoTratamientoFragment.newInstance(paciente);
+    public void OnNuevoTratamiento(Paciente paciente, ArrayList<Medicamento> medicamentos) {
+        fragNuevoTratamiento = NuevoTratamientoFragment.newInstance(paciente, medicamentos);
         transaction=getSupportFragmentManager().beginTransaction();
         /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
                     R.anim.fragment_slide_left_exit,

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fdi.ucm.ifarmamobile.R;
+import fdi.ucm.model.Medicamento;
 import fdi.ucm.model.Paciente;
 import fdi.ucm.model.Tratamiento;
 import fdi.ucm.model.Usuario;
@@ -20,9 +21,11 @@ import fdi.ucm.model.Usuario;
 public class PacienteAdapter  extends RecyclerView.Adapter<PacienteAdapter.PersonViewHolder>{
 
     private List<Paciente> pacientes;
+    private ArrayList<Medicamento> medicamentos;
     private OnPacienteSelected mListener;
-    public PacienteAdapter(List<Paciente> pacientes,Context context){
+    public PacienteAdapter(List<Paciente> pacientes,ArrayList<Medicamento> medicamentos){
         this.pacientes = pacientes;
+        this.medicamentos= medicamentos;
     }
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
@@ -64,11 +67,12 @@ public class PacienteAdapter  extends RecyclerView.Adapter<PacienteAdapter.Perso
             public void onClick(View v) {
                 mListener=(OnPacienteSelected) v.getContext();
                 String paciente=pacientes.get(i).getNombre()+" "+pacientes.get(i).getApellidos();
-                mListener.OnPacienteSelected(pacientes.get(i));
+                mListener.OnPacienteSelected(pacientes.get(i),medicamentos);
             }
         });
     }
     public interface OnPacienteSelected {
-        void OnPacienteSelected(Paciente paciente);
+        void OnPacienteSelected(Paciente paciente,ArrayList<Medicamento> medicamentos);
     }
+
 }

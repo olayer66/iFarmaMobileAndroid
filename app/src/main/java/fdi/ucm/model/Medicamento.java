@@ -3,10 +3,6 @@ package fdi.ucm.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by joset on 21/05/2017.
- */
-
 public class Medicamento implements Parcelable{
     private long id;
     private String nombre;

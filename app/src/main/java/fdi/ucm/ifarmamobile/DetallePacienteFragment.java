@@ -45,17 +45,19 @@ public class DetallePacienteFragment extends Fragment  {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PACIENTE= "paciente";
+    private static  final String ARG_MEDICAMENTOS="medicamentos";
 
     // TODO: Rename and change types of parameters
     private Paciente paciente;
-
+    private ArrayList<Medicamento> medicamentos;
     private OnNuevoTratamiento mListener;
     private ArrayList<Tratamiento> tratamientos;
 
-    public static DetallePacienteFragment newInstance(Paciente paciente) {
+    public static DetallePacienteFragment newInstance(Paciente paciente, ArrayList<Medicamento> medicamentos) {
         DetallePacienteFragment fragment = new DetallePacienteFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_PACIENTE, paciente);
+        args.putParcelableArrayList(ARG_MEDICAMENTOS,medicamentos);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,6 +66,7 @@ public class DetallePacienteFragment extends Fragment  {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             paciente = getArguments().getParcelable(ARG_PACIENTE);
+            medicamentos= getArguments().getParcelableArrayList(ARG_MEDICAMENTOS);
         }
     }
     @Override
@@ -96,7 +99,8 @@ public class DetallePacienteFragment extends Fragment  {
             @Override
             public void onClick(View v) {
                 mListener=(OnNuevoTratamiento) v.getContext();
-                mListener.OnNuevoTratamiento(paciente);
+                ArrayList<Medicamento> medicamentos= args.getParcelableArrayList(ARG_MEDICAMENTOS);
+                mListener.OnNuevoTratamiento(paciente,medicamentos);
             }
         });
         return view;
@@ -115,6 +119,6 @@ public class DetallePacienteFragment extends Fragment  {
     }
 
     public interface OnNuevoTratamiento {
-        void OnNuevoTratamiento(Paciente paciente);
+        void OnNuevoTratamiento(Paciente paciente, ArrayList<Medicamento> medicamentos);
     }
 }

@@ -41,7 +41,8 @@
     <string name="hint_periodicidad">Frecuencia de toma</string>
     <string name="num_pastillas">Nº de pastillas:</string>
     <string name="hint_pastillas" >Nº de pastillas por toma</string>
-    <string name="hint_fecha_fin">Fecha finalización</string>
+    <string name="hint_fecha_fin">01/01/1900</string>
     <string name="anadir">Añadir</string>
     <string name="hint_anadir_tratamiento">Añadir Tratamiento</string>
+    <string name="select_fecha_fin">Seleccionar fecha final</string>
 </resources>

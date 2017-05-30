@@ -23,6 +23,7 @@ import fdi.ucm.model.Usuario;
 
 public class ListaPacientesFragment extends Fragment {
     private List<Paciente> pacientes;
+    private ArrayList<Medicamento> medicamentos;
     private static final String TAG = "listaPacientes";
     protected RecyclerView mRecyclerView;
     protected PacienteAdapter mAdapter;
@@ -31,6 +32,7 @@ public class ListaPacientesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         traerPacientes();
+        cargarListaMedicamentos();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,7 +43,7 @@ public class ListaPacientesFragment extends Fragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rvPacientes);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new PacienteAdapter(pacientes,activity);
+        mAdapter = new PacienteAdapter(pacientes,medicamentos);
         mRecyclerView.setAdapter(mAdapter);
         return rootView;
     }
@@ -73,5 +75,14 @@ public class ListaPacientesFragment extends Fragment {
         tratamientos.add(new Tratamiento(Long.parseLong("3"),pac,medicamento,"12/05/2017","12/08/2017",0,8,2));
         tratamientos.add(new Tratamiento(Long.parseLong("4"),pac,medicamento,"12/05/2017","12/08/2017",0,8,2));
         return tratamientos;
+    }
+    private void cargarListaMedicamentos()
+    {
+        medicamentos= new ArrayList<>();
+        medicamentos.add(new Medicamento(Long.parseLong("0"),"Viralex","El antivirus definivo","AvastFarma",Double.parseDouble("12")));
+        medicamentos.add(new Medicamento(Long.parseLong("0"),"Xor","Solo apto para mojitas","AvastFarma",Double.parseDouble("2")));
+        medicamentos.add(new Medicamento(Long.parseLong("0"),"Agrilea","Jalea para brutos","AvastFarma",Double.parseDouble("10")));
+        medicamentos.add(new Medicamento(Long.parseLong("0"),"Viagra","Toma Salami","AvastFarma",Double.parseDouble("54")));
+        medicamentos.add(new Medicamento(Long.parseLong("0"),"Zumbon","Como viagra pero falso","AvastFarma",Double.parseDouble("10")));
     }
 }

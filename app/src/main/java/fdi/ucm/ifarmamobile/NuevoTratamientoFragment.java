@@ -159,10 +159,10 @@ public class NuevoTratamientoFragment extends Fragment {
             e.printStackTrace();
         }
         if (new Date().before(fechaTratamiento)) {
-            if (perio.trim().matches(regexStr)) {
+            if (!perio.equals("")) {
                 int p = Integer.parseInt(perio);
                 if (p > 0 && p <= 24) {
-                    if (nPas.trim().matches(regexStr)) {
+                    if (!nPas.equals("")) {
                         if(Integer.parseInt(nPas)>0) {
                             return 0;
                         }

@@ -38,7 +38,7 @@
     <string name="nuevo_tratamiento">Nuevo tratamiento</string>
     <string name="medicamento">Medicamento:</string>
     <string name="periodicidad">Periodicidad:</string>
-    <string name="hint_periodicidad">Frecuencia de toma</string>
+    <string name="hint_periodicidad">Frecuencia en horas</string>
     <string name="num_pastillas">Nº de pastillas:</string>
     <string name="hint_pastillas" >Nº de pastillas por toma</string>
     <string name="hint_fecha_fin">01/01/1900</string>

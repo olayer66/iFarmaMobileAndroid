@@ -32,6 +32,7 @@ import fdi.ucm.model.Tratamiento;
 
 import static fdi.ucm.ifarmamobile.R.string.anadir;
 import static fdi.ucm.ifarmamobile.R.string.medicamento;
+import static fdi.ucm.ifarmamobile.R.string.periodicidad;
 
 
 /**
@@ -52,6 +53,7 @@ public class NuevoTratamientoFragment extends Fragment {
     private List<Medicamento> medicamentos;
     private int dia,mes, anio;
     private String calculoMes;
+    private String fechaActual;
     Calendar myCalendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -90,7 +92,7 @@ public class NuevoTratamientoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_nuevo_tratamiento, container, false);
         //Spinner
-        Spinner medicamento=(Spinner) view.findViewById(R.id.nuevoTratamientoMedicamentos);
+        final Spinner medicamento=(Spinner) view.findViewById(R.id.nuevoTratamientoMedicamentos);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), R.layout.spinner_personal, cargarSpinner());
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         medicamento.setAdapter(adapter);
@@ -103,7 +105,8 @@ public class NuevoTratamientoFragment extends Fragment {
         mes=myCalendar.get(Calendar.MONTH)+1;
         calculoMes=mes/10==0?("0"+mes):String.valueOf(mes);
         anio=myCalendar.get(Calendar.YEAR);
-        fechaFin.setText(dia+"/"+calculoMes+"/"+anio);
+        fechaActual=dia+"/"+calculoMes+"/"+anio;
+        fechaFin.setText(fechaActual);
         //Boton calendario
         ImageButton btnCalendario= (ImageButton) view.findViewById(R.id.nuevoTratamientoCalendario);
         btnCalendario.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +128,23 @@ public class NuevoTratamientoFragment extends Fragment {
                 int respValidacion=validarDatos(per,nPas);
                 if(respValidacion==0)
                 {
-                    //Tratamiento tratamiento= new Tratamiento(Long.parseLong("0"),args.getParcelable(ARG_PACIENTE),)
+                    Calendar actual= Calendar.getInstance();
+
+                    Paciente pac=args.getParcelable(ARG_PACIENTE);
+                    Medicamento selecMed=medicamentos.get((int)medicamento.getSelectedItemId());
+                    String fechInicio=fechaActual;
+                    String fechFin=fechaFin.getText().toString();
+                    int perio=Integer.parseInt(periodicidad.getText().toString());
+                    int numPas=Integer.parseInt(numPastillas.getText().toString());;
+                    Tratamiento tratamiento= new Tratamiento(Long.parseLong("0"),pac,selecMed,fechInicio,fechFin,numPas,perio,0);
+                    if(enviarDatos(tratamiento))
+                    {
+                        cargarDialog(v.getContext(),"Enviado","Se ha añadido el tratamiento al paciente");
+                    }
+                    else
+                    {
+                        cargarDialog(v.getContext(),"Error","No se ha podido añadir, vuelva a intentarlo");
+                    }
                 }
                 else
                 {
@@ -203,5 +222,8 @@ public class NuevoTratamientoFragment extends Fragment {
         AlertDialog alert = builder.create();
         alert.show();
     }
-
+    private boolean enviarDatos(Tratamiento tratamiento)
+    {
+        return true;
+    }
 }

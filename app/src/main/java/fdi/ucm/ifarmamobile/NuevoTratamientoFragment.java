@@ -46,14 +46,16 @@ public class NuevoTratamientoFragment extends Fragment {
     private static final String ARG_PACIENTE= "paciente";
     private static  final String ARG_MEDICAMENTOS="medicamentos";
 
-    EditText fechaFin;
+    private Spinner medicamento;
+    private EditText periodicidad;
+    private EditText numPastillas;
+    private EditText fechaFin;
+    private goBackTratamiento mListener;
 
     // TODO: Rename and change types of parameters
     private Paciente paciente;
     private List<Medicamento> medicamentos;
-    private int dia,mes, anio;
-    private String calculoMes;
-    private String fechaActual;
+
     Calendar myCalendar = Calendar.getInstance();
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
@@ -62,10 +64,10 @@ public class NuevoTratamientoFragment extends Fragment {
             myCalendar.set(Calendar.YEAR, year);
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            dia=myCalendar.get(Calendar.DAY_OF_MONTH);
-            mes=myCalendar.get(Calendar.MONTH)+1;
-            calculoMes=mes/10==0?("0"+mes):String.valueOf(mes);
-            anio=myCalendar.get(Calendar.YEAR);
+            int dia=myCalendar.get(Calendar.DAY_OF_MONTH);
+            int mes=myCalendar.get(Calendar.MONTH)+1;
+            String calculoMes=mes/10==0?("0"+mes):String.valueOf(mes);
+            int anio=myCalendar.get(Calendar.YEAR);
             fechaFin.setText(dia+"/"+calculoMes+"/"+anio);
         }
     };
@@ -92,21 +94,15 @@ public class NuevoTratamientoFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_nuevo_tratamiento, container, false);
         //Spinner
-        final Spinner medicamento=(Spinner) view.findViewById(R.id.nuevoTratamientoMedicamentos);
+        medicamento=(Spinner) view.findViewById(R.id.nuevoTratamientoMedicamentos);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), R.layout.spinner_personal, cargarSpinner());
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         medicamento.setAdapter(adapter);
-
         //EditText
-        final EditText periodicidad=(EditText) view.findViewById(R.id.nuevoTratamientoPeriodicidad);
-        final EditText numPastillas= (EditText) view.findViewById(R.id.nuevoTratamientoPastillas);
+        periodicidad=(EditText) view.findViewById(R.id.nuevoTratamientoPeriodicidad);
+        numPastillas= (EditText) view.findViewById(R.id.nuevoTratamientoPastillas);
         fechaFin= (EditText) view.findViewById(R.id.nuevoTratamientoFin);
-        dia=myCalendar.get(Calendar.DAY_OF_MONTH);
-        mes=myCalendar.get(Calendar.MONTH)+1;
-        calculoMes=mes/10==0?("0"+mes):String.valueOf(mes);
-        anio=myCalendar.get(Calendar.YEAR);
-        fechaActual=dia+"/"+calculoMes+"/"+anio;
-        fechaFin.setText(fechaActual);
+        fechaFin.setText(getFechaActual());
         //Boton calendario
         ImageButton btnCalendario= (ImageButton) view.findViewById(R.id.nuevoTratamientoCalendario);
         btnCalendario.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +115,6 @@ public class NuevoTratamientoFragment extends Fragment {
 
         //Boton enviar
         Button anadir=(Button) view.findViewById(R.id.nuevoTratamientoAnadir);
-        final Bundle args=getArguments();
         anadir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,23 +123,13 @@ public class NuevoTratamientoFragment extends Fragment {
                 int respValidacion=validarDatos(per,nPas);
                 if(respValidacion==0)
                 {
-                    Calendar actual= Calendar.getInstance();
-
-                    Paciente pac=args.getParcelable(ARG_PACIENTE);
-                    Medicamento selecMed=medicamentos.get((int)medicamento.getSelectedItemId());
-                    String fechInicio=fechaActual;
-                    String fechFin=fechaFin.getText().toString();
-                    int perio=Integer.parseInt(periodicidad.getText().toString());
-                    int numPas=Integer.parseInt(numPastillas.getText().toString());;
-                    Tratamiento tratamiento= new Tratamiento(Long.parseLong("0"),pac,selecMed,fechInicio,fechFin,numPas,perio,0);
-                    if(enviarDatos(tratamiento))
-                    {
+                    mListener=(goBackTratamiento) v.getContext();
+                    if(enviarDatos(crearTratamiento())) {
                         cargarDialog(v.getContext(),"Enviado","Se ha añadido el tratamiento al paciente");
+                        mListener.goBackTratamiento();
                     }
                     else
-                    {
                         cargarDialog(v.getContext(),"Error","No se ha podido añadir, vuelva a intentarlo");
-                    }
                 }
                 else
                 {
@@ -169,6 +154,9 @@ public class NuevoTratamientoFragment extends Fragment {
     //Comprobar los datos de entrada (0=ok,1=Fallo fecha,2=fallo periodicidad,3=Fallo pastillas)
     private int validarDatos(String perio, String nPas) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        int dia=myCalendar.get(Calendar.DAY_OF_MONTH);
+        int mes=myCalendar.get(Calendar.MONTH)+1;
+        int anio=myCalendar.get(Calendar.YEAR);
         String regexStr = "^[0-9]*$";
         String fecha = dia + "/" + mes + "/" + anio;
         Date fechaTratamiento = null;
@@ -197,6 +185,18 @@ public class NuevoTratamientoFragment extends Fragment {
         } else
             return 1;
     }
+    //Crea un Tratamiento
+    private Tratamiento crearTratamiento()
+    {
+        final Bundle args=getArguments();
+        Paciente pac=args.getParcelable(ARG_PACIENTE);
+        Medicamento selecMed=medicamentos.get((int)medicamento.getSelectedItemId());
+        String fechInicio=getFechaActual();
+        String fechFin=fechaFin.getText().toString();
+        int perio=Integer.parseInt(periodicidad.getText().toString());
+        int numPas=Integer.parseInt(numPastillas.getText().toString());;
+        return new Tratamiento(Long.parseLong("0"),pac,selecMed,fechInicio,fechFin,numPas,perio,0);
+    }
     //Carga lo datos del los medicamentos en la list para el Spinner
     private List<String> cargarSpinner() {
         List<String> nombres= new ArrayList<>();
@@ -208,8 +208,7 @@ public class NuevoTratamientoFragment extends Fragment {
         return nombres;
     }
     //Message dialog
-    private void cargarDialog(Context c, String titulo, String mensaje)
-    {
+    private void cargarDialog(Context c, String titulo, String mensaje) {
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
         builder.setMessage(mensaje)
                 .setTitle(titulo)
@@ -222,8 +221,21 @@ public class NuevoTratamientoFragment extends Fragment {
         AlertDialog alert = builder.create();
         alert.show();
     }
+    //Devuelve la fecha actual
+    private String getFechaActual() {
+        Calendar cal= Calendar.getInstance();
+        int dia=cal.get(Calendar.DAY_OF_MONTH);
+        int mes=cal.get(Calendar.MONTH)+1;
+        String calculoMes=mes/10==0?("0"+mes):String.valueOf(mes);
+        int anio=cal.get(Calendar.YEAR);
+        return dia +"/"+ calculoMes + "/" +anio;
+    }
     private boolean enviarDatos(Tratamiento tratamiento)
     {
         return true;
     }
+    public interface goBackTratamiento {
+        void goBackTratamiento();
+    }
+
 }

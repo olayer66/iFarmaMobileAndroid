@@ -1,6 +1,7 @@
 package fdi.ucm.ifarmamobile;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,25 +10,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
+import java.util.Calendar;
+
+import fdi.ucm.model.Mensaje;
 import fdi.ucm.model.Usuario;
+
+import static fdi.ucm.ifarmamobile.R.string.asunto;
+import static fdi.ucm.ifarmamobile.R.string.mensaje;
 
 
 public class NuevoCorreoFragment extends Fragment {
 
     private static final String ARG_REMITENTE = "remitente";
-    private static final String ARG_EMISOR = "emisor";
+    private static final String ARG_DESTINATARIO = "destinatario";
 
     private Usuario remitente;
-    private Usuario emisor;
+    private Usuario destinatario;
 
-    private goBack mListener;
+    private goBackCorreo mListener;
+    private EditText asunto;
+    private EditText mensaje;
 
-    public static NuevoCorreoFragment newInstance(Usuario remitente, Usuario emisor) {
+    public static NuevoCorreoFragment newInstance(Usuario remitente, Usuario destinatario) {
         NuevoCorreoFragment fragment = new NuevoCorreoFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_REMITENTE, remitente);
-        args.putParcelable(ARG_EMISOR,emisor);
+        args.putParcelable(ARG_DESTINATARIO,destinatario);
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,62 +46,109 @@ public class NuevoCorreoFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             remitente = getArguments().getParcelable(ARG_REMITENTE);
-            emisor= getArguments().getParcelable(ARG_EMISOR);
+            destinatario= getArguments().getParcelable(ARG_DESTINATARIO);
         }
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_nuevo_correo, container, false);
-        Button enviar=(Button) view.findViewById(R.id.nuevoCorreoEnviar);
-
-        final Bundle bundle;
+        asunto=(EditText) view.findViewById(R.id.nuevoCorreoAsunto);
+        mensaje=(EditText) view.findViewById(R.id.nuevoCorreoMensaje);
+        final Button enviar=(Button) view.findViewById(R.id.nuevoCorreoEnviar);
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-               if(enviarCorreo())
-               {
-                   mListener=(goBack) v.getContext();
-                   AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                   builder.setMessage("Mensaje enviado correctamente.")
-                           .setTitle("Enviado")
-                           .setCancelable(false)
-                           .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                               public void onClick(DialogInterface dialog, int id) {
-                                   dialog.cancel();
-                                   mListener.goBack();
-                               }
-                           });
-                   AlertDialog alert = builder.create();
-                   alert.show();
-               }
-               else
-               {
-                   AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                   builder.setMessage("Error al enviar el mensaje, vuelva a intentarlo.")
-                           .setTitle("Error")
-                           .setCancelable(false)
-                           .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                               public void onClick(DialogInterface dialog, int id) {
-                                   dialog.cancel();
-                               }
-                           });
-                   AlertDialog alert = builder.create();
-                   alert.show();
-               }
+                mListener = (goBackCorreo) v.getContext();
+                int correcto=validarMensaje();
+                if (correcto == 0) {
+                    if (enviarCorreo(crearMensaje())) {
+                        cargarDialog(v.getContext(),"Enviado","Se ha enviado el mensaje");
+                        mListener.goBackCorreo();
+                    } else
+                        cargarDialog(v.getContext(),"Error","No se ha podido enviar el mensaje, vuelva a intentarlo");
+                }
+                else
+                {
+                    switch (correcto)
+                    {
+                        case 1:
+                            cargarDialog(v.getContext(),"Error","El asunto dado no es valido");
+                            break;
+                        case 2:
+                            cargarDialog(v.getContext(),"Error","El mensaje dado no es valido");
+                            break;
+                        default:
+                            cargarDialog(v.getContext(),"Error","Error no especificado");
+                    }
+                }
             }
         });
-
         return view;
     }
-    //Envia el mensaje a la BBDD
-    protected boolean enviarCorreo()
+    //Valida los campos del mensaje (0=Correcto,1=Asunto no valido,2=Mensaje no valido)
+    private int validarMensaje()
     {
+        String asu= asunto.getText().toString();
+        String men=mensaje.getText().toString();
+        if(!asu.equals(""))
+        {
+            if(!men.equals(""))
+            {
+                return 0;
+            }
+            else
+                return 2;
+        }
+        else
+            return 1;
+
+    }
+    //Crea un mensaje
+    private Mensaje crearMensaje()
+    {
+        final Bundle args=getArguments();
+        String asu= asunto.getText().toString();
+        String men=mensaje.getText().toString();
+        Usuario rem=args.getParcelable(ARG_REMITENTE);
+        Usuario des=args.getParcelable(ARG_DESTINATARIO);
+        String fecha= getFechaActual();
+        return new Mensaje(Long.parseLong("0"),asu,rem,des,men,false,fecha);
+    }
+    //Devuelve la fecha actual
+    private String getFechaActual()
+    {
+        Calendar cal= Calendar.getInstance();
+        int dia=cal.get(Calendar.DAY_OF_MONTH);
+        int mes=cal.get(Calendar.MONTH)+1;
+        String calculoMes=mes/10==0?("0"+mes):String.valueOf(mes);
+        int anio=cal.get(Calendar.YEAR);
+        return dia +"/"+ calculoMes + "/" +anio;
+    }
+    //Crea un dialog con los datos pasados por parametro
+    private void cargarDialog(Context c, String titulo, String mensaje)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setMessage(mensaje)
+                .setTitle(titulo)
+                .setCancelable(false)
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+    //Envia el mensaje a la BBDD
+    protected boolean enviarCorreo(Mensaje mensaje)
+    {
+
         return true;
     }
     //Envia atras
-    public interface goBack
+    public interface goBackCorreo
     {
-        public void goBack();
+         void goBackCorreo();
     }
 }

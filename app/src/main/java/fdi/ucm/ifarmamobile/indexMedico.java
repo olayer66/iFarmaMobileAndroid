@@ -25,8 +25,9 @@ public class indexMedico extends AppCompatActivity
         implements MensajeAdapter.OnCorreoSelected
                   ,PacienteAdapter.OnPacienteSelected
                   ,DetalleCorreoFragment.OnResponderSelected
-                  ,NuevoCorreoFragment.goBack
-                  ,DetallePacienteFragment.OnNuevoTratamiento{
+                  ,NuevoCorreoFragment.goBackCorreo
+                  ,DetallePacienteFragment.OnNuevoTratamiento
+                  ,NuevoTratamientoFragment.goBackTratamiento{
     SharedPreferences mPrefs;
     Medico medico;
     private ListaPacientesFragment fragListaPacientes;
@@ -156,8 +157,12 @@ public class indexMedico extends AppCompatActivity
         transaction.commit();
     }
     @Override
-    public void goBack() {
+    public void goBackCorreo() {
         getSupportFragmentManager().popBackStack();
+        getSupportFragmentManager().popBackStack();
+    }
+    @Override
+    public void goBackTratamiento() {
         getSupportFragmentManager().popBackStack();
     }
     //Extrae el medico de la BBDD
@@ -173,6 +178,4 @@ public class indexMedico extends AppCompatActivity
         medico= new Medico(id,"Lauro","Gordo Vago","635428976","lauro@algo.com","12/23/23343","C.S. Acacias");
 
     }
-
-
 }

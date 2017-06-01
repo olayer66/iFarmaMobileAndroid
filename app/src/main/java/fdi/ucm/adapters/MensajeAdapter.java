@@ -64,7 +64,7 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
                 mListener=(OnCorreoSelected)v.getContext();
                 mListener.OnCorreoSelected(mensajes.get(i).getAsunto(),
                                            mensajes.get(i).getRemitente(),
-                                           mensajes.get(i).getEmisor(),
+                                           mensajes.get(i).getDestinatario(),
                                            mensajes.get(i).getFecha(),
                                            mensajes.get(i).getMensaje());
             }

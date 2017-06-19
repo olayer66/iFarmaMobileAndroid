@@ -9,6 +9,7 @@
     <string name="error_invalid_usuario">El usuario no es valido</string>
     <string name="error_invalid_password">la contraseña es demasiado corta</string>
     <string name="error_incorrect_password">La contraseña es incorrecta</string>
+    <string name="error_incorrect_login">El login no es correcto</string>
     <string name="error_field_required">Campo obligatorio</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."

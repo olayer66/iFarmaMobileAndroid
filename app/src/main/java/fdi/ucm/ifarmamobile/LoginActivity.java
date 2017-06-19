@@ -3,12 +3,9 @@ package fdi.ucm.ifarmamobile;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,13 +15,11 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,24 +30,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import fdi.ucm.model.Medico;
-import fdi.ucm.model.Paciente;
+import fdi.ucm.volley.Conexion;
 
 import static android.Manifest.permission.READ_CONTACTS;
 import static fdi.ucm.ifarmamobile.R.id.usuario;
@@ -66,7 +47,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Id to identity READ_CONTACTS permission request.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
-
     /**
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
@@ -74,10 +54,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
-    /**
-     * Keep track of the login task to ensure we can cancel it if requested.
-     */
-    private UserLoginTask mAuthTask = null;
 
     // UI references.
     private AutoCompleteTextView mUsuarioView;
@@ -88,6 +64,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Conexion con el servidor
+        Conexion.getInstance(this);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
@@ -168,9 +147,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
+
 
         // Reset errors.
         mUsuarioView.setError(null);
@@ -208,9 +185,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(usuario, password);
-            mAuthTask.execute((Void) null);
+            //showProgress(true);
+            Conexion.getInstance().loginRequest(usuario, password, new Conexion.respuestaListener<String>() {
+                @Override
+                public void getResult(String resultado) {
+                    if (resultado.equals("fallo"))
+                        mPasswordView.setError("Login incorrecto");
+                    else if (resultado.equals("estado"))
+                        mUsuarioView.setError("El usuario no tiene permiso");
+                    else
+                        iniciarSesion(resultado);
+                    showProgress(false);
+                }
+            });
         }
     }
 
@@ -221,7 +208,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 3;
     }
 
     /**
@@ -313,114 +300,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mUsuario;
-        private final String mPassword;
-        private boolean acceso=false;
-        private String role="";
-        UserLoginTask(String usuario, String password) {
-            mUsuario = usuario;
-            mPassword = password;
-        }
-        public void setAcceso(boolean estado)
+    private void iniciarSesion(String role)
+    {
+        if(role.equals("PAC"))
         {
-            acceso=estado;
+            Intent myIntent = new Intent(LoginActivity.this,indexPaciente.class);
+            LoginActivity.this.startActivity(myIntent);
         }
-        public void setRole(String tipo)
+        else
         {
-            role=tipo;
-        }
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service
-            String url = "http://container.fdi.ucm.es:20007/mobile/login";
-            JSONObject entrada= new JSONObject();
-
-            try {
-                entrada.put("usuario",mUsuario);
-                entrada.put("contrasenia",mPassword);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            JsonObjectRequest jsonRequest = new JsonObjectRequest
-                    (Request.Method.POST, url, entrada, new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-
-                            // the response is already constructed as a JSONObject
-                            SharedPreferences.Editor editor = mPrefs.edit();
-                            Boolean acceso=false;
-                            String role="";
-                            Long id=Long.parseLong("0");
-                            try {
-                                acceso=response.getBoolean("acceso");
-                                role=response.getString("role");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            if(acceso)
-                            {
-                                if(role.equals("PAC") || role.equals("MED"))
-                                {
-                                    try {
-                                        id=response.getLong("id");
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                    editor.putLong("ID_USUARIO",id);
-                                    editor.apply();
-                                    setAcceso(true);
-                                    setRole(role);
-                                }
-                            }
-                            else
-                            {
-                                setAcceso(false);
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            error.printStackTrace();
-                        }
-                    });
-            Volley.newRequestQueue(getApplicationContext()).add(jsonRequest);
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-                if(role.equals("PAC"))
-                {
-                    Intent myIntent = new Intent(LoginActivity.this,indexPaciente.class);
-                    LoginActivity.this.startActivity(myIntent);
-                }
-                else
-                {
-                    Intent myIntent = new Intent(LoginActivity.this,indexMedico.class);
-                    LoginActivity.this.startActivity(myIntent);
-                }
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
+            Intent myIntent = new Intent(LoginActivity.this,indexMedico.class);
+            LoginActivity.this.startActivity(myIntent);
         }
     }
 }

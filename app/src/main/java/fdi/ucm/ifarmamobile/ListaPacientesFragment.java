@@ -67,11 +67,6 @@ public class ListaPacientesFragment extends Fragment {
     }
     private void cargarListaMedicamentos()
     {
-        medicamentos= new ArrayList<>();
-        medicamentos.add(new Medicamento(Long.parseLong("0"),"Viralex","El antivirus definivo","AvastFarma",Double.parseDouble("12")));
-        medicamentos.add(new Medicamento(Long.parseLong("0"),"Xor","Solo apto para mojitas","AvastFarma",Double.parseDouble("2")));
-        medicamentos.add(new Medicamento(Long.parseLong("0"),"Agrilea","Jalea para brutos","AvastFarma",Double.parseDouble("10")));
-        medicamentos.add(new Medicamento(Long.parseLong("0"),"Viagra","Toma Salami","AvastFarma",Double.parseDouble("54")));
-        medicamentos.add(new Medicamento(Long.parseLong("0"),"Zumbon","Como viagra pero falso","AvastFarma",Double.parseDouble("10")));
+        medicamentos= new ArrayList<>(Propiedades.getInstance().getMedicamentos());
     }
 }

@@ -41,16 +41,21 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import fdi.ucm.Propiedades;
+import fdi.ucm.model.Medicamento;
 import fdi.ucm.model.Medico;
 import fdi.ucm.model.Mensaje;
 import fdi.ucm.volley.Conexion;
@@ -317,6 +322,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     {
         String role=Propiedades.getInstance().getRole();
         showProgress(false);
+        cargarMedicamentos();
         if(role.equals("PAC"))
         {
             Intent myIntent = new Intent(LoginActivity.this,indexPaciente.class);
@@ -328,6 +334,36 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             Intent myIntent = new Intent(LoginActivity.this,indexMedico.class);
             LoginActivity.this.startActivity(myIntent);
         }
+    }
+    private void cargarMedicamentos()
+    {
+        final String LOGIN_URL = prefixURL + "medicamentos";
+        JsonObjectRequest medicamentosRequest = new JsonObjectRequest(Request.Method.GET, LOGIN_URL,null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        List<Medicamento> medicamentos= new ArrayList<>();
+                        JSONArray listaMed;
+                        try {
+                            listaMed= response.getJSONArray("medicamentos");
+                            for(int i=0;i<listaMed.length();i++)
+                            {
+                                medicamentos.add(Conexion.parserMedicamento(listaMed.getJSONObject(i)));
+                            }
+                        } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                        Propiedades.getInstance().setMedicamentos(medicamentos);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        queue.add(medicamentosRequest);
     }
     private class Login extends AsyncTask<Void, Void, Void> {
         private Context mContext;

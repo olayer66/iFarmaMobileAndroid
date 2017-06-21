@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fdi.ucm.Propiedades;
 import fdi.ucm.adapters.PacienteAdapter;
 import fdi.ucm.model.Medicamento;
 import fdi.ucm.model.Medico;
@@ -55,25 +57,12 @@ public class ListaPacientesFragment extends Fragment {
     //Carga con volley los mensajes desde la BBDD
     private void traerPacientes()
     {
-        Medico medico= new Medico(Long.parseLong("1"),"Paco","Perez Andaluz","234324554","paco@algo.com","12/14/20004","C.S. Acacias");
-        ArrayList<Tratamiento> tratamientos= crearTratamiento();
-        ArrayList<Tratamiento> tratVacio= new ArrayList<>();
-        pacientes = new ArrayList<>();
-        pacientes.add(new Paciente(Long.parseLong("1"),"Paco","Perez Andaluz","234324554","paco@algo.com","C/ falsa 123","Madrid","28045","Madrid","Madrid",medico,tratamientos));
-        pacientes.add(new Paciente(Long.parseLong("2"),"Ana","Sanchez Gorfo","234324554","ana@algo.com","C/ falsa 123","Madrid","28045","Madrid","Madrid",medico,tratVacio));
-        pacientes.add(new Paciente(Long.parseLong("3"),"Antonio","Perez Sanchez","234324554","antonio@algo.com","C/ falsa 123","Madrid","28045","Madrid","Madrid",medico,tratVacio));
-        pacientes.add(new Paciente(Long.parseLong("4"),"Juana","Perez Sanchez","234324554","juana@algo.com","C/ falsa 123","Madrid","28045","Madrid","Madrid",medico,tratamientos));
+        pacientes= Propiedades.getInstance().getMedico().getListaPacientes();
     }
     private ArrayList<Tratamiento> crearTratamiento()
     {
         ArrayList<Tratamiento> tratamientos=new ArrayList<>();
-        Medicamento medicamento= new Medicamento(Long.parseLong("1"),"Tranquinol","Duerme como un liron","TontoFarma",Double.parseDouble("13"));
-        Medico medico= new Medico(Long.parseLong("1"),"Paco","Perez Andaluz","234324554","paco@algo.com","12/14/20004","C.S. Acacias");
-        Paciente pac=new Paciente(Long.parseLong("1"),"Paco","Perez Andaluz","234324554","paco@algo.com","C/ falsa 123","Madrid","28045","Madrid","Madrid",medico,tratamientos);
-        tratamientos.add(new Tratamiento(Long.parseLong("1"),pac,medicamento,"12/05/2017","12/08/2017",0,8,2));
-        tratamientos.add(new Tratamiento(Long.parseLong("2"),pac,medicamento,"12/05/2017","12/08/2017",0,8,2));
-        tratamientos.add(new Tratamiento(Long.parseLong("3"),pac,medicamento,"12/05/2017","12/08/2017",0,8,2));
-        tratamientos.add(new Tratamiento(Long.parseLong("4"),pac,medicamento,"12/05/2017","12/08/2017",0,8,2));
+
         return tratamientos;
     }
     private void cargarListaMedicamentos()

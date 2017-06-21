@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by joset on 21/05/2017.
@@ -23,9 +24,10 @@ public class Paciente implements Parcelable {
     private String provincia;
     private String comAutonoma;
     private Medico medico;
-    private ArrayList<Tratamiento> tratamiento;
+    private List<Tratamiento> tratamiento;
+    private List<Mensaje> listaMensajes;
 
-    public Paciente(long id,String nombre,String apellidos, String telefono, String email,String direccion,String ciudad,String codPostal, String provincia,String comAutonoma,Medico medico,ArrayList<Tratamiento> tratamiento)
+    public Paciente(long id,String nombre,String apellidos, String telefono, String email,String direccion,String ciudad,String codPostal, String provincia,String comAutonoma,Medico medico,List<Tratamiento> tratamiento, List<Mensaje> listaMensajes)
     {
         this.id=id;
         this.nombre=nombre;
@@ -40,6 +42,7 @@ public class Paciente implements Parcelable {
         this.comAutonoma=comAutonoma;
         this.medico=medico;
         this.tratamiento=tratamiento;
+        this.listaMensajes=listaMensajes;
     }
 
     public long getId() {
@@ -76,8 +79,11 @@ public class Paciente implements Parcelable {
     public Medico getMedico() {
         return medico;
     }
-    public ArrayList<Tratamiento> getTratamiento() {
+    public List<Tratamiento> getTratamiento() {
         return tratamiento;
+    }
+    public List<Mensaje> getListaMensajes() {
+        return listaMensajes;
     }
 
     @Override
@@ -99,6 +105,7 @@ public class Paciente implements Parcelable {
         dest.writeString(comAutonoma);
         dest.writeParcelable(medico,flags);
         dest.writeList(tratamiento);
+        dest.writeList(listaMensajes);
     }
     public void readFromParcel(Parcel in) {
         id = in.readLong();
@@ -113,5 +120,6 @@ public class Paciente implements Parcelable {
         comAutonoma= in.readString();
         medico=in.readParcelable(Medico.class.getClassLoader());
         tratamiento=in.readArrayList(Tratamiento.class.getClassLoader());
+        listaMensajes=in.readArrayList(Mensaje.class.getClassLoader());
     }
 }

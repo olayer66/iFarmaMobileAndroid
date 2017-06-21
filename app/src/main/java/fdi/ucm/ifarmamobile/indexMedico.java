@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,13 +12,11 @@ import java.util.ArrayList;
 
 import fdi.ucm.adapters.MensajeAdapter;
 import fdi.ucm.adapters.PacienteAdapter;
-import fdi.ucm.adapters.TratamientoMedicoAdapter;
 import fdi.ucm.model.Medicamento;
 import fdi.ucm.model.Medico;
 import fdi.ucm.model.Paciente;
-import fdi.ucm.model.Tratamiento;
 import fdi.ucm.model.Usuario;
-
+import fdi.ucm.volley.Conexion;
 
 public class indexMedico extends AppCompatActivity
         implements MensajeAdapter.OnCorreoSelected
@@ -40,8 +37,6 @@ public class indexMedico extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPrefs = getPreferences(MODE_PRIVATE);
-        cargarMedico();
         setContentView(R.layout.activity_index_medico);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarMedico);
         setSupportActionBar(myToolbar);
@@ -164,18 +159,5 @@ public class indexMedico extends AppCompatActivity
     @Override
     public void goBackTratamiento() {
         getSupportFragmentManager().popBackStack();
-    }
-    //Extrae el medico de la BBDD
-    private void cargarMedico()
-    {
-        Long id;
-        //Peticion a la BBDD
-        //id= mPrefs.getLong("ID_USUARIO", Long.parseLong(null));
-
-
-        //Temporal
-        id=Long.parseLong("1");
-        medico= new Medico(id,"Lauro","Gordo Vago","635428976","lauro@algo.com","12/23/23343","C.S. Acacias");
-
     }
 }

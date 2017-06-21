@@ -3,6 +3,8 @@ package fdi.ucm.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 
 public class Medico implements Parcelable {
     //estandar
@@ -14,7 +16,11 @@ public class Medico implements Parcelable {
     //Especificos
     private String numColegiado;
     private String centroTrabajo;
-    public  Medico(long id,String nombre,String apellidos, String telefono, String email,String numColegiado,String centroTrabajo)
+    //Lista de pacientes
+    private List<Paciente> listaPacientes;
+
+    private List<Mensaje> listaMensajes;
+    public  Medico(long id,String nombre,String apellidos, String telefono, String email,String numColegiado,String centroTrabajo, List<Paciente>listaPacientes,List<Mensaje>listaMensajes)
     {
         this.id=id;
         this.nombre=nombre;
@@ -24,6 +30,9 @@ public class Medico implements Parcelable {
 
         this.numColegiado=numColegiado;
         this.centroTrabajo=centroTrabajo;
+
+        this.listaPacientes=listaPacientes;
+        this.listaMensajes=listaMensajes;
     }
 
     protected Medico(Parcel in) {
@@ -34,6 +43,8 @@ public class Medico implements Parcelable {
         email = in.readString();
         numColegiado = in.readString();
         centroTrabajo = in.readString();
+        listaPacientes= in.readArrayList(Paciente.class.getClassLoader());
+        listaMensajes= in.readArrayList(Mensaje.class.getClassLoader());
     }
 
     public static final Creator<Medico> CREATOR = new Creator<Medico>() {
@@ -71,6 +82,13 @@ public class Medico implements Parcelable {
         return centroTrabajo;
     }
 
+    public List<Paciente> getListaPacientes() {
+        return listaPacientes;
+    }
+    public List<Mensaje> getListaMensajes() {
+        return listaMensajes;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -85,6 +103,8 @@ public class Medico implements Parcelable {
         dest.writeString(telefono);
         dest.writeString(numColegiado);
         dest.writeString(centroTrabajo);
+        dest.writeList(listaPacientes);
+        dest.writeList(listaMensajes);
     }
     public void readFromParcel(Parcel in) {
         id = in.readLong();
@@ -94,5 +114,7 @@ public class Medico implements Parcelable {
         telefono = in.readString();
         numColegiado= in.readString();
         centroTrabajo=in.readString();
+        listaPacientes=in.readArrayList(Paciente.class.getClassLoader());
+        listaMensajes= in.readArrayList(Mensaje.class.getClassLoader());
     }
 }

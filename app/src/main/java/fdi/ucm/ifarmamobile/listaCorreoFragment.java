@@ -17,6 +17,7 @@ import android.widget.RadioButton;
 import java.util.ArrayList;
 import java.util.List;
 
+import fdi.ucm.Propiedades;
 import fdi.ucm.adapters.MensajeAdapter;
 import fdi.ucm.model.Mensaje;
 import fdi.ucm.model.Usuario;
@@ -71,23 +72,14 @@ public class listaCorreoFragment extends Fragment {
     //Carga con volley los mensajes desde la BBDD
     private void traerMensajes()
     {
-        Long id=Long.parseLong("1");
-        Usuario rem=new Usuario(id,"paco","perez","234324554","paco@algo.com");
-        Usuario emi=new Usuario(id,"Ana","Sanchez","152356677","ana@algo.com");
-        mensajes = new ArrayList<>();
-        mensajes.add(new Mensaje(Long.parseLong("3"),"prueba3",rem,emi,"esto es una prueba de mensaje",false,"19/10/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("4"),"prueba4",rem,emi,"esto es una prueba de mensaje",false,"27/02/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("1"),"prueba1",rem,emi,"esto es una prueba de mensaje",true,"20/10/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("2"),"prueba2",rem,emi,"esto es una prueba de mensaje",true,"20/09/2017"));
+        if(Propiedades.getInstance().getMedico()!=null)
+            mensajes=Propiedades.getInstance().getMedico().getListaMensajes();
+        else
+            mensajes=Propiedades.getInstance().getPaciente().getListaMensajes();
     }
-    //actualiza ña lista de mensajes
+    //actualiza la lista de mensajes
     private void updateMensajes()
     {
-        Usuario rem=new Usuario(id,"paco","perez","234324554","paco@algo.com");
-        Usuario emi=new Usuario(id,"Ana","Sanchez","152356677","ana@algo.com");
-        mensajes.add(new Mensaje(Long.parseLong("5"),"prueba5",rem,emi,"esto es una prueba de mensaje",false,"19/10/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("5"),"prueba6",rem,emi,"esto es una prueba de mensaje",false,"19/10/2017"));
-        mensajes.add(new Mensaje(Long.parseLong("5"),"prueba7",rem,emi,"esto es una prueba de mensaje",false,"19/10/2017"));
 
         mAdapter.notifyDataSetChanged();
     }

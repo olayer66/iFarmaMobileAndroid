@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -89,7 +90,7 @@ public class DetallePacienteFragment extends Fragment  {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.rvTratamientoMedico);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        ArrayList<Tratamiento> tr=paciente.getTratamiento();
+        ArrayList<Tratamiento> tr= new ArrayList<>(paciente.getTratamiento());
         if(tr==null)
             tr= new ArrayList<>();
         mAdapter = new TratamientoMedicoAdapter(tr);

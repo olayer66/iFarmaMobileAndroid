@@ -195,7 +195,7 @@ public class NuevoTratamientoFragment extends Fragment {
         String fechFin=fechaFin.getText().toString();
         int perio=Integer.parseInt(periodicidad.getText().toString());
         int numPas=Integer.parseInt(numPastillas.getText().toString());;
-        return new Tratamiento(Long.parseLong("0"),pac,selecMed,fechInicio,fechFin,numPas,perio,0);
+        return new Tratamiento(Long.parseLong("0"),selecMed,fechInicio,fechFin,numPas,perio);
     }
     //Carga lo datos del los medicamentos en la list para el Spinner
     private List<String> cargarSpinner() {

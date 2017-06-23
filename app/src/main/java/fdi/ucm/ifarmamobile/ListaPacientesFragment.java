@@ -24,17 +24,27 @@ import fdi.ucm.model.Tratamiento;
 import fdi.ucm.model.Usuario;
 
 public class ListaPacientesFragment extends Fragment {
-    private List<Paciente> pacientes;
+    private ArrayList<Paciente> pacientes;
     private ArrayList<Medicamento> medicamentos;
     private static final String TAG = "listaPacientes";
     protected RecyclerView mRecyclerView;
     protected PacienteAdapter mAdapter;
     protected RecyclerView.LayoutManager mLayoutManager;
+    private static final String ARG_MEDICO= "medico";
+    private static final String ARG_MEDICAMENTOS= "medicamentos";
+
+    public static ListaPacientesFragment newInstance(Medico medico, ArrayList<Medicamento> medicamentos) {
+        ListaPacientesFragment fragment = new ListaPacientesFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_MEDICO, medico);
+        args.putParcelableArrayList(ARG_MEDICAMENTOS,medicamentos);
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        traerPacientes();
-        cargarListaMedicamentos();
+        cargarDatos();
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,18 +65,11 @@ public class ListaPacientesFragment extends Fragment {
         Activity activity=getActivity();
     }
     //Carga con volley los mensajes desde la BBDD
-    private void traerPacientes()
+    private void cargarDatos()
     {
-        pacientes= Propiedades.getInstance().getMedico().getListaPacientes();
-    }
-    private ArrayList<Tratamiento> crearTratamiento()
-    {
-        ArrayList<Tratamiento> tratamientos=new ArrayList<>();
-
-        return tratamientos;
-    }
-    private void cargarListaMedicamentos()
-    {
-        medicamentos= new ArrayList<>(Propiedades.getInstance().getMedicamentos());
+        final Bundle args = getArguments();
+        Medico medico=args.getParcelable(ARG_MEDICO);
+        medicamentos=args.getParcelableArrayList(ARG_MEDICAMENTOS);
+        pacientes=medico.getListaPacientes();
     }
 }

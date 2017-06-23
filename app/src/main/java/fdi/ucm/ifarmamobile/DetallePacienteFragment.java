@@ -106,19 +106,6 @@ public class DetallePacienteFragment extends Fragment  {
         });
         return view;
     }
-
-    public ArrayList<Tratamiento> getTratamientos() {
-        return tratamientos;
-    }
-
-    public void setTratamientos(ArrayList<Tratamiento> tratamientos) {
-        this.tratamientos = tratamientos;
-    }
-
-    public TratamientoMedicoAdapter getmAdapter() {
-        return mAdapter;
-    }
-
     public interface OnNuevoTratamiento {
         void OnNuevoTratamiento(Paciente paciente, ArrayList<Medicamento> medicamentos);
     }

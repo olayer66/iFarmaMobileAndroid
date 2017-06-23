@@ -1,24 +1,18 @@
 package fdi.ucm;
 
-import android.app.Application;
-
+import java.util.ArrayList;
 import java.util.List;
-
 import fdi.ucm.model.Medicamento;
 import fdi.ucm.model.Medico;
 import fdi.ucm.model.Paciente;
 
-/**
- * Created by joset on 20/06/2017.
- */
 
 public class Propiedades{
     private static Propiedades mInstance= null;
-    private static String id="";
     private static String role="";
     private static Medico medico=null;
     private static Paciente paciente=null;
-    private static List<Medicamento> medicamentos;
+    private static ArrayList<Medicamento> medicamentos;
     protected Propiedades(){}
 
     public static synchronized Propiedades getInstance(){
@@ -44,17 +38,17 @@ public class Propiedades{
         this.medico = medico;
     }
     //Medicamentos
-    public List<Medicamento> getMedicamentos() {
+    public ArrayList<Medicamento> getMedicamentos() {
         return medicamentos;
     }
-    public void setMedicamentos(List<Medicamento> medicamentos) {
+    public void setMedicamentos(ArrayList<Medicamento> medicamentos) {
         Propiedades.medicamentos = medicamentos;
     }
     //Paciente
-    public static Paciente getPaciente() {
+    public Paciente getPaciente() {
         return paciente;
     }
-    public static void setPaciente(Paciente paciente) {
+    public void setPaciente(Paciente paciente) {
         Propiedades.paciente = paciente;
     }
 }

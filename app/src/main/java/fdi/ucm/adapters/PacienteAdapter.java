@@ -59,9 +59,11 @@ public class PacienteAdapter  extends RecyclerView.Adapter<PacienteAdapter.Perso
         personViewHolder.telefono.setText(pacientes.get(i).getTelefono());
         personViewHolder.id.setText(String.valueOf(pacientes.get(i).getId()));
         if(pacientes.get(i).getTratamiento().size()==0)
-        {
             personViewHolder.tratamiento.setVisibility(View.INVISIBLE);
+        else {
+
         }
+
         personViewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

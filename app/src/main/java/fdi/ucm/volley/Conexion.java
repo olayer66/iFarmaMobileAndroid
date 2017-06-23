@@ -38,8 +38,8 @@ public class Conexion {
             String email= entrada.getString("email");
             String numColegiado= entrada.getString("numColMedico");
             String centroTrabajo= entrada.getString("centroTrabajo");
-            List<Paciente> listaPacientes = new ArrayList<>();
-            List<Mensaje> listaMensajes = new ArrayList<>();
+            ArrayList<Paciente> listaPacientes = new ArrayList<>();
+            ArrayList<Mensaje> listaMensajes = new ArrayList<>();
             if(tipo==0) {
                 JSONArray listaP = entrada.getJSONArray("listaPacientes");
                 for (int i = 0; i < listaP.length(); i++) {
@@ -70,8 +70,8 @@ public class Conexion {
             String codPostal= entrada.getString("codPostal");
             String provincia= entrada.getString("provincia");
             String conAutonoma= entrada.getString("comAutonoma");
-            List<Mensaje> listaMensajes = new ArrayList<>();
-            List<Tratamiento> tratamientos = new ArrayList<>();
+            ArrayList<Mensaje> listaMensajes = new ArrayList<>();
+            ArrayList<Tratamiento> tratamientos = new ArrayList<>();
             Medico medicoCabecera=null;
             if(tipo==0) {
                 medicoCabecera = parserMedico(entrada.getJSONObject("medCabecera"),1);

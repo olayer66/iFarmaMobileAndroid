@@ -3,7 +3,7 @@ package fdi.ucm.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
+import java.util.ArrayList;
 
 
 public class Medico implements Parcelable {
@@ -16,11 +16,11 @@ public class Medico implements Parcelable {
     //Especificos
     private String numColegiado;
     private String centroTrabajo;
-    //Lista de pacientes
-    private List<Paciente> listaPacientes;
+    //ArrayLista de pacientes
+    private ArrayList<Paciente> listaPacientes;
 
-    private List<Mensaje> listaMensajes;
-    public  Medico(long id,String nombre,String apellidos, String telefono, String email,String numColegiado,String centroTrabajo, List<Paciente>listaPacientes,List<Mensaje>listaMensajes)
+    private ArrayList<Mensaje> listaMensajes;
+    public  Medico(long id,String nombre,String apellidos, String telefono, String email,String numColegiado,String centroTrabajo, ArrayList<Paciente>listaPacientes,ArrayList<Mensaje>listaMensajes)
     {
         this.id=id;
         this.nombre=nombre;
@@ -82,10 +82,10 @@ public class Medico implements Parcelable {
         return centroTrabajo;
     }
 
-    public List<Paciente> getListaPacientes() {
+    public ArrayList<Paciente> getListaPacientes() {
         return listaPacientes;
     }
-    public List<Mensaje> getListaMensajes() {
+    public ArrayList<Mensaje> getListaMensajes() {
         return listaMensajes;
     }
 

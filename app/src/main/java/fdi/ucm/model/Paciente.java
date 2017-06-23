@@ -24,10 +24,10 @@ public class Paciente implements Parcelable {
     private String provincia;
     private String comAutonoma;
     private Medico medico;
-    private List<Tratamiento> tratamiento;
-    private List<Mensaje> listaMensajes;
+    private ArrayList<Tratamiento> tratamiento;
+    private ArrayList<Mensaje> listaMensajes;
 
-    public Paciente(long id,String nombre,String apellidos, String telefono, String email,String direccion,String ciudad,String codPostal, String provincia,String comAutonoma,Medico medico,List<Tratamiento> tratamiento, List<Mensaje> listaMensajes)
+    public Paciente(long id,String nombre,String apellidos, String telefono, String email,String direccion,String ciudad,String codPostal, String provincia,String comAutonoma,Medico medico,ArrayList<Tratamiento> tratamiento, ArrayList<Mensaje> listaMensajes)
     {
         this.id=id;
         this.nombre=nombre;
@@ -44,6 +44,33 @@ public class Paciente implements Parcelable {
         this.tratamiento=tratamiento;
         this.listaMensajes=listaMensajes;
     }
+
+    protected Paciente(Parcel in) {
+        id = in.readLong();
+        nombre = in.readString();
+        apellidos = in.readString();
+        telefono = in.readString();
+        email = in.readString();
+        direccion = in.readString();
+        ciudad = in.readString();
+        codPostal = in.readString();
+        provincia = in.readString();
+        comAutonoma = in.readString();
+        medico = in.readParcelable(Medico.class.getClassLoader());
+        tratamiento = in.createTypedArrayList(Tratamiento.CREATOR);
+    }
+
+    public static final Creator<Paciente> CREATOR = new Creator<Paciente>() {
+        @Override
+        public Paciente createFromParcel(Parcel in) {
+            return new Paciente(in);
+        }
+
+        @Override
+        public Paciente[] newArray(int size) {
+            return new Paciente[size];
+        }
+    };
 
     public long getId() {
         return id;
@@ -79,10 +106,10 @@ public class Paciente implements Parcelable {
     public Medico getMedico() {
         return medico;
     }
-    public List<Tratamiento> getTratamiento() {
+    public ArrayList<Tratamiento> getTratamiento() {
         return tratamiento;
     }
-    public List<Mensaje> getListaMensajes() {
+    public ArrayList<Mensaje> getListaMensajes() {
         return listaMensajes;
     }
 

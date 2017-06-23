@@ -3,11 +3,9 @@ package fdi.ucm.ifarmamobile;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +36,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -46,18 +43,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import fdi.ucm.Propiedades;
 import fdi.ucm.model.Medicamento;
 import fdi.ucm.model.Medico;
-import fdi.ucm.model.Mensaje;
 import fdi.ucm.volley.Conexion;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -97,7 +87,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // Set up the login form.
         mUsuarioView = (AutoCompleteTextView) findViewById(usuario);
         populateAutoComplete();
-        mPrefs=getPreferences(MODE_PRIVATE);
+        mPrefs = getPreferences(MODE_PRIVATE);
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -209,16 +199,57 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             //Peticion asincrona al servidor
-            Login login = new Login(this.getApplicationContext(), usuario, password);
-            try {
-                login.execute();
-                Thread.sleep(3000);
-                iniciarSesion();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            showProgress(true);
+            login(usuario, password, new loginResp() {
+                @Override
+                public void OnRespuesta(JSONObject response) {
+                    try {
+                        String error = response.getString("error");
+                        if (error.equals("fallo"))
+                            mPasswordView.setError(getString(R.string.error_incorrect_login));
+                        else if (error.equals("estado"))
+                            mUsuarioView.setError(getString(R.string.error_incorrect_estado));
+                        else if(error.equals("red")) {
+                            String mesg= getString(R.string.error_red)+" "+ response.getString("mensaje");
+                            Toast.makeText(getApplicationContext(),mesg , Toast.LENGTH_LONG).show();
+                        }else {
+                            String role = response.getString("role");
+                            JSONObject usu = response.getJSONObject("usuario");
+                            Propiedades.getInstance().setRole(role);
+                            if (role.equals("MED"))
+                                Propiedades.getInstance().setMedico(Conexion.parserMedico(usu, 0));
+                            else
+                                Propiedades.getInstance().setPaciente(Conexion.parserPaciente(usu, 0));
+
+                            Medico med = Propiedades.getInstance().getMedico();
+                            cargarMedicamentos(new MedicamentosResp() {
+                                @Override
+                                public void OnRespuesta(JSONObject response) {
+                                    ArrayList<Medicamento> medicamentos = new ArrayList<>();
+                                    JSONArray listaMed;
+                                    try {
+                                        listaMed = response.getJSONArray("medicamentos");
+                                        for (int i = 0; i < listaMed.length(); i++) {
+                                            medicamentos.add(Conexion.parserMedicamento(listaMed.getJSONObject(i)));
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    Propiedades.getInstance().setMedicamentos(medicamentos);
+                                    showProgress(false);
+                                    iniciarSesion();
+                                }
+                            });
+                        }
+                        showProgress(false);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         }
     }
+
     private boolean isUsuarioValid(String usuario) {
         //TODO: Replace this with your own logic
         return usuario.contains("");
@@ -295,7 +326,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
+    public void onLoaderReset(Loader<Cursor> loader) {
 
     }
 
@@ -318,106 +349,82 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int ADDRESS = 0;
         int IS_PRIMARY = 1;
     }
-    private void iniciarSesion()
-    {
-        String role=Propiedades.getInstance().getRole();
-        showProgress(false);
-        cargarMedicamentos();
-        if(role.equals("PAC"))
-        {
-            Intent myIntent = new Intent(LoginActivity.this,indexPaciente.class);
+
+    private void iniciarSesion() {
+        String role = Propiedades.getInstance().getRole();
+        if (role.equals("PAC")) {
+            Intent myIntent = new Intent(LoginActivity.this, indexPaciente.class);
             LoginActivity.this.startActivity(myIntent);
-        }
-        else
-        {
+        } else {
             //cargamos la vista del medico
-            Intent myIntent = new Intent(LoginActivity.this,indexMedico.class);
+            Intent myIntent = new Intent(LoginActivity.this, indexMedico.class);
             LoginActivity.this.startActivity(myIntent);
         }
     }
-    private void cargarMedicamentos()
-    {
+
+    //Carga los medicamentos de la BBDD
+    private void cargarMedicamentos(final MedicamentosResp callback) {
         final String LOGIN_URL = prefixURL + "medicamentos";
-        JsonObjectRequest medicamentosRequest = new JsonObjectRequest(Request.Method.GET, LOGIN_URL,null,
+        JsonObjectRequest medicamentosRequest = new JsonObjectRequest(Request.Method.GET, LOGIN_URL, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        List<Medicamento> medicamentos= new ArrayList<>();
-                        JSONArray listaMed;
-                        try {
-                            listaMed= response.getJSONArray("medicamentos");
-                            for(int i=0;i<listaMed.length();i++)
-                            {
-                                medicamentos.add(Conexion.parserMedicamento(listaMed.getJSONObject(i)));
-                            }
-                        } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                        Propiedades.getInstance().setMedicamentos(medicamentos);
+                        callback.OnRespuesta(response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
+                        JSONObject err= new JSONObject();
+                        try {
+                            err.put("error","red");
+                            err.put("mensaje",error.getMessage());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        callback.OnRespuesta(err);
                     }
                 });
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         queue.add(medicamentosRequest);
     }
-    private class Login extends AsyncTask<Void, Void, Void> {
-        private Context mContext;
-        private String mUsuario;
-        private String mPassword;
-        public Login(Context ctx, String usuario,String password) {
-            mContext = ctx;
-            mUsuario = usuario;
-            mPassword=password;
+    //Realiza el login contra la BBDD
+    private void login(String mUsuario, String mPassword, final loginResp callback) {
+        final String LOGIN_URL = prefixURL + "login";
+        JSONObject request = new JSONObject();
+        try {
+            request.put("usuario", mUsuario);
+            request.put("password", mPassword);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            final String LOGIN_URL = prefixURL + "login";
-            JSONObject request = new JSONObject();
-            try {
-                request.put("usuario", mUsuario);
-                request.put("password", mPassword);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, LOGIN_URL,request,
+        JsonObjectRequest loginRequest = new JsonObjectRequest(Request.Method.POST, LOGIN_URL, request,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        try {
-                            String error = response.getString("error");
-                            if (error.equals("fallo"))
-                                mPasswordView.setError("Login incorrecto");
-                            else if (error.equals("estado"))
-                                mUsuarioView.setError("El usuario no tiene permiso");
-                            else {
-                                String role = response.getString("role");
-                                Propiedades.getInstance().setRole(role);
-                                if (role.equals("MED"))
-                                    Propiedades.getInstance().setMedico(Conexion.parserMedico(response.getJSONObject("usuario"), 0));
-                                else
-                                    Propiedades.getInstance().setPaciente(Conexion.parserPaciente(response.getJSONObject("usuario"), 0));
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                       callback.OnRespuesta(response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
+                        JSONObject err= new JSONObject();
+                        try {
+                            err.put("error","red");
+                            err.put("mensaje",error.getMessage());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        callback.OnRespuesta(err);
                     }
                 });
-            RequestQueue queue = Volley.newRequestQueue(mContext.getApplicationContext());
-            queue.add(loginRequest);
-            return null;
-        }
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        queue.add(loginRequest);
+    }
+    public interface loginResp{
+        void OnRespuesta(JSONObject response);
+    }
+    private interface MedicamentosResp{
+        void OnRespuesta(JSONObject response);
     }
 }
-

@@ -7,9 +7,11 @@
     <string name="action_sign_in">Iniciar sesion o registrarse</string>
     <string name="action_sign_in_short">Iniciar Sesion</string>
     <string name="error_invalid_usuario">El usuario no es valido</string>
+    <string name="error_red">Error de red:</string>
     <string name="error_invalid_password">la contraseña es demasiado corta</string>
     <string name="error_incorrect_password">La contraseña es incorrecta</string>
     <string name="error_incorrect_login">El login no es correcto</string>
+    <string name="error_incorrect_estado">El usuario no tiene permisos</string>
     <string name="error_field_required">Campo obligatorio</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."

@@ -1,9 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="fdi.ucm.ifarmamobile.indexPaciente">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarPaciente"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="@string/app_name"
+        app:titleTextColor="@android:color/white"
+        android:background="@color/colorPrimary">
+    </android.support.v7.widget.Toolbar>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/fondo_base"
+        android:id="@+id/view_toolbar" />
 
-</android.support.constraint.ConstraintLayout>
+    <!-- Layout for content is here. This can be a RelativeLayout  -->
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/FragmentPrincipalPac"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/fondo_fragment" />
+</LinearLayout>

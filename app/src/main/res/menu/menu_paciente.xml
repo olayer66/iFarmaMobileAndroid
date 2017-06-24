@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/perfilPac"
+        android:icon="@mipmap/ic_pacientes"
+        android:title="@string/perfil"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/tratamientoPac"
+        android:icon="@mipmap/ic_tratamiento"
+        android:title="@string/tratamientoPac"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/correoPac"
+        android:icon="@android:drawable/ic_dialog_email"
+        android:title="@string/correoPac"
+        app:showAsAction="always" />
+</menu>

@@ -17,9 +17,9 @@ public class Conexion {
     private static final String TAG = "NetworkManager";
     private static Conexion instance = null;
     /*------LOCAL--------*/
-    private static final String prefixURL = "http://localhost:8080/mobile/";
+    //private static final String prefixURL = "http://localhost:8080/mobile/";
     /*------SERVIDOR--------*/
-    //private static final String prefixURL = "http://container.fdi.ucm.es:20007/mobile/";
+    private static final String prefixURL = "http://container.fdi.ucm.es:20007/mobile/";
 
     public static synchronized Conexion getInstance()
     {

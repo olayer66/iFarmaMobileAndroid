@@ -20,6 +20,12 @@
     <!--Menu medico-->
     <string name="agenda">Lista pacientes</string>
     <string name="correo">Correo</string>
+    <!--Menu paciente-->
+    <string name="perfil">Perfil</string>
+    <string name="tratamientoPac">Tratamiento</string>
+    <string name="correoPac">Correo</string>
+
+
     <!-- correo-->
     <string name="boton_nuevo">Nuevo mensaje</string>
     <string name="boton_responder">Responder</string>
@@ -43,7 +49,7 @@
     <string name="periodicidad">Periodicidad:</string>
     <string name="hint_periodicidad">Frecuencia en horas</string>
     <string name="num_pastillas">Nº de pastillas:</string>
-    <string name="hint_pastillas" >Nº de pastillas por toma</string>
+    <string name="hint_pastillas">Nº de pastillas por toma</string>
     <string name="hint_fecha_fin">01/01/1900</string>
     <string name="anadir">Añadir</string>
     <string name="hint_anadir_tratamiento">Añadir Tratamiento</string>

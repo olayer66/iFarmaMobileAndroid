@@ -11,12 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 
 import fdi.ucm.model.Mensaje;
 import fdi.ucm.model.Usuario;
+import fdi.ucm.volley.Conexion;
 
+import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 import static fdi.ucm.ifarmamobile.R.string.asunto;
 import static fdi.ucm.ifarmamobile.R.string.mensaje;
 
@@ -30,6 +44,7 @@ public class NuevoCorreoFragment extends Fragment {
     private Usuario destinatario;
 
     private goBackCorreo mListener;
+    private Context context;
     private EditText asunto;
     private EditText mensaje;
 
@@ -60,26 +75,41 @@ public class NuevoCorreoFragment extends Fragment {
             @Override
             public void onClick(final View v) {
                 mListener = (goBackCorreo) v.getContext();
+                context=v.getContext();
                 int correcto=validarMensaje();
                 if (correcto == 0) {
-                    if (enviarCorreo(crearMensaje())) {
-                        cargarDialog(v.getContext(),"Enviado","Se ha enviado el mensaje");
-                        mListener.goBackCorreo();
-                    } else
-                        cargarDialog(v.getContext(),"Error","No se ha podido enviar el mensaje, vuelva a intentarlo");
+                    Mensaje mensaje= crearMensaje();
+                    enviarCorreo(v.getContext(), mensaje, new OnCorreoEnviado() {
+                        @Override
+                        public void OnRespuesta(JSONObject response) {
+
+                            try {
+                                String error= response.getString("error");
+                                if(error.equals("red")) {
+                                    cargarDialog(v.getContext(), context.getString(R.string.mensaje_error_title), context.getString(R.string.mensaje_error_texto));
+                                    Toast.makeText(context,context.getString(R.string.error_red),Toast.LENGTH_LONG).show();
+                                }else {
+                                    cargarDialog(v.getContext(), context.getString(R.string.mensaje_enviado_title), context.getString(R.string.mensaje_enviado_texto));
+                                    mListener.goBackCorreo();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 }
                 else
                 {
                     switch (correcto)
                     {
                         case 1:
-                            cargarDialog(v.getContext(),"Error","El asunto dado no es valido");
+                            cargarDialog(v.getContext(),context.getString(R.string.mensaje_error_title),context.getString(R.string.mensaje_validacion_asunto));
                             break;
                         case 2:
-                            cargarDialog(v.getContext(),"Error","El mensaje dado no es valido");
+                            cargarDialog(v.getContext(),context.getString(R.string.mensaje_error_title),context.getString(R.string.mensaje_validacion_mensaje));
                             break;
                         default:
-                            cargarDialog(v.getContext(),"Error","Error no especificado");
+                            cargarDialog(v.getContext(),context.getString(R.string.mensaje_error_title),context.getString(R.string.mensaje_validacion_error));
                     }
                 }
             }
@@ -87,8 +117,7 @@ public class NuevoCorreoFragment extends Fragment {
         return view;
     }
     //Valida los campos del mensaje (0=Correcto,1=Asunto no valido,2=Mensaje no valido)
-    private int validarMensaje()
-    {
+    private int validarMensaje() {
         String asu= asunto.getText().toString();
         String men=mensaje.getText().toString();
         if(!asu.equals(""))
@@ -105,8 +134,7 @@ public class NuevoCorreoFragment extends Fragment {
 
     }
     //Crea un mensaje
-    private Mensaje crearMensaje()
-    {
+    private Mensaje crearMensaje() {
         final Bundle args=getArguments();
         String asu= asunto.getText().toString();
         String men=mensaje.getText().toString();
@@ -141,10 +169,35 @@ public class NuevoCorreoFragment extends Fragment {
         alert.show();
     }
     //Envia el mensaje a la BBDD
-    protected boolean enviarCorreo(Mensaje mensaje)
+    private void enviarCorreo(Context context,Mensaje mensaje,final OnCorreoEnviado callback)
     {
-
-        return true;
+        String URL= Conexion.getInstance().getPrefixURL()+"nuevoMensaje";
+        JSONObject request= Conexion.mensajeToJson(mensaje);
+        JsonRequest nuevoMensaje = new JsonObjectRequest(Request.Method.POST,URL, request,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        callback.OnRespuesta(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        JSONObject err= new JSONObject();
+                        try {
+                            err.put("error","red");
+                            err.put("mensaje",error.getMessage());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        callback.OnRespuesta(err);
+                    }
+                });
+        RequestQueue queue = Volley.newRequestQueue(context);
+        queue.add(nuevoMensaje);
+    }
+    private interface OnCorreoEnviado{
+        void OnRespuesta(JSONObject response);
     }
     //Envia atras
     public interface goBackCorreo

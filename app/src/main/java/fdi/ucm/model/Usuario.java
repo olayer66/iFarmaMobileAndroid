@@ -42,6 +42,8 @@ public class Usuario implements Parcelable {
         return telefono;
     }
 
+
+
     @Override
     public int describeContents() {
         return 0;

@@ -2,11 +2,16 @@
   <dictionary name="joset">
     <words>
       <w>asunto</w>
+      <w>añadir</w>
       <w>cargar</w>
+      <w>conexión</w>
+      <w>contraseña</w>
       <w>correo</w>
+      <w>finalización</w>
       <w>lista</w>
       <w>mensajes</w>
       <w>pacientes</w>
+      <w>sesión</w>
     </words>
   </dictionary>
 </component>

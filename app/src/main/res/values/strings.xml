@@ -4,10 +4,10 @@
     <!-- Strings related to login -->
     <string name="prompt_usuario">Usuario</string>
     <string name="prompt_password">Contraseña</string>
-    <string name="action_sign_in">Iniciar sesion o registrarse</string>
-    <string name="action_sign_in_short">Iniciar Sesion</string>
+    <string name="action_sign_in">Iniciar sesión o registrarse</string>
+    <string name="action_sign_in_short">Iniciar Sesión</string>
     <string name="error_invalid_usuario">El usuario no es valido</string>
-    <string name="error_red">Error de red:</string>
+    <string name="error_red">Error de conexión con el servidor</string>
     <string name="error_invalid_password">la contraseña es demasiado corta</string>
     <string name="error_incorrect_password">La contraseña es incorrecta</string>
     <string name="error_incorrect_login">El login no es correcto</string>
@@ -25,8 +25,19 @@
     <string name="boton_responder">Responder</string>
     <string name="fecha_correo">Fecha: </string>
     <string name="remitente_correo">Remitente: </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--respuesta correo-->
+    <string name="mensaje_error_title">Error</string>
+    <string name="mensaje_error_texto">No se ha podido enviar el mensaje, vuelva a intentarlo</string>
+    <string name="mensaje_enviado_title">Enviado</string>
+    <string name="mensaje_enviado_texto">El mensaje se ha enviado correctamente</string>
+    <string name="mensaje_validacion_asunto">El asunto dado no es valido</string>
+    <string name="mensaje_validacion_mensaje">El mensaje dado no es valido</string>
+    <string name="mensaje_validacion_error">Mensaje no valido</string>
+
+
+    <!-- otros-->
+    <string name="hello_blank_fragment">Fragmento vacio</string>
     <string name="tratamiento">Tratamiento:</string>
     <string name="fecha_fin">Finalización:</string>
     <string name="eliminar_tratamiento">Eliminar tratamiento</string>

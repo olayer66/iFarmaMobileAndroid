@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import fdi.ucm.Propiedades;
 import fdi.ucm.adapters.MensajeAdapter;
@@ -17,7 +16,6 @@ import fdi.ucm.model.Medicamento;
 import fdi.ucm.model.Medico;
 import fdi.ucm.model.Paciente;
 import fdi.ucm.model.Usuario;
-import fdi.ucm.volley.Conexion;
 
 public class indexMedico extends AppCompatActivity
         implements MensajeAdapter.OnCorreoSelected
@@ -26,22 +24,23 @@ public class indexMedico extends AppCompatActivity
                   ,NuevoCorreoFragment.goBackCorreo
                   ,DetallePacienteFragment.OnNuevoTratamiento
                   ,NuevoTratamientoFragment.goBackTratamiento{
-    private ListaPacientesFragment fragListaPacientes;
-    private listaCorreoFragment fragListaCorreo;
-    private DetalleCorreoFragment fragDetalleCorreo;
-    private DetallePacienteFragment fragDetallePaciente;
-    private NuevoCorreoFragment fragNuevoCorreo;
-    private NuevoTratamientoFragment fragNuevoTratamiento;
     private FragmentTransaction transaction;
+    private Medico medico;
+    private ArrayList<Medicamento> listaMed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_index_medico);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarMedico);
         setSupportActionBar(myToolbar);
+        //Cargamos el medico en la activity
+        medico= Propiedades.getInstance().getMedico();
+        //Cargamos el listado de medicamentos en la activity
+        listaMed= Propiedades.getInstance().getMedicamentos();
+        //Cargamos el fragment principal
         cargarListaPacientes();
     }
-    // Menu icons are inflated just as they were with actionbar
+    //Menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -64,8 +63,8 @@ public class indexMedico extends AppCompatActivity
     }
     //Framents pricipales
     private void cargarListaPacientes() {
-        ArrayList<Medicamento> listadoMed=Propiedades.getInstance().getMedicamentos();
-        fragListaPacientes= ListaPacientesFragment.newInstance(Propiedades.getInstance().getMedico(),listadoMed);
+
+        ListaPacientesFragment fragListaPacientes = ListaPacientesFragment.newInstance(medico.getListaPacientes(), listaMed);
         transaction = getSupportFragmentManager().beginTransaction();
         /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
                 R.anim.fragment_slide_left_exit,
@@ -76,22 +75,20 @@ public class indexMedico extends AppCompatActivity
         transaction.commit();
     }
     private void cargarMensajes() {
-        android.app.Fragment fragmento = getFragmentManager().findFragmentByTag("listaCorreo");
-        if(fragmento==null || !fragmento.isVisible()) {
-            transaction = getSupportFragmentManager().beginTransaction();
-            /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
-                    R.anim.fragment_slide_left_exit,
-                    R.anim.fragment_slide_right_enter,
-                    R.anim.fragment_slide_right_exit);*/
-            transaction.addToBackStack(null);
-            transaction.replace(R.id.FragmentPrincipal, fragListaCorreo);
-            transaction.commit();
-        }
+        listaCorreoFragment fragListaCorreo = listaCorreoFragment.newInstance(medico.getListaMensajes(),medico.getId());
+        transaction = getSupportFragmentManager().beginTransaction();
+        /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                R.anim.fragment_slide_left_exit,
+                R.anim.fragment_slide_right_enter,
+                R.anim.fragment_slide_right_exit);*/
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.FragmentPrincipal, fragListaCorreo);
+        transaction.commit();
     }
-    //Fragments de detalle supeditamos a los fragment principales
+    //Fragments de detalle supeditados a los fragment principales
     @Override
     public void OnCorreoSelected(String asunto, Usuario remitente, Usuario emisor, String fecha, String mensaje) {
-        fragDetalleCorreo= DetalleCorreoFragment.newInstance(asunto,remitente,emisor,fecha,mensaje);
+        DetalleCorreoFragment fragDetalleCorreo = DetalleCorreoFragment.newInstance(asunto, remitente, emisor, fecha, mensaje);
         transaction = getSupportFragmentManager().beginTransaction();
             /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
                     R.anim.fragment_slide_left_exit,
@@ -103,7 +100,7 @@ public class indexMedico extends AppCompatActivity
     }
     @Override
     public void OnPacienteSelected(Paciente paciente,ArrayList<Medicamento> medicamentos) {
-        fragDetallePaciente= DetallePacienteFragment.newInstance(paciente, medicamentos);
+        DetallePacienteFragment fragDetallePaciente = DetallePacienteFragment.newInstance(paciente, medicamentos);
         transaction = getSupportFragmentManager().beginTransaction();
             /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
                     R.anim.fragment_slide_left_exit,
@@ -115,7 +112,7 @@ public class indexMedico extends AppCompatActivity
     }
     @Override
     public void OnResponderSelected(Usuario remitente, Usuario emisor) {
-        fragNuevoCorreo = NuevoCorreoFragment.newInstance(remitente,emisor);
+        NuevoCorreoFragment fragNuevoCorreo = NuevoCorreoFragment.newInstance(remitente, emisor);
         transaction=getSupportFragmentManager().beginTransaction();
         /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
                     R.anim.fragment_slide_left_exit,
@@ -127,7 +124,7 @@ public class indexMedico extends AppCompatActivity
     }
     @Override
     public void OnNuevoTratamiento(Paciente paciente, ArrayList<Medicamento> medicamentos) {
-        fragNuevoTratamiento = NuevoTratamientoFragment.newInstance(paciente, medicamentos);
+        NuevoTratamientoFragment fragNuevoTratamiento = NuevoTratamientoFragment.newInstance(paciente, medicamentos);
         transaction=getSupportFragmentManager().beginTransaction();
         /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
                     R.anim.fragment_slide_left_exit,
@@ -146,4 +143,5 @@ public class indexMedico extends AppCompatActivity
     public void goBackTratamiento() {
         getSupportFragmentManager().popBackStack();
     }
+
 }

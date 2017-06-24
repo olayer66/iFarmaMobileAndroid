@@ -210,7 +210,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         else if (error.equals("estado"))
                             mUsuarioView.setError(getString(R.string.error_incorrect_estado));
                         else if(error.equals("red")) {
-                            String mesg= getString(R.string.error_red)+" "+ response.getString("mensaje");
+                            String mesg= getString(R.string.error_red);
                             Toast.makeText(getApplicationContext(),mesg , Toast.LENGTH_LONG).show();
                         }else {
                             String role = response.getString("role");

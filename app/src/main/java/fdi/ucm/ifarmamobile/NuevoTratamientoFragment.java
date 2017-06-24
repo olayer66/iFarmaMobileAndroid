@@ -193,7 +193,7 @@ public class NuevoTratamientoFragment extends Fragment {
         Medicamento selecMed=medicamentos.get((int)medicamento.getSelectedItemId());
         String fechInicio=getFechaActual();
         String fechFin=fechaFin.getText().toString();
-        int perio=Integer.parseInt(periodicidad.getText().toString());
+        String perio=periodicidad.getText().toString();
         int numPas=Integer.parseInt(numPastillas.getText().toString());;
         return new Tratamiento(Long.parseLong("0"),selecMed,fechInicio,fechFin,numPas,perio);
     }

@@ -12,8 +12,8 @@ public class Tratamiento implements Parcelable {
     private String fechaInicio;
     private String fechaFin;
     private int numDosis;
-    private int perioicidad;
-    public Tratamiento (long id,Medicamento medicamento, String fechaInicio,String fechaFin, int numDosis,int perioicidad)
+    private String perioicidad;
+    public Tratamiento (long id,Medicamento medicamento, String fechaInicio,String fechaFin, int numDosis,String perioicidad)
     {
         this.id=id;
         this.medicamento=medicamento;
@@ -36,7 +36,7 @@ public class Tratamiento implements Parcelable {
     public int getNumDosis() {
         return numDosis;
     }
-    public int getPerioicidad() {
+    public String getPerioicidad() {
         return perioicidad;
     }
 
@@ -68,7 +68,7 @@ public class Tratamiento implements Parcelable {
         dest.writeString(fechaInicio);
         dest.writeString(fechaFin);
         dest.writeInt(numDosis);
-        dest.writeInt(perioicidad);
+        dest.writeString(perioicidad);
     }
     public void readFromParcel(Parcel in) {
         id = in.readLong();
@@ -76,6 +76,6 @@ public class Tratamiento implements Parcelable {
         fechaFin = in.readString();
         fechaInicio=in.readString();
         numDosis=in.readInt();
-        perioicidad=in.readInt();
+        perioicidad=in.readString();
     }
 }

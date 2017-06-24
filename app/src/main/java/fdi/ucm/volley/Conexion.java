@@ -1,11 +1,9 @@
 package fdi.ucm.volley;
 
-import android.content.Context;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
-import java.util.List;
 import fdi.ucm.model.Medicamento;
 import fdi.ucm.model.Medico;
 import fdi.ucm.model.Mensaje;
@@ -79,10 +77,10 @@ public class Conexion {
                 for (int i = 0; i < listaM.length(); i++) {
                     listaMensajes.add(parserMensaje(listaM.getJSONObject(i)));
                 }
-                JSONArray listaT = entrada.getJSONArray("tratamientos");
-                for (int i = 0; i < listaT.length(); i++) {
-                    tratamientos.add(parserTratamiento(listaT.getJSONObject(i)));
-                }
+            }
+            JSONArray listaT = entrada.getJSONArray("tratamientos");
+            for (int i = 0; i < listaT.length(); i++) {
+                tratamientos.add(parserTratamiento(listaT.getJSONObject(i)));
             }
             return new Paciente(id,nombre,apellidos,telefono,email,direccion,ciudad,codPostal,provincia,conAutonoma,medicoCabecera,tratamientos,listaMensajes);
         } catch (JSONException e) {
@@ -96,7 +94,7 @@ public class Conexion {
             Long id = entrada.getLong("id");
             String asunto= entrada.getString("asunto");
             String mensaje=entrada.getString("mensaje");
-            String fecha= entrada.getString("mensaje");
+            String fecha= entrada.getString("fecha");
             boolean leido= entrada.getBoolean("leido");
             Usuario remitente= parserUsuario(entrada.getJSONObject("remitente"));
             Usuario destinatario=parserUsuario(entrada.getJSONObject("destinatario"));
@@ -115,7 +113,7 @@ public class Conexion {
             String fechaFin= entrada.getString("fechaFin");
             String periodicidad= entrada.getString("periodicidad");
             int numDosis= entrada.getInt("numDosis");
-            return new Tratamiento(id,medicamento,fechaInicio,fechaFin,numDosis,Integer.parseInt(periodicidad));
+            return new Tratamiento(id,medicamento,fechaInicio,fechaFin,numDosis,periodicidad);
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
@@ -150,6 +148,21 @@ public class Conexion {
         }
     }
 
+    //Mensaje a JSON
+    public static JSONObject mensajeToJson (Mensaje entrada)
+    {
+        JSONObject mensaje= new JSONObject();
+        try {
+            mensaje.put("asunto",entrada.getAsunto());
+            mensaje.put("mensaje",entrada.getMensaje());
+            mensaje.put("fecha",entrada.getFecha());
+            mensaje.put("remitente", entrada.getRemitente().getIdUsuario());
+            mensaje.put("destinatario", entrada.getDestinatario().getIdUsuario());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return mensaje;
+    }
     public String getPrefixURL() {
         return prefixURL;
     }

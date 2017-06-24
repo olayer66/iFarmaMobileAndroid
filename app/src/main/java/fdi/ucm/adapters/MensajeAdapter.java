@@ -1,5 +1,6 @@
 package fdi.ucm.adapters;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,12 +8,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import fdi.ucm.ifarmamobile.R;
 import fdi.ucm.model.Mensaje;
 import fdi.ucm.model.Usuario;
+import fdi.ucm.volley.Conexion;
+
+import static android.R.attr.id;
 
 
 public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonViewHolder>{
@@ -62,6 +77,8 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
             @Override
             public void onClick(View v) {
                 mListener=(OnCorreoSelected)v.getContext();
+                mensajes.get(i).setLeido(true);
+                actMensajeLeido(mensajes.get(i).getId(), v.getContext());
                 mListener.OnCorreoSelected(mensajes.get(i).getAsunto(),
                                            mensajes.get(i).getRemitente(),
                                            mensajes.get(i).getDestinatario(),
@@ -73,6 +90,31 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
         {
             personViewHolder.leido.setVisibility(View.VISIBLE);
         }
+    }
+    private void actMensajeLeido(final long id , final Context context)
+    {
+        String URL= Conexion.getInstance().getPrefixURL()+"actMensaje";
+        RequestQueue queue = Volley.newRequestQueue(context);
+        StringRequest sr = new StringRequest(Request.Method.POST,URL, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String estado=response;
+                Toast.makeText(context,estado,Toast.LENGTH_LONG).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context,context.getString(R.string.error_red),Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<>();
+                params.put("id", Long.toString(id));
+                return params;
+            }
+        };
+        queue.add(sr);
     }
     public interface OnCorreoSelected {
         void OnCorreoSelected(String asunto, Usuario remitente,Usuario emisor, String fecha, String mensaje);

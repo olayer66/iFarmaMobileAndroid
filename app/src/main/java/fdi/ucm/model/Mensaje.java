@@ -1,6 +1,9 @@
 package fdi.ucm.model;
 
-public class Mensaje {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Mensaje implements Parcelable {
     private long id;
     private String asunto;
     private Usuario remitente;
@@ -40,8 +43,38 @@ public class Mensaje {
     {
         return leido;
     }
+    public void setLeido(boolean leido) {
+        this.leido = leido;
+    }
+
     public String getFecha()
     {
         return fecha;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(mensaje);
+        dest.writeString(asunto);
+        dest.writeString(fecha);
+        dest.writeParcelable(remitente,flags);
+        dest.writeParcelable(destinatario,flags);
+        dest.writeByte((byte) (leido ? 1 : 0));
+
+    }
+    public void readFromParcel(Parcel in) {
+        id = in.readLong();
+        asunto= in.readString();
+        mensaje=in.readString();
+        fecha= in.readString();
+        leido= in.readByte() != 0;
+        remitente= in.readParcelable(Usuario.class.getClassLoader());
+        destinatario= in.readParcelable(Usuario.class.getClassLoader());
     }
 }

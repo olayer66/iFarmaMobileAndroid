@@ -1,7 +1,5 @@
 package fdi.ucm.ifarmamobile;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,11 +18,8 @@ public class PerfilPacienteFragment extends Fragment {
     private static final String ARG_PACIENTE = "paciente";
     private static final String ARG_MEDICAMENTOS = "medicamentos";
 
-
     private Paciente pac;
     private ArrayList<Medicamento> medi;
-
-    private OnFragmentInteractionListener mListener;
 
     public static PerfilPacienteFragment newInstance(Paciente paciente, ArrayList<Medicamento> medicamentos) {
         PerfilPacienteFragment fragment = new PerfilPacienteFragment();
@@ -33,10 +28,6 @@ public class PerfilPacienteFragment extends Fragment {
         args.putParcelableArrayList(ARG_MEDICAMENTOS, medicamentos);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    public PerfilPacienteFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -64,59 +55,18 @@ public class PerfilPacienteFragment extends Fragment {
         final TextView provincia  = (TextView) view.findViewById(R.id.detallePacienteProvincia);
         final TextView comunidadAutonoma  = (TextView) view.findViewById(R.id.detallePacienteComAutonoma);
         final TextView medico  = (TextView) view.findViewById(R.id.detallePacienteMedico);
+        final Bundle args = getArguments();
+        Paciente paciente= args.getParcelable(ARG_PACIENTE);
 
-
-        nombre.setText(pac.getNombre()+" "+pac.getApellidos());
-        telefono.setText(pac.getTelefono());
-        email.setText(pac.getEmail());
-        direccion.setText(pac.getDireccion());
-        ciudad.setText(pac.getCiudad());
-        codpostal.setText(pac.getCodPostal());
-        provincia.setText(pac.getProvincia());
-        comunidadAutonoma.setText(pac.getComAutonoma());
-        medico.setText(pac.getMedico().getNombre() + " " + pac.getMedico().getApellidos());
-
-
+        nombre.setText(paciente.getNombre()+" "+paciente.getApellidos());
+        telefono.setText(paciente.getTelefono());
+        email.setText(paciente.getEmail());
+        direccion.setText(paciente.getDireccion());
+        ciudad.setText(paciente.getCiudad());
+        codpostal.setText(paciente.getCodPostal());
+        provincia.setText(paciente.getProvincia());
+        comunidadAutonoma.setText(paciente.getComAutonoma());
+        medico.setText(paciente.getMedico().getNombre() + " " + paciente.getMedico().getApellidos());
         return view;
-
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
     }
 }

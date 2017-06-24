@@ -35,9 +35,10 @@ public class indexPaciente extends AppCompatActivity implements MensajeAdapter.O
         setContentView(R.layout.activity_index_paciente);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarPaciente);
         setSupportActionBar(myToolbar);
-
         pac = Propiedades.getInstance().getPaciente();
-         medicamentos = Propiedades.getInstance().getMedicamentos();
+        medicamentos = Propiedades.getInstance().getMedicamentos();
+        //Carga el fragmento principal
+        cargarPerfilPac();
     }
 
     // Menu icons are inflated just as they were with actionbar

@@ -96,29 +96,28 @@ public class indexPaciente extends AppCompatActivity implements MensajeAdapter.O
 
 //Correo
     private void cargarMensajesPac() {
-        android.app.Fragment fragmento = getFragmentManager().findFragmentByTag("listaCorreo");
-        if(fragmento==null || !fragmento.isVisible()) {
-            transaction = getSupportFragmentManager().beginTransaction();
-            /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
-                    R.anim.fragment_slide_left_exit,
-                    R.anim.fragment_slide_right_enter,
-                    R.anim.fragment_slide_right_exit);*/
-            transaction.addToBackStack(null);
-            transaction.replace(R.id.FragmentPrincipal, fragListaCorreo);
-            transaction.commit();
-        }
+        listaCorreoFragment fragListaCorreo = listaCorreoFragment.newInstance(pac.getListaMensajes(), pac.getId());
+        transaction = getSupportFragmentManager().beginTransaction();
+        /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                R.anim.fragment_slide_left_exit,
+                R.anim.fragment_slide_right_enter,
+                R.anim.fragment_slide_right_exit);*/
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.FragmentPrincipalPac, fragListaCorreo);
+        transaction.commit();
     }
+
     //Fragments de detalle supeditamos a los fragment principales
     @Override
     public void OnCorreoSelected(String asunto, Usuario remitente, Usuario emisor, String fecha, String mensaje) {
-        fragDetalleCorreo= DetalleCorreoFragment.newInstance(asunto,remitente,emisor,fecha,mensaje);
+        fragDetalleCorreo = DetalleCorreoFragment.newInstance(asunto,remitente,emisor,fecha,mensaje);
         transaction = getSupportFragmentManager().beginTransaction();
             /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
                     R.anim.fragment_slide_left_exit,
                     R.anim.fragment_slide_right_enter,
                     R.anim.fragment_slide_right_exit);*/
         transaction.addToBackStack(null);
-        transaction.replace(R.id.FragmentPrincipal, fragDetalleCorreo);
+        transaction.replace(R.id.FragmentPrincipalPac, fragDetalleCorreo);
         transaction.commit();
     }
 
@@ -131,7 +130,7 @@ public class indexPaciente extends AppCompatActivity implements MensajeAdapter.O
                     R.anim.fragment_slide_right_enter,
                     R.anim.fragment_slide_right_exit);*/
         transaction.addToBackStack(null);
-        transaction.replace(R.id.FragmentPrincipal, fragNuevoCorreo);
+        transaction.replace(R.id.FragmentPrincipalPac, fragNuevoCorreo);
         transaction.commit();
     }
 

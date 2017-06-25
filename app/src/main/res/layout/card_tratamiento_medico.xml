@@ -26,9 +26,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="2dp"
             android:layout_toEndOf="@+id/cardTratamientoMedicoTratLabel"
-            android:text="Una cada 8 horas"
+            android:text="2 cada 24 horas"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="?attr/colorControlNormal" />
 
@@ -43,13 +43,12 @@
             style="@android:style/Widget.DeviceDefault.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/cardTratamientoMedicoTomas"
             android:background="@drawable/shape"
             android:contentDescription="@string/eliminar_tratamiento"
             android:src="@android:drawable/ic_delete"
-            android:layout_toEndOf="@+id/cardTratamientoMedicoTomas"
-            android:layout_alignBottom="@+id/cardTratamientoMedicoFinLabel" />
+            android:layout_below="@+id/cardTratamientoMedicoMedicamento"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true" />
 
         <TextView
             android:id="@+id/cardTratamientoMedicoTratLabel"
@@ -74,9 +73,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/cardTratamientoMedicoTomas"
             android:layout_below="@+id/cardTratamientoMedicoTomas"
             android:layout_toEndOf="@+id/cardTratamientoMedicoFinLabel"
+            android:layout_marginStart="2dp"
             android:text="29/10/1956"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="?attr/colorControlNormal" />

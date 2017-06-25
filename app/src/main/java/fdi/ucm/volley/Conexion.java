@@ -163,6 +163,22 @@ public class Conexion {
         }
         return mensaje;
     }
+    public static JSONObject tratamientoToJson(Tratamiento entrada, long id)
+    {
+        JSONObject tratamiento= new JSONObject();
+        try {
+            tratamiento.put("medicamento",entrada.getMedicamento().getId());
+            tratamiento.put("fechaInicio",entrada.getFechaInicio());
+            tratamiento.put("fechaFin",entrada.getFechaFin());
+            tratamiento.put("paciente",id);
+            tratamiento.put("numDosis",entrada.getNumDosis());
+            String perio=entrada.getPerioicidad() +" horas";
+            tratamiento.put("periodicidad",perio);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return tratamiento;
+    }
     public String getPrefixURL() {
         return prefixURL;
     }

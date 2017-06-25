@@ -17,6 +17,18 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,13 +38,16 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import fdi.ucm.Propiedades;
 import fdi.ucm.model.Medicamento;
 import fdi.ucm.model.Paciente;
 import fdi.ucm.model.Tratamiento;
+import fdi.ucm.volley.Conexion;
 
 import static fdi.ucm.ifarmamobile.R.string.anadir;
 import static fdi.ucm.ifarmamobile.R.string.medicamento;
 import static fdi.ucm.ifarmamobile.R.string.periodicidad;
+import static fdi.ucm.ifarmamobile.R.string.tratamiento;
 
 
 /**
@@ -51,6 +66,7 @@ public class NuevoTratamientoFragment extends Fragment {
     private EditText numPastillas;
     private EditText fechaFin;
     private goBackTratamiento mListener;
+    private Context context;
 
     // TODO: Rename and change types of parameters
     private Paciente paciente;
@@ -117,32 +133,50 @@ public class NuevoTratamientoFragment extends Fragment {
         Button anadir=(Button) view.findViewById(R.id.nuevoTratamientoAnadir);
         anadir.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 String per= periodicidad.getText().toString();
                 String nPas= numPastillas.getText().toString();
                 int respValidacion=validarDatos(per,nPas);
                 if(respValidacion==0)
                 {
+                    final Bundle args=getArguments();
+                    final Paciente paciente=args.getParcelable(ARG_PACIENTE);
                     mListener=(goBackTratamiento) v.getContext();
-                    if(enviarDatos(crearTratamiento())) {
-                        cargarDialog(v.getContext(),"Enviado","Se ha añadido el tratamiento al paciente");
-                        mListener.goBackTratamiento();
-                    }
-                    else
-                        cargarDialog(v.getContext(),"Error","No se ha podido añadir, vuelva a intentarlo");
+                    context=v.getContext();
+                    final Tratamiento trat=crearTratamiento();
+                    enviarDatos(context, trat,paciente.getId(), new OnNuevoTratamientoResp() {
+                        @Override
+                        public void OnRespuesta(JSONObject response) {
+                            try {
+                                String error= response.getString("error");
+                                String mensaje= response.getString("mensaje");
+                                if(error.equals("red")){
+                                    cargarDialog(context,context.getString(R.string.mensaje_error_title),context.getString(R.string.tratamiento_anadir_error));
+                                    Toast.makeText(context,context.getString(R.string.error_red),Toast.LENGTH_LONG).show();
+                                } else {
+                                    int posicion= Propiedades.getInstance().getMedico().getListaPacientes().indexOf(paciente);
+                                    Propiedades.getInstance().getMedico().getListaPacientes().get(posicion).getTratamiento().add(trat);
+                                    cargarDialog(context,context.getString(R.string.mensaje_enviado_title),context.getString(R.string.tratamiento_anadir_ok));
+                                    mListener.goBackTratamiento();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
                 }
                 else
                 {
                     switch (respValidacion)
                     {
                         case 1:
-                            cargarDialog(v.getContext(),"Error","La fecha tiene que ser superior a la actual");
+                            cargarDialog(v.getContext(),context.getString(R.string.mensaje_error_title),context.getString(R.string.tratamiento_anadir_fecha));
                             break;
                         case 2:
-                            cargarDialog(v.getContext(),"Error","La periodicidad debe de ser superior a 0 y menor de 24 horas");
+                            cargarDialog(v.getContext(),context.getString(R.string.mensaje_error_title),context.getString(R.string.tratamiento_anadir_periodicidad));
                             break;
                         case 3:
-                            cargarDialog(v.getContext(),"Error","El numero de pastillas ha de ser superior a 0");
+                            cargarDialog(v.getContext(),context.getString(R.string.mensaje_error_title),context.getString(R.string.tratamiento_anadir_pastillas));
                             break;
                         default:
                     }
@@ -188,8 +222,6 @@ public class NuevoTratamientoFragment extends Fragment {
     //Crea un Tratamiento
     private Tratamiento crearTratamiento()
     {
-        final Bundle args=getArguments();
-        Paciente pac=args.getParcelable(ARG_PACIENTE);
         Medicamento selecMed=medicamentos.get((int)medicamento.getSelectedItemId());
         String fechInicio=getFechaActual();
         String fechFin=fechaFin.getText().toString();
@@ -230,9 +262,36 @@ public class NuevoTratamientoFragment extends Fragment {
         int anio=cal.get(Calendar.YEAR);
         return dia +"/"+ calculoMes + "/" +anio;
     }
-    private boolean enviarDatos(Tratamiento tratamiento)
+    private void enviarDatos(final Context context,final Tratamiento tratamiento,long id, final OnNuevoTratamientoResp callback)
     {
-        return true;
+        String URL= Conexion.getInstance().getPrefixURL()+"nuevoTratamiento";
+        JSONObject request= Conexion.tratamientoToJson(tratamiento, id);
+        JsonRequest nuevoMensaje = new JsonObjectRequest(Request.Method.POST,URL, request,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        callback.OnRespuesta(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        JSONObject err= new JSONObject();
+                        try {
+                            err.put("error","red");
+                            err.put("mensaje",error.getMessage());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        callback.OnRespuesta(err);
+                    }
+                });
+        RequestQueue queue = Volley.newRequestQueue(context);
+        queue.add(nuevoMensaje);
+
+    }
+    private interface OnNuevoTratamientoResp{
+        void OnRespuesta(JSONObject response);
     }
     public interface goBackTratamiento {
         void goBackTratamiento();

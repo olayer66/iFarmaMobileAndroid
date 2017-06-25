@@ -41,6 +41,13 @@
     <string name="mensaje_validacion_mensaje">El mensaje dado no es valido</string>
     <string name="mensaje_validacion_error">Mensaje no valido</string>
 
+    <!--tratamientos-->
+    <string name="tratamiento_eliminar_ok">El tratamiento ha sido borrado</string>
+    <string name="tratamiento_anadir_ok">Se ha añadido el tratamiento al paciente"</string>
+    <string name="tratamiento_anadir_error">No se ha podido añadir, vuelva a intentarlo</string>
+    <string name="tratamiento_anadir_fecha">La fecha tiene que ser superior a la actual</string>
+    <string name="tratamiento_anadir_pastillas">El numero de pastillas ha de ser superior a 0</string>
+    <string name="tratamiento_anadir_periodicidad">La periodicidad debe de ser superior a 0 y menor de 24 horas</string>
 
     <!-- otros-->
     <string name="hello_blank_fragment">Fragmento vacio</string>

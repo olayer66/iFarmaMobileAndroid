@@ -93,7 +93,7 @@ public class DetallePacienteFragment extends Fragment  {
         ArrayList<Tratamiento> tr= new ArrayList<>(paciente.getTratamiento());
         if(tr==null)
             tr= new ArrayList<>();
-        mAdapter = new TratamientoMedicoAdapter(tr);
+        mAdapter = new TratamientoMedicoAdapter(tr,paciente);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         anadir.setOnClickListener(new View.OnClickListener() {

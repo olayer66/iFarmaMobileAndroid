@@ -22,7 +22,7 @@ public class indexPaciente extends AppCompatActivity implements MensajeAdapter.O
     private Paciente pac;
     ArrayList<Medicamento> medicamentos;
     PerfilPacienteFragment fragPerfilPac;
-
+    TratamientoPacienteFragment tratPacFragment;
 
     private listaCorreoFragment fragListaCorreo;
     private DetalleCorreoFragment fragDetalleCorreo;
@@ -83,9 +83,15 @@ public class indexPaciente extends AppCompatActivity implements MensajeAdapter.O
 
 //Tratamientos
     private void mostrarTratamientosPac(){
-
-
-
+        tratPacFragment = TratamientoPacienteFragment.newInstance(pac, medicamentos);
+        transaction = getSupportFragmentManager().beginTransaction();
+            /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                    R.anim.fragment_slide_left_exit,
+                    R.anim.fragment_slide_right_enter,
+                    R.anim.fragment_slide_right_exit);*/
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.FragmentPrincipalPac, tratPacFragment);
+        transaction.commit();
     }
 
 //Correo

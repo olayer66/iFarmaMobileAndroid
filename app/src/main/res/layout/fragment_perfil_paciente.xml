@@ -11,178 +11,202 @@
         android:background="@drawable/shape"
         android:backgroundTint="@color/fondo_base">
 
-        <TextView
-            android:id="@+id/detallePacienteTelefono"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/detallePacienteTelefonoLabel"
-            android:layout_marginStart="9dp"
-            android:layout_toEndOf="@+id/detallePacienteTelefonoLabel"
-            android:text="907452114"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-            android:textColor="?attr/colorControlNormal" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/detallePacienteNombreCompleto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_weight="1"
+                android:text="Paco Porras Garcia"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/detallePacienteNombreCompleto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:text="Paco Porras Garcia"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="36sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/detallePacienteCorreoLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/detallePacienteTelefonoLabel"
+                android:layout_weight="1"
+                android:text="Correo:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <TextView
-            android:id="@+id/detallePacienteTelefonoLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/detallePacienteNombreCompleto"
-            android:text="Telefono:"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            <TextView
+                android:id="@+id/detallePacienteCorreo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/detallePacienteCorreoLabel"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:text="paco_porras@algo.com"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                android:textColor="?attr/colorControlNormal" />
 
-        <TextView
-            android:id="@+id/detallePacienteCorreoLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/detallePacienteTelefonoLabel"
-            android:text="Correo:"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            <TextView
+                android:id="@+id/detallePacienteTelefonoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/detallePacienteNombreCompleto"
+                android:layout_weight="1"
+                android:text="Telefono:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <TextView
-            android:id="@+id/detallePacienteCorreo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/detallePacienteCorreoLabel"
-            android:layout_marginTop="16dp"
-            android:text="paco_porras@algo.com"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-            android:textColor="?attr/colorControlNormal" />
+            <TextView
+                android:id="@+id/detallePacienteTelefono"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/detallePacienteTelefonoLabel"
+                android:layout_marginStart="9dp"
+                android:layout_toEndOf="@+id/detallePacienteTelefonoLabel"
+                android:layout_weight="1"
+                android:text="907452114"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                android:textColor="?attr/colorControlNormal" />
 
-        <TextView
-            android:id="@+id/detallePacienteDireccionLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/detallePacienteCorreo"
-            android:layout_marginTop="18dp"
-            android:text="Direccion:"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            <TextView
+                android:id="@+id/detallePacienteDireccionLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/detallePacienteCorreo"
+                android:layout_marginTop="18dp"
+                android:layout_weight="1"
+                android:text="Direccion:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <TextView
-            android:id="@+id/detallePacienteDireccion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/detallePacienteDireccionLabel"
-            android:layout_marginTop="14dp"
-            android:text="Tejera"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-            android:textColor="?attr/colorControlNormal" />
+            <TextView
+                android:id="@+id/detallePacienteDireccion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/detallePacienteDireccionLabel"
+                android:layout_marginTop="14dp"
+                android:layout_weight="1"
+                android:text="Tejera"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                android:textColor="?attr/colorControlNormal" />
 
-        <TextView
-            android:id="@+id/detallePacienteCiudadLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/detallePacienteDireccion"
-            android:layout_marginTop="13dp"
-            android:text="Ciudad:"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            <TextView
+                android:id="@+id/detallePacienteProvinciaLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/detallePacienteCodPostal"
+                android:layout_marginTop="19dp"
+                android:layout_weight="1"
+                android:text="Provincia:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <TextView
-            android:id="@+id/detallePacienteCiudad"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:text="Madrid"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-            android:textColor="?attr/colorControlNormal" />
+            <TextView
+                android:id="@+id/detallePacienteProvincia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/detallePacienteProvinciaLabel"
+                android:layout_marginTop="17dp"
+                android:layout_weight="1"
+                android:text="Madrid"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                android:textColor="?attr/colorControlNormal" />
 
-        <TextView
-            android:id="@+id/detallePacienteCodPostalLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/detallePacienteCiudad"
-            android:layout_marginTop="21dp"
-            android:text="Codigo Postal:"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            <TextView
+                android:id="@+id/detallePacienteComAutonomaLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/detallePacienteComAutonoma"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:text="Com. Autonoma:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <TextView
-            android:id="@+id/detallePacienteCodPostal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/detallePacienteCodPostalLabel"
-            android:layout_marginTop="15dp"
-            android:text="28450"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-            android:textColor="?attr/colorControlNormal" />
+            <TextView
+                android:id="@+id/detallePacienteComAutonoma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/detallePacienteMedico"
+                android:layout_below="@+id/detallePacienteProvincia"
+                android:layout_marginTop="18dp"
+                android:layout_weight="1"
+                android:text="Madrid"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                android:textColor="?attr/colorControlNormal" />
 
-        <TextView
-            android:id="@+id/detallePacienteProvinciaLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/detallePacienteCodPostal"
-            android:layout_marginTop="19dp"
-            android:text="Provincia:"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            <TextView
+                android:id="@+id/detallePacienteCodPostalLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/detallePacienteCiudad"
+                android:layout_marginTop="21dp"
+                android:layout_weight="1"
+                android:text="Codigo Postal:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <TextView
-            android:id="@+id/detallePacienteProvincia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/detallePacienteProvinciaLabel"
-            android:layout_marginTop="17dp"
-            android:text="Madrid"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-            android:textColor="?attr/colorControlNormal" />
+            <TextView
+                android:id="@+id/detallePacienteCodPostal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/detallePacienteCodPostalLabel"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:text="28450"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                android:textColor="?attr/colorControlNormal" />
 
-        <TextView
-            android:id="@+id/detallePacienteComAutonomaLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/detallePacienteComAutonoma"
-            android:layout_alignParentStart="true"
-            android:text="Com. Autonoma:"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            <TextView
+                android:id="@+id/detallePacienteCiudadLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/detallePacienteDireccion"
+                android:layout_marginTop="13dp"
+                android:layout_weight="1"
+                android:text="Ciudad:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <TextView
-            android:id="@+id/detallePacienteComAutonoma"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/detallePacienteMedico"
-            android:layout_below="@+id/detallePacienteProvincia"
-            android:layout_marginTop="18dp"
-            android:text="Madrid"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-            android:textColor="?attr/colorControlNormal" />
+            <TextView
+                android:id="@+id/detallePacienteCiudad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:text="Madrid"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                android:textColor="?attr/colorControlNormal" />
 
-        <TextView
-            android:id="@+id/detallePacienteMedicoLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Medico:"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:layout_alignTop="@+id/detallePacienteMedico"
-            android:layout_alignParentStart="true" />
+            <TextView
+                android:id="@+id/detallePacienteMedicoLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignTop="@+id/detallePacienteMedico"
+                android:layout_weight="1"
+                android:text="Medico:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-        <TextView
-            android:id="@+id/detallePacienteMedico"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/detallePacienteNombreCompleto"
-            android:layout_alignParentBottom="true"
-            android:text="Ramon"
-            android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
-            android:textColor="?attr/colorControlNormal" />
+            <TextView
+                android:id="@+id/detallePacienteMedico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/detallePacienteNombreCompleto"
+                android:layout_alignParentBottom="true"
+                android:layout_weight="1"
+                android:text="Ramon"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                android:textColor="?attr/colorControlNormal" />
+
+        </LinearLayout>
+
 
     </RelativeLayout>
 

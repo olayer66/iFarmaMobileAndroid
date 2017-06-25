@@ -16,6 +16,7 @@
             android:id="@+id/cardCorreoAsunto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:ems="10"
             android:text="Asunto"
             android:textSize="27sp"
             android:textStyle="bold" />

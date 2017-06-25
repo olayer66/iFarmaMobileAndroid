@@ -8,9 +8,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -108,7 +110,10 @@ public class listaCorreoFragment extends Fragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.rvCorreo);
         mLayoutManager = new LinearLayoutManager(activity);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new MensajeAdapter(mensajes);
+
+        int ancho = container.getWidth();
+
+        mAdapter = new MensajeAdapter(mensajes, ancho);
         // Set CustomAdapter as the adapter for RecyclerView.
         mRecyclerView.setAdapter(mAdapter);
         return rootView;

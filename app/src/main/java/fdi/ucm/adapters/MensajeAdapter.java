@@ -1,11 +1,15 @@
 package fdi.ucm.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,12 +36,13 @@ import static android.R.attr.id;
 
 public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonViewHolder>{
 
+    int anchoPantalla;
     private List<Mensaje> mensajes;
     private OnCorreoSelected mListener;
 
-    public MensajeAdapter(List<Mensaje> mensajes){
+    public MensajeAdapter(List<Mensaje> mensajes, int ancho){
         this.mensajes = mensajes;
-
+        anchoPantalla = ancho;
     }
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
@@ -68,7 +73,17 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
     }
     @Override
     public void onBindViewHolder(PersonViewHolder personViewHolder,final int i) {
+
         personViewHolder.asunto.setText(mensajes.get(i).getAsunto());
+        //Reajustamos el tamaño si es demasiado grande
+
+        /*if(mensajes.get(i).getAsunto().getMaxWidth() >  anchoPantalla){
+            String aux = mensajes.get(i).getAsunto();
+            //int number = personViewHolder.asunto.length();
+            String asuntoAux = aux.substring(0, personViewHolder.asunto.length()-3) + "...";
+            personViewHolder.asunto.setText(asuntoAux);
+        }*/
+
         String remitente=mensajes.get(i).getRemitente().getNombre()+" "+mensajes.get(i).getRemitente().getApellidos();
         personViewHolder.remitente.setText(remitente);
         personViewHolder.fecha.setText(mensajes.get(i).getFecha());

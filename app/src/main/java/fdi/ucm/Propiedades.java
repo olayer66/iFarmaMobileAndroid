@@ -1,5 +1,7 @@
 package fdi.ucm;
 
+import android.location.Location;
+
 import java.util.ArrayList;
 import java.util.List;
 import fdi.ucm.model.Medicamento;
@@ -13,6 +15,7 @@ public class Propiedades{
     private static Medico medico=null;
     private static Paciente paciente=null;
     private static ArrayList<Medicamento> medicamentos;
+    private static Location location;
     protected Propiedades(){}
 
     public static synchronized Propiedades getInstance(){
@@ -50,5 +53,13 @@ public class Propiedades{
     }
     public void setPaciente(Paciente paciente) {
         Propiedades.paciente = paciente;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        Propiedades.location = location;
     }
 }

@@ -1,11 +1,21 @@
 package fdi.ucm.ifarmamobile;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 
@@ -18,6 +28,11 @@ import fdi.ucm.model.Usuario;
 public class indexPaciente extends AppCompatActivity implements MensajeAdapter.OnCorreoSelected,
         DetalleCorreoFragment.OnResponderSelected
         ,NuevoCorreoFragment.goBackCorreo{
+
+    private final int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    private LocationManager locationManager;
+    private String provider;
+    private FusedLocationProviderClient mFusedLocationClient;
 
     private Paciente pac;
     ArrayList<Medicamento> medicamentos;
@@ -37,6 +52,7 @@ public class indexPaciente extends AppCompatActivity implements MensajeAdapter.O
         setSupportActionBar(myToolbar);
         pac = Propiedades.getInstance().getPaciente();
         medicamentos = Propiedades.getInstance().getMedicamentos();
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         //Carga el fragmento principal
         cargarPerfilPac();
     }
@@ -60,6 +76,21 @@ public class indexPaciente extends AppCompatActivity implements MensajeAdapter.O
                 return true;
             case R.id.correoPac:
                 cargarMensajesPac();
+                return true;
+            case R.id.farmaciasPac:
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    mFusedLocationClient.getLastLocation()
+                            .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                                @Override
+                                public void onSuccess(Location location) {
+                                    // Got last known location. In some rare situations this can be null.
+                                    Propiedades.getInstance().setLocation(location);
+                                    cargarfarmaciasPac();
+                                }
+                            });
+                }
+                else
+                    permisos();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -106,6 +137,17 @@ public class indexPaciente extends AppCompatActivity implements MensajeAdapter.O
         transaction.replace(R.id.FragmentPrincipalPac, fragListaCorreo);
         transaction.commit();
     }
+    private void cargarfarmaciasPac() {
+        MapaFragment fragMapa = MapaFragment.newInstance();
+        transaction = getSupportFragmentManager().beginTransaction();
+        /*transaction.setCustomAnimations(R.anim.fragment_slide_left_enter,
+                R.anim.fragment_slide_left_exit,
+                R.anim.fragment_slide_right_enter,
+                R.anim.fragment_slide_right_exit);*/
+        transaction.addToBackStack(null);
+        transaction.replace(R.id.FragmentPrincipalPac, fragMapa);
+        transaction.commit();
+    }
 
     //Fragments de detalle supeditamos a los fragment principales
     @Override
@@ -133,7 +175,21 @@ public class indexPaciente extends AppCompatActivity implements MensajeAdapter.O
         transaction.replace(R.id.FragmentPrincipalPac, fragNuevoCorreo);
         transaction.commit();
     }
-
+    private void permisos()
+    {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_ASK_PERMISSIONS );
+        }
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION)) {
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_ASK_PERMISSIONS );
+        }
+    }
     @Override
     public void goBackCorreo() {
         getSupportFragmentManager().popBackStack();

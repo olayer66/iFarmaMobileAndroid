@@ -17,4 +17,9 @@
         android:icon="@android:drawable/ic_dialog_email"
         android:title="@string/correoPac"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/farmaciasPac"
+        android:icon="@mipmap/ic_farmacia"
+        android:title="@string/farmaciasPac"
+        app:showAsAction="always" />
 </menu>

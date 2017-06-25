@@ -24,7 +24,7 @@
     <string name="perfil">Perfil</string>
     <string name="tratamientoPac">Tratamiento</string>
     <string name="correoPac">Correo</string>
-
+    <string name="farmaciasPac">Farmacias</string>
 
     <!-- correo-->
     <string name="boton_nuevo">Nuevo mensaje</string>

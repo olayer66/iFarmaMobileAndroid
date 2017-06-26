@@ -114,7 +114,7 @@ public class MensajeAdapter  extends RecyclerView.Adapter<MensajeAdapter.PersonV
             @Override
             public void onResponse(String response) {
                 String estado=response;
-                Toast.makeText(context,estado,Toast.LENGTH_LONG).show();
+                //Toast.makeText(context,estado,Toast.LENGTH_LONG).show();
             }
         }, new Response.ErrorListener() {
             @Override

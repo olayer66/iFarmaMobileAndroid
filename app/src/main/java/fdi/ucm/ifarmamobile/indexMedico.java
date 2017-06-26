@@ -1,11 +1,15 @@
 package fdi.ucm.ifarmamobile;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 
@@ -24,19 +28,31 @@ public class indexMedico extends AppCompatActivity
                   ,NuevoCorreoFragment.goBackCorreo
                   ,DetallePacienteFragment.OnNuevoTratamiento
                   ,NuevoTratamientoFragment.goBackTratamiento{
+    //Control de los fragment
+    private FrameLayout frameLayout;
     private FragmentTransaction transaction;
+    //Dispositivo y orientacion
+    private boolean tablet;
+    private int orientation;
+    //Datos basicos
     private Medico medico;
     private ArrayList<Medicamento> listaMed;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_index_medico);
+        tablet=isTablet(this);
+        orientation=getResources().getConfiguration().orientation;
+        if(tablet && orientation==2)
+            setContentView(R.layout.activity_index_medico_tablet);
+        else
+            setContentView(R.layout.activity_index_medico);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbarMedico);
         setSupportActionBar(myToolbar);
         //Cargamos el medico en la activity
         medico= Propiedades.getInstance().getMedico();
         //Cargamos el listado de medicamentos en la activity
         listaMed= Propiedades.getInstance().getMedicamentos();
+        frameLayout = (FrameLayout) getWindow().findViewById(R.id.FragmentDetalle);
         //Cargamos el fragment principal
         cargarListaPacientes();
     }
@@ -71,7 +87,11 @@ public class indexMedico extends AppCompatActivity
                 R.anim.fragment_slide_right_enter,
                 R.anim.fragment_slide_right_exit);*/
         transaction.addToBackStack(null);
-        transaction.replace(R.id.FragmentPrincipal, fragListaPacientes);
+        if(tablet && orientation==2) {
+            frameLayout.setVisibility(View.INVISIBLE);
+            transaction.replace(R.id.FragmentLateral, fragListaPacientes);
+        }else
+            transaction.replace(R.id.FragmentPrincipal, fragListaPacientes);
         transaction.commit();
     }
     private void cargarMensajes() {
@@ -82,8 +102,19 @@ public class indexMedico extends AppCompatActivity
                 R.anim.fragment_slide_right_enter,
                 R.anim.fragment_slide_right_exit);*/
         transaction.addToBackStack(null);
-        transaction.replace(R.id.FragmentPrincipal, fragListaCorreo);
+        if(tablet && orientation==2) {
+            frameLayout.setVisibility(View.INVISIBLE);
+            transaction.replace(R.id.FragmentLateral, fragListaCorreo);
+        }else
+            transaction.replace(R.id.FragmentPrincipal, fragListaCorreo);
         transaction.commit();
+    }
+
+    //pantallas
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
     //Fragments de detalle supeditados a los fragment principales
     @Override
@@ -95,7 +126,11 @@ public class indexMedico extends AppCompatActivity
                     R.anim.fragment_slide_right_enter,
                     R.anim.fragment_slide_right_exit);*/
         transaction.addToBackStack(null);
-        transaction.replace(R.id.FragmentPrincipal, fragDetalleCorreo);
+        if(tablet && orientation==2) {
+            frameLayout.setVisibility(View.VISIBLE);
+            transaction.replace(R.id.FragmentDetalle, fragDetalleCorreo);
+        }else
+            transaction.replace(R.id.FragmentPrincipal, fragDetalleCorreo);
         transaction.commit();
     }
     @Override
@@ -107,7 +142,11 @@ public class indexMedico extends AppCompatActivity
                     R.anim.fragment_slide_right_enter,
                     R.anim.fragment_slide_right_exit);*/
         transaction.addToBackStack(null);
-        transaction.replace(R.id.FragmentPrincipal, fragDetallePaciente);
+        if(tablet && orientation==2) {
+            frameLayout.setVisibility(View.VISIBLE);
+            transaction.replace(R.id.FragmentDetalle, fragDetallePaciente);
+        }else
+            transaction.replace(R.id.FragmentPrincipal, fragDetallePaciente);
         transaction.commit();
     }
     @Override
@@ -119,7 +158,11 @@ public class indexMedico extends AppCompatActivity
                     R.anim.fragment_slide_right_enter,
                     R.anim.fragment_slide_right_exit);*/
         transaction.addToBackStack(null);
-        transaction.replace(R.id.FragmentPrincipal, fragNuevoCorreo);
+        if(tablet && orientation==2) {
+            frameLayout.setVisibility(View.VISIBLE);
+            transaction.replace(R.id.FragmentDetalle, fragNuevoCorreo);
+        }else
+            transaction.replace(R.id.FragmentPrincipal, fragNuevoCorreo);
         transaction.commit();
     }
     @Override
@@ -131,13 +174,21 @@ public class indexMedico extends AppCompatActivity
                     R.anim.fragment_slide_right_enter,
                     R.anim.fragment_slide_right_exit);*/
         transaction.addToBackStack(null);
-        transaction.replace(R.id.FragmentPrincipal, fragNuevoTratamiento);
+        if(tablet && orientation==2) {
+            frameLayout.setVisibility(View.VISIBLE);
+            transaction.replace(R.id.FragmentDetalle, fragNuevoTratamiento);
+        }else
+            transaction.replace(R.id.FragmentPrincipal, fragNuevoTratamiento);
         transaction.commit();
     }
     @Override
     public void goBackCorreo() {
-        getSupportFragmentManager().popBackStack();
-        getSupportFragmentManager().popBackStack();
+        if(tablet && orientation==2)
+            getSupportFragmentManager().popBackStack();
+        else{
+            getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStack();
+        }
     }
     @Override
     public void goBackTratamiento() {

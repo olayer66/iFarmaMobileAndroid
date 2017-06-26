@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,19 +29,19 @@
             android:id="@+id/nuevoTratamientoMedicamentos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="16dp"
+            android:textSize="22sp"
             android:layout_below="@+id/nuevoTratamientoLabel"
-            android:layout_alignEnd="@+id/nuevoTratamientoLabel"
-            android:textSize="22sp"/>
+            android:layout_alignStart="@+id/nuevoTratamientoPastillas" />
 
         <TextView
             android:id="@+id/nuevoTratamientoPastillasLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="59dp"
             android:text="@string/num_pastillas"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:layout_below="@+id/nuevoTratamientoMedicamentos"
+            android:layout_alignBaseline="@+id/nuevoTratamientoPastillas"
+            android:layout_alignBottom="@+id/nuevoTratamientoPastillas"
             android:layout_alignParentStart="true" />
 
         <TextView
@@ -59,18 +58,15 @@
             android:id="@+id/nuevoTratamientoFin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:editable="false"
             android:ems="10"
             android:hint="@string/hint_fecha_fin"
             android:clickable="false"
             android:cursorVisible="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            android:layout_alignBaseline="@+id/nuevoTratamientoFinLabel"
-            android:layout_alignBottom="@+id/nuevoTratamientoFinLabel"
-            android:layout_alignStart="@+id/nuevoTratamientoPeriodicidad"
-            android:layout_toStartOf="@+id/nuevoTratamientoMedicamentos"
-            android:layout_alignEnd="@+id/nuevoTratamientoMedicamentos" />
+            android:layout_below="@+id/nuevoTratamientoPastillas"
+            android:layout_alignEnd="@+id/nuevoTratamientoLabel"
+            android:layout_alignStart="@+id/nuevoTratamientoPeriodicidad" />
 
         <TextView
             android:id="@+id/textView"
@@ -90,7 +86,7 @@
             android:contentDescription="@string/select_fecha_fin"
             android:src="@mipmap/ic_calendar"
             android:layout_below="@+id/nuevoTratamientoPastillas"
-            android:layout_alignEnd="@+id/nuevoTratamientoPeriodicidad" />
+            android:layout_toEndOf="@+id/nuevoTratamientoFin" />
 
         <EditText
             android:id="@+id/nuevoTratamientoPeriodicidad"
@@ -118,13 +114,13 @@
             android:id="@+id/nuevoTratamientoAnadir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/nuevoTratamientoPastillas"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="51dp"
+            android:layout_marginTop="11dp"
             android:background="@drawable/shape"
             android:backgroundTint="@color/boton"
             android:text="@string/anadir"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse"
+            android:layout_below="@+id/nuevoTratamientoCalendario"
+            android:layout_toEndOf="@+id/textView" />
 
         <EditText
             android:id="@+id/nuevoTratamientoPastillas"

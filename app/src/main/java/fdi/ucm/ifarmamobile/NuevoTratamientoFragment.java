@@ -2,7 +2,6 @@ package fdi.ucm.ifarmamobile;
 
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -43,12 +42,6 @@ import fdi.ucm.model.Medicamento;
 import fdi.ucm.model.Paciente;
 import fdi.ucm.model.Tratamiento;
 import fdi.ucm.volley.Conexion;
-
-import static fdi.ucm.ifarmamobile.R.string.anadir;
-import static fdi.ucm.ifarmamobile.R.string.medicamento;
-import static fdi.ucm.ifarmamobile.R.string.periodicidad;
-import static fdi.ucm.ifarmamobile.R.string.tratamiento;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -109,6 +102,7 @@ public class NuevoTratamientoFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_nuevo_tratamiento, container, false);
+        view.setTag(TAG);
         //Spinner
         medicamento=(Spinner) view.findViewById(R.id.nuevoTratamientoMedicamentos);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getActivity(), R.layout.spinner_personal, cargarSpinner());
@@ -118,6 +112,7 @@ public class NuevoTratamientoFragment extends Fragment {
         periodicidad=(EditText) view.findViewById(R.id.nuevoTratamientoPeriodicidad);
         numPastillas= (EditText) view.findViewById(R.id.nuevoTratamientoPastillas);
         fechaFin= (EditText) view.findViewById(R.id.nuevoTratamientoFin);
+        fechaFin.setKeyListener(null);
         fechaFin.setText(getFechaActual());
         //Boton calendario
         ImageButton btnCalendario= (ImageButton) view.findViewById(R.id.nuevoTratamientoCalendario);
@@ -149,7 +144,6 @@ public class NuevoTratamientoFragment extends Fragment {
                         public void OnRespuesta(JSONObject response) {
                             try {
                                 String error= response.getString("error");
-                                String mensaje= response.getString("mensaje");
                                 if(error.equals("red")){
                                     cargarDialog(context,context.getString(R.string.mensaje_error_title),context.getString(R.string.tratamiento_anadir_error));
                                     Toast.makeText(context,context.getString(R.string.error_red),Toast.LENGTH_LONG).show();
@@ -191,7 +185,6 @@ public class NuevoTratamientoFragment extends Fragment {
         int dia=myCalendar.get(Calendar.DAY_OF_MONTH);
         int mes=myCalendar.get(Calendar.MONTH)+1;
         int anio=myCalendar.get(Calendar.YEAR);
-        String regexStr = "^[0-9]*$";
         String fecha = dia + "/" + mes + "/" + anio;
         Date fechaTratamiento = null;
         try {
@@ -226,7 +219,7 @@ public class NuevoTratamientoFragment extends Fragment {
         String fechInicio=getFechaActual();
         String fechFin=fechaFin.getText().toString();
         String perio=periodicidad.getText().toString();
-        int numPas=Integer.parseInt(numPastillas.getText().toString());;
+        int numPas=Integer.parseInt(numPastillas.getText().toString());
         return new Tratamiento(Long.parseLong("0"),selecMed,fechInicio,fechFin,numPas,perio);
     }
     //Carga lo datos del los medicamentos en la list para el Spinner

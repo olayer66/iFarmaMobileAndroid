@@ -16,7 +16,7 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="471dp">
 
         <LinearLayout
             android:id="@+id/usuario_login_form"
@@ -26,11 +26,15 @@
             android:orientation="vertical"
             android:weightSum="1"
             tools:ignore="MissingPrefix">
+
             <ImageView
                 android:id="@+id/imageView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:adjustViewBounds="false"
+                android:layout_gravity="center"
                 android:src="@drawable/logo1" />
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -73,6 +77,33 @@
 
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/creada"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large.Inverse" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/creador1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Inverse" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Creador2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Inverse" />
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/login_progress"

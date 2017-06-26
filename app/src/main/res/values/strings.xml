@@ -72,4 +72,7 @@
     <string name="anadir">Añadir</string>
     <string name="hint_anadir_tratamiento">Añadir Tratamiento</string>
     <string name="select_fecha_fin">Seleccionar fecha final</string>
+    <string name="creada">App creada por:</string>
+    <string name="creador1">Jose Luis Sanchez Garcia</string>
+    <string name="Creador2">Arturo Marino Quintana</string>
 </resources>

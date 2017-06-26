@@ -6,4 +6,5 @@
     <color name="fondo_base">#e9e9e9</color>
     <color name="fondo_fragment">#a3ba81</color>
     <color name="colorAccent">#a3ba81</color>
+    <color name="transparente">#00ffffff</color>
 </resources>

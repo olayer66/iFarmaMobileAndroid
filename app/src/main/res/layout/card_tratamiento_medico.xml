@@ -4,7 +4,7 @@
     android:id="@+id/cvTratamientoMedico"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/fondo_base">
+    app:cardBackgroundColor="@color/transparente">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -43,12 +43,12 @@
             style="@android:style/Widget.DeviceDefault.ImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/cardTratamientoMedicoMedicamento"
             android:background="@drawable/shape"
             android:contentDescription="@string/eliminar_tratamiento"
-            android:src="@android:drawable/ic_delete"
-            android:layout_below="@+id/cardTratamientoMedicoMedicamento"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true" />
+            android:src="@android:drawable/ic_delete" />
 
         <TextView
             android:id="@+id/cardTratamientoMedicoTratLabel"
@@ -74,8 +74,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_below="@+id/cardTratamientoMedicoTomas"
-            android:layout_toEndOf="@+id/cardTratamientoMedicoFinLabel"
             android:layout_marginStart="2dp"
+            android:layout_toEndOf="@+id/cardTratamientoMedicoFinLabel"
             android:text="29/10/1956"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="?attr/colorControlNormal" />

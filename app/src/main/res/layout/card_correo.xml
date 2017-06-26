@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="92dp"
         android:background="@drawable/shape"
         android:paddingLeft="10dp">
 
@@ -25,9 +25,8 @@
             android:id="@+id/cardCorreoRemitente"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/cardTratamientoMedicoMedicamento"
             android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/cardCorreoFecha"
+            android:layout_centerVertical="true"
             android:text="remitente"
             android:textSize="20sp" />
 
@@ -41,8 +40,9 @@
             android:id="@+id/cardCorreoNuevo"
             android:layout_width="@android:dimen/app_icon_size"
             android:layout_height="@android:dimen/app_icon_size"
+            android:layout_alignBottom="@+id/cardCorreoFecha"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
+            android:layout_alignTop="@+id/cardCorreoRemitente"
             android:src="@android:drawable/btn_star_big_on"
             android:visibility="invisible" />
 
@@ -50,8 +50,7 @@
             android:id="@+id/cardCorreoFecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/cardCorreoNuevo"
+            android:layout_below="@+id/cardCorreoRemitente"
             android:text="Fecha"
             android:textSize="20sp" />
     </RelativeLayout>
